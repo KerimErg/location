@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   title: { default: "TestLocation — Location de voitures premium", template: "%s · TestLocation" },
   description:
     "Louez une citadine, un SUV, un utilitaire ou un véhicule premium en quelques clics. Kilométrage illimité, annulation gratuite, assistance 24/7.",
-  openGraph: { type: "website", locale: "fr_FR", siteName: "TestLocation", images: ["/images/hero-fallback.png"] },
+  openGraph: { type: "website", locale: "fr_FR", siteName: "TestLocation" },
   icons: { icon: "/icon.svg" },
 };
 

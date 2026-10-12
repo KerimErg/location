@@ -67,12 +67,17 @@ export function BookingPanel({
   className,
   submitLabel = "Voir les véhicules",
   action = "/vehicules",
+  stacked = false,
+  title = "Réservez votre véhicule",
 }: {
   agencies: AgencyOption[];
   defaults: SearchInput;
   className?: string;
   submitLabel?: string;
   action?: string;
+  /** Mise en page verticale (barre latérale). */
+  stacked?: boolean;
+  title?: string;
 }) {
   const router = useRouter();
   const [differentReturn, setDifferentReturn] = useState(!!defaults.returnAgency && defaults.returnAgency !== defaults.pickupAgency);
@@ -94,7 +99,7 @@ export function BookingPanel({
   return (
     <form onSubmit={onSubmit} className={cn("rounded-3xl border bg-background/95 p-4 text-foreground shadow-lift backdrop-blur-xl sm:p-5", className)} noValidate>
       <div className="mb-3 flex flex-wrap items-center justify-between gap-3 px-1">
-        <p className="font-display text-sm font-semibold">Réservez votre véhicule</p>
+        <p className="font-display text-sm font-semibold">{title}</p>
         <Label className="cursor-pointer text-xs font-medium text-muted-foreground">
           <Switch
             checked={differentReturn}
@@ -106,7 +111,7 @@ export function BookingPanel({
           Retour dans une autre agence
         </Label>
       </div>
-      <div className={cn("grid gap-3", differentReturn ? "lg:grid-cols-[1fr_1fr_1.3fr_0.7fr_0.7fr_auto]" : "lg:grid-cols-[1.3fr_1.3fr_0.7fr_0.7fr_auto]")}>
+      <div className={cn("grid gap-3", stacked ? "" : differentReturn ? "lg:grid-cols-[1fr_1fr_1.3fr_0.7fr_0.7fr_auto]" : "lg:grid-cols-[1.3fr_1.3fr_0.7fr_0.7fr_auto]")}>
         <AgencySelect value={v.pickupAgency} onChange={setPickupAgency} agencies={agencies} placeholder="Agence de départ" invalid={!!errors.pickupAgency} />
         {differentReturn && (
           <AgencySelect
@@ -126,7 +131,7 @@ export function BookingPanel({
             form.setValue("returnDate", t, { shouldValidate: form.formState.isSubmitted });
           }}
         />
-        <div className="grid grid-cols-2 gap-3 lg:contents">
+        <div className={cn("grid grid-cols-2 gap-3", !stacked && "lg:contents")}>
           <TimeSelect label="Prise" value={v.pickupTime} onChange={(t) => form.setValue("pickupTime", t, { shouldValidate: form.formState.isSubmitted })} />
           <TimeSelect label="Retour" value={v.returnTime} onChange={(t) => form.setValue("returnTime", t, { shouldValidate: form.formState.isSubmitted })} />
         </div>

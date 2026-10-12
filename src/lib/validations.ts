@@ -83,7 +83,7 @@ export const vehicleSchema = z.object({
   color: z.string().regex(/^#[0-9a-fA-F]{6}$/, "Couleur hex invalide"),
   colorName: z.string().trim().min(1),
   description: z.string().trim().min(10, "10 caractères minimum"),
-  images: z.string().trim().min(1, "Au moins une image"),
+  images: z.string().trim(),
   featured: z.boolean(),
   active: z.boolean(),
 });

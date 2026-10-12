@@ -44,15 +44,14 @@ async function main() {
   for (const a of agencies) await prisma.agency.create({ data: a });
   for (const e of extras) await prisma.extra.create({ data: { ...e } });
   for (const v of vehicles) {
-    const { type: _type, ...rest } = v;
     await prisma.vehicle.create({
       data: {
-        ...rest,
+        ...v,
         category: v.category as Category,
         transmission: v.transmission as Transmission,
         fuel: v.fuel as Fuel,
         deposit: v.pricePerDay > 150 ? 2500 : v.pricePerDay > 80 ? 1200 : 800,
-        images: JSON.stringify(["front34", "side", "rear34"].map((view) => `/vehicles/${v.slug}-${view}.png`)),
+        images: JSON.stringify([]), // ajoutez vos photos depuis l'admin (URL ou /public)
       },
     });
   }

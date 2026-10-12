@@ -18,12 +18,14 @@ import { Reveal } from "@/components/reveal";
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const [agencyOptions, agencies, featured, reviews] = await Promise.all([
+  const [agencyOptions, agencies, featured, reviews, grouped] = await Promise.all([
     getAgencyOptions(),
     getAgencies(),
     prisma.vehicle.findMany({ where: { featured: true, active: true }, orderBy: { pricePerDay: "asc" }, take: 6 }),
     prisma.review.findMany({ where: { published: true }, orderBy: { createdAt: "desc" }, take: 6 }),
+    prisma.vehicle.groupBy({ by: ["category"], where: { active: true }, _count: true }),
   ]);
+  const counts = Object.fromEntries(grouped.map((g) => [g.category, g._count]));
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -34,7 +36,7 @@ export default async function HomePage() {
   return (
     <>
       <Hero agencies={agencyOptions} defaults={{ ...defaultSearch(), pickupAgency: "", returnAgency: "" }} />
-      <Categories />
+      <Categories counts={counts} />
 
       <section className="container-page pb-20 md:pb-28">
         <div className="flex flex-wrap items-end justify-between gap-6">

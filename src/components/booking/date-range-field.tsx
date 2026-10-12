@@ -32,9 +32,9 @@ export function DateRangeField({
       <PopoverTrigger asChild>
         <button
           type="button"
-          aria-invalid={invalid}
+          data-invalid={invalid || undefined}
           className={cn(
-            "flex h-14 w-full items-center gap-3 rounded-xl border border-input bg-background px-4 text-left text-sm transition outline-none hover:border-foreground/30 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/25 aria-invalid:border-destructive",
+            "flex h-14 w-full items-center gap-3 rounded-xl border border-input bg-background px-4 text-left text-sm transition outline-none hover:border-foreground/30 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/25 data-invalid:border-destructive",
             className,
           )}
         >
@@ -42,11 +42,11 @@ export function DateRangeField({
           <span className="grid flex-1 grid-cols-2 gap-2">
             <span>
               <span className="block text-[0.7rem] font-medium tracking-wide text-muted-foreground uppercase">Départ</span>
-              <span className="font-medium capitalize">{from ? fmtDate(combine(from, "00:00"), "EEE d MMM") : "—"}</span>
+              <span className="font-medium">{from ? fmtDate(combine(from, "00:00"), "EEE d MMM") : "—"}</span>
             </span>
             <span>
               <span className="block text-[0.7rem] font-medium tracking-wide text-muted-foreground uppercase">Retour</span>
-              <span className="font-medium capitalize">{to ? fmtDate(combine(to, "00:00"), "EEE d MMM") : "—"}</span>
+              <span className="font-medium">{to ? fmtDate(combine(to, "00:00"), "EEE d MMM") : "—"}</span>
             </span>
           </span>
         </button>

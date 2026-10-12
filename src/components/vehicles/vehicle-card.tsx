@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Briefcase, Fuel, Settings2, Users, Zap } from "lucide-react";
 import type { Vehicle } from "@prisma/client";
@@ -6,8 +5,9 @@ import { Badge } from "@/components/ui/badge";
 import { CATEGORY_LABEL, FUEL_LABEL, TRANSMISSION_LABEL } from "@/lib/constants";
 import { eur, parseImages } from "@/lib/format";
 import { cn } from "@/lib/utils";
+import { VehicleVisual } from "./vehicle-visual";
 
-export type CardVehicle = Pick<Vehicle, "id" | "slug" | "name" | "category" | "seats" | "transmission" | "fuel" | "luggage" | "pricePerDay" | "images" | "featured">;
+export type CardVehicle = Pick<Vehicle, "id" | "slug" | "name" | "category" | "seats" | "transmission" | "fuel" | "luggage" | "pricePerDay" | "images" | "featured" | "color">;
 
 export function VehicleSpecs({ v, className }: { v: Pick<Vehicle, "seats" | "transmission" | "fuel" | "luggage">; className?: string }) {
   const FuelIcon = v.fuel === "ELECTRIC" ? Zap : Fuel;
@@ -46,22 +46,22 @@ export function VehicleCard({
         unavailable && "opacity-60",
       )}
     >
-      <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-b from-surface to-muted/60">
+      <div className="relative aspect-[16/10] overflow-hidden">
         <div className="absolute top-4 left-4 z-10 flex gap-2">
           <Badge variant="secondary" className="bg-background/90 backdrop-blur">{CATEGORY_LABEL[v.category]}</Badge>
           {v.featured && !unavailable && <Badge>Coup de cœur</Badge>}
           {unavailable && <Badge variant="danger">Indisponible</Badge>}
         </div>
-        {img && (
-          <Image
-            src={img}
-            alt={v.name}
-            fill
-            priority={priority}
-            sizes="(min-width:1280px) 400px, (min-width:768px) 50vw, 100vw"
-            className="object-contain p-2 transition-transform duration-700 ease-out group-hover:scale-[1.06]"
-          />
-        )}
+        <VehicleVisual
+          src={img}
+          alt={v.name}
+          color={v.color}
+          category={v.category}
+          priority={priority}
+          sizes="(min-width:1280px) 400px, (min-width:768px) 50vw, 100vw"
+          className="absolute inset-0"
+          imgClassName="transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+        />
       </div>
       <div className="flex flex-1 flex-col p-6">
         <div className="flex items-start justify-between gap-3">
