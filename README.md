@@ -2,12 +2,15 @@
 
 Site de location de voitures premium : Next.js 15 (App Router), TypeScript, Tailwind CSS v4, composants shadcn/ui (Radix), Framer Motion, Prisma (SQLite en dev, PostgreSQL en prod), NextAuth (identifiants), React Hook Form + Zod, react-day-picker, Leaflet + OpenStreetMap.
 
-## Démarrage
+## Démarrage (local)
+
+Il faut une base PostgreSQL : une branche Neon de dev, ou un Postgres local.
 
 ```bash
 npm install
-cp .env.example .env          # puis renseignez NEXTAUTH_SECRET (openssl rand -base64 32)
-npm run db:push && npm run db:seed
+cp .env.example .env          # renseignez DATABASE_URL, DIRECT_URL, NEXTAUTH_SECRET
+npm run db:deploy             # applique les migrations (prisma/migrations)
+npm run db:seed               # données de démo
 npm run dev                   # http://localhost:3000
 ```
 
@@ -27,6 +30,12 @@ Comptes de démo : `admin@testlocation.fr` / `Admin123!` · `client@testlocation
 
 Aucune image n'est fournie : un visuel neutre s'affiche par défaut. Ajoutez vos photos depuis **Admin → Véhicules → Modifier** (un chemin `/public/...` ou une URL https par ligne).
 
-## Production (PostgreSQL)
+## Déploiement (Vercel + Neon)
 
-Dans `prisma/schema.prisma`, remplacez `provider = "sqlite"` par `"postgresql"`, renseignez `DATABASE_URL`, puis `npx prisma db push && npm run db:seed && npm run build`. Branchez un vrai prestataire de paiement (ex. Stripe) à la place du paiement simulé.
+- `vercel-build` (exécuté automatiquement par Vercel) : `prisma generate && prisma migrate deploy && next build`.
+- `postinstall` : `prisma generate`.
+- Variables : `DATABASE_URL` (Neon, poolée), `DIRECT_URL` (Neon, directe), `NEXTAUTH_SECRET`, `NEXTAUTH_URL`.
+- Seed de la base en ligne, depuis votre machine : `DATABASE_URL="<url directe>" DIRECT_URL="<url directe>" npm run db:seed`. Attention : le seed **efface** les données existantes.
+- Modifier le schéma : `npm run db:migrate -- --name ma_modif`, puis commit du dossier `prisma/migrations`.
+
+Le paiement est simulé : branchez Stripe avant d'encaisser de vrais paiements.

@@ -1,13 +1,13 @@
-// TestLocation — SQLite en développement.
-// Pour PostgreSQL en production : remplacez provider par "postgresql" et
-// DATABASE_URL par une URL postgres:// (le schéma est compatible tel quel).
+// TestLocation — PostgreSQL (Neon en production).
+// DATABASE_URL : connexion poolée (runtime) · DIRECT_URL : connexion directe (migrations).
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 enum Role {

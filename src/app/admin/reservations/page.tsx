@@ -17,7 +17,7 @@ export default async function AdminReservations({ searchParams }: { searchParams
   const status = statut && statut in STATUS_LABEL ? (statut as ReservationStatus) : undefined;
   const where: Prisma.ReservationWhereInput = {
     ...(status && { status }),
-    ...(q && { OR: [{ reference: { contains: q } }, { lastName: { contains: q } }, { email: { contains: q } }, { vehicle: { name: { contains: q } } }] }),
+    ...(q && { OR: [{ reference: { contains: q, mode: "insensitive" } }, { lastName: { contains: q, mode: "insensitive" } }, { email: { contains: q, mode: "insensitive" } }, { vehicle: { name: { contains: q, mode: "insensitive" } } }] }),
   };
   const [rows, counts] = await Promise.all([
     prisma.reservation.findMany({ where, include: { vehicle: true, pickupAgency: true, returnAgency: true }, orderBy: { pickupAt: "desc" }, take: 200 }),
