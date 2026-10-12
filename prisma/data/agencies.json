@@ -1,0 +1,12 @@
+[
+  {"slug":"paris-gare-de-lyon","name":"Paris Gare de Lyon","city":"Paris","address":"20 boulevard Diderot","postalCode":"75012","latitude":48.8443,"longitude":2.3744,"phone":"01 84 60 12 00","hours":"Lun–Dim · 7h00–22h00","type":"station"},
+  {"slug":"paris-cdg","name":"Paris Charles de Gaulle","city":"Roissy-en-France","address":"Terminal 2, niveau arrivées","postalCode":"95700","latitude":49.0034,"longitude":2.5713,"phone":"01 84 60 12 10","hours":"Lun–Dim · 24h/24","type":"airport"},
+  {"slug":"paris-orly","name":"Paris Orly","city":"Orly","address":"Orly 1-2-3, parking P0","postalCode":"94390","latitude":48.7262,"longitude":2.3652,"phone":"01 84 60 12 20","hours":"Lun–Dim · 6h00–0h00","type":"airport"},
+  {"slug":"lyon-part-dieu","name":"Lyon Part-Dieu","city":"Lyon","address":"5 place Charles Béraudier","postalCode":"69003","latitude":45.7606,"longitude":4.8593,"phone":"04 28 29 30 00","hours":"Lun–Sam · 7h00–21h00","type":"station"},
+  {"slug":"marseille-saint-charles","name":"Marseille Saint-Charles","city":"Marseille","address":"Square Narvik","postalCode":"13001","latitude":43.3026,"longitude":5.3806,"phone":"04 86 11 20 00","hours":"Lun–Dim · 7h00–21h00","type":"station"},
+  {"slug":"nice-cote-azur","name":"Nice Côte d'Azur","city":"Nice","address":"Terminal 2, rez-de-chaussée","postalCode":"06200","latitude":43.6584,"longitude":7.2159,"phone":"04 22 13 40 00","hours":"Lun–Dim · 6h30–23h30","type":"airport"},
+  {"slug":"bordeaux-centre","name":"Bordeaux Centre","city":"Bordeaux","address":"42 cours de l'Intendance","postalCode":"33000","latitude":44.8417,"longitude":-0.5754,"phone":"05 57 20 10 00","hours":"Lun–Sam · 8h00–19h30","type":"city"},
+  {"slug":"lille-europe","name":"Lille Europe","city":"Lille","address":"Parvis de Rotterdam","postalCode":"59000","latitude":50.6392,"longitude":3.0756,"phone":"03 20 40 50 00","hours":"Lun–Sam · 7h00–21h00","type":"station"},
+  {"slug":"toulouse-blagnac","name":"Toulouse Blagnac","city":"Blagnac","address":"Hall D, niveau 0","postalCode":"31700","latitude":43.6293,"longitude":1.3638,"phone":"05 61 30 20 00","hours":"Lun–Dim · 6h00–23h30","type":"airport"},
+  {"slug":"nantes-centre","name":"Nantes Centre","city":"Nantes","address":"12 quai de la Fosse","postalCode":"44000","latitude":47.2108,"longitude":-1.5652,"phone":"02 40 70 80 00","hours":"Lun–Sam · 8h00–19h00","type":"city"}
+]

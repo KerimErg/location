@@ -1,0 +1,190 @@
+// TestLocation — SQLite en développement.
+// Pour PostgreSQL en production : remplacez provider par "postgresql" et
+// DATABASE_URL par une URL postgres:// (le schéma est compatible tel quel).
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  CLIENT
+  ADMIN
+}
+
+enum Category {
+  CITADINE
+  BERLINE
+  SUV
+  UTILITAIRE
+  PREMIUM
+  ELECTRIQUE
+}
+
+enum Transmission {
+  MANUAL
+  AUTOMATIC
+}
+
+enum Fuel {
+  PETROL
+  DIESEL
+  HYBRID
+  ELECTRIC
+}
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  ONGOING
+  COMPLETED
+  CANCELLED
+}
+
+enum Protection {
+  BASIC
+  PLUS
+  PREMIUM
+}
+
+enum ExtraPricing {
+  PER_DAY
+  PER_RENTAL
+}
+
+model User {
+  id           String        @id @default(cuid())
+  email        String        @unique
+  name         String
+  phone        String?
+  passwordHash String
+  role         Role          @default(CLIENT)
+  createdAt    DateTime      @default(now())
+  reservations Reservation[]
+}
+
+model Agency {
+  id                 String        @id @default(cuid())
+  slug               String        @unique
+  name               String
+  city               String
+  address            String
+  postalCode         String
+  latitude           Float
+  longitude          Float
+  phone              String
+  hours              String
+  type               String        @default("city") // city | airport | station
+  createdAt          DateTime      @default(now())
+  pickupReservations Reservation[] @relation("PickupAgency")
+  returnReservations Reservation[] @relation("ReturnAgency")
+}
+
+model Vehicle {
+  id           String        @id @default(cuid())
+  slug         String        @unique
+  name         String
+  category     Category
+  transmission Transmission
+  fuel         Fuel
+  seats        Int
+  doors        Int
+  luggage      Int
+  pricePerDay  Int // en euros TTC
+  deposit      Int           @default(800)
+  power        Int // ch
+  consumption  String
+  year         Int
+  color        String
+  colorName    String
+  description  String
+  images       String // JSON: string[]
+  featured     Boolean       @default(false)
+  active       Boolean       @default(true)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  reservations Reservation[]
+
+  @@index([category])
+}
+
+model Extra {
+  id          String             @id @default(cuid())
+  code        String             @unique
+  name        String
+  description String
+  price       Int
+  pricing     ExtraPricing       @default(PER_DAY)
+  maxPrice    Int? // plafond par location
+  icon        String
+  order       Int                @default(0)
+  items       ReservationExtra[]
+}
+
+model Reservation {
+  id              String             @id @default(cuid())
+  reference       String             @unique
+  status          ReservationStatus  @default(CONFIRMED)
+  userId          String?
+  user            User?              @relation(fields: [userId], references: [id], onDelete: SetNull)
+  vehicleId       String
+  vehicle         Vehicle            @relation(fields: [vehicleId], references: [id])
+  pickupAgencyId  String
+  pickupAgency    Agency             @relation("PickupAgency", fields: [pickupAgencyId], references: [id])
+  returnAgencyId  String
+  returnAgency    Agency             @relation("ReturnAgency", fields: [returnAgencyId], references: [id])
+  pickupAt        DateTime
+  returnAt        DateTime
+  days            Int
+  protection      Protection         @default(BASIC)
+  basePrice       Int
+  discount        Int                @default(0)
+  protectionPrice Int                @default(0)
+  extrasPrice     Int                @default(0)
+  oneWayFee       Int                @default(0)
+  total           Int
+  firstName       String
+  lastName        String
+  email           String
+  phone           String
+  birthDate       DateTime
+  licenseNumber   String
+  flightNumber    String?
+  notes           String?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+  extras          ReservationExtra[]
+
+  @@index([vehicleId, pickupAt, returnAt])
+  @@index([userId])
+}
+
+model ReservationExtra {
+  id            String      @id @default(cuid())
+  reservationId String
+  reservation   Reservation @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+  extraId       String
+  extra         Extra       @relation(fields: [extraId], references: [id])
+  quantity      Int         @default(1)
+  price         Int
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  author    String
+  city      String
+  rating    Int
+  comment   String
+  vehicle   String?
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model NewsletterSubscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
