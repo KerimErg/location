@@ -15,7 +15,10 @@
     "consumption": "4,9 L/100 km",
     "year": 2025,
     "featured": false,
-    "description": "La citadine agile par excellence : compacte, économique et facile à garer, idéale pour la ville."
+    "description": "La citadine agile par excellence : compacte, économique et facile à garer, idéale pour la ville.",
+    "images": [
+      "https://unsplash.com/photos/SwJuiyGABEw/download?w=1600"
+    ]
   },
   {
     "slug": "nova-city-auto",
@@ -33,7 +36,10 @@
     "consumption": "3,9 L/100 km",
     "year": 2025,
     "featured": true,
-    "description": "Toute la maniabilité de la Nova City avec une boîte automatique et une motorisation hybride sobre."
+    "description": "Toute la maniabilité de la Nova City avec une boîte automatique et une motorisation hybride sobre.",
+    "images": [
+      "https://unsplash.com/photos/MTZ_S1XoJVQ/download?w=1600"
+    ]
   },
   {
     "slug": "pixel-one",
@@ -51,7 +57,10 @@
     "consumption": "5,1 L/100 km",
     "year": 2024,
     "featured": false,
-    "description": "Cinq vraies places et un coffre malin pour les escapades du week-end."
+    "description": "Cinq vraies places et un coffre malin pour les escapades du week-end.",
+    "images": [
+      "https://unsplash.com/photos/SwJuiyGABEw/download?w=1600"
+    ]
   },
   {
     "slug": "strada-sedan",
@@ -69,7 +78,10 @@
     "consumption": "5,2 L/100 km",
     "year": 2025,
     "featured": true,
-    "description": "Berline routière confortable et silencieuse, parfaite pour les longs trajets professionnels."
+    "description": "Berline routière confortable et silencieuse, parfaite pour les longs trajets professionnels.",
+    "images": [
+      "https://unsplash.com/photos/FMbWFDiVRPs/download?w=1600"
+    ]
   },
   {
     "slug": "strada-touring",
@@ -87,7 +99,10 @@
     "consumption": "4,6 L/100 km",
     "year": 2025,
     "featured": false,
-    "description": "Version break de la Strada : volume de chargement généreux et motorisation hybride."
+    "description": "Version break de la Strada : volume de chargement généreux et motorisation hybride.",
+    "images": [
+      "https://unsplash.com/photos/Af52c5v0_aA/download?w=1600"
+    ]
   },
   {
     "slug": "lumen-berline",
@@ -105,7 +120,10 @@
     "consumption": "5,8 L/100 km",
     "year": 2024,
     "featured": false,
-    "description": "Une berline élégante au rapport équipement/prix imbattable."
+    "description": "Une berline élégante au rapport équipement/prix imbattable.",
+    "images": [
+      "https://unsplash.com/photos/Af52c5v0_aA/download?w=1600"
+    ]
   },
   {
     "slug": "atlas-suv",
@@ -123,7 +141,10 @@
     "consumption": "5,9 L/100 km",
     "year": 2025,
     "featured": true,
-    "description": "SUV familial spacieux, position de conduite haute et transmission intégrale."
+    "description": "SUV familial spacieux, position de conduite haute et transmission intégrale.",
+    "images": [
+      "https://unsplash.com/photos/lPgikJiNI5o/download?w=1600"
+    ]
   },
   {
     "slug": "atlas-xl",
@@ -141,7 +162,10 @@
     "consumption": "6,4 L/100 km",
     "year": 2025,
     "featured": false,
-    "description": "Sept places, un vrai coffre et tout le confort pour les grandes tribus."
+    "description": "Sept places, un vrai coffre et tout le confort pour les grandes tribus.",
+    "images": [
+      "https://unsplash.com/photos/8LdEZ54GJBU/download?w=1600"
+    ]
   },
   {
     "slug": "terra-cross",
@@ -159,7 +183,10 @@
     "consumption": "6,1 L/100 km",
     "year": 2024,
     "featured": false,
-    "description": "Crossover compact au caractère aventurier, à l'aise en ville comme sur les chemins."
+    "description": "Crossover compact au caractère aventurier, à l'aise en ville comme sur les chemins.",
+    "images": [
+      "https://unsplash.com/photos/lPgikJiNI5o/download?w=1600"
+    ]
   },
   {
     "slug": "cargo-pro-12",
@@ -177,7 +204,10 @@
     "consumption": "8,2 L/100 km",
     "year": 2025,
     "featured": false,
-    "description": "Fourgon 12 m³ idéal pour déménager : grand volume, hayon large et porte latérale."
+    "description": "Fourgon 12 m³ idéal pour déménager : grand volume, hayon large et porte latérale.",
+    "images": [
+      "https://unsplash.com/photos/JSJWpcBo8UE/download?w=1600"
+    ]
   },
   {
     "slug": "cargo-pro-20",
@@ -195,7 +225,10 @@
     "consumption": "9,4 L/100 km",
     "year": 2025,
     "featured": false,
-    "description": "Notre plus grand volume pour les déménagements complets, accessible avec le permis B."
+    "description": "Notre plus grand volume pour les déménagements complets, accessible avec le permis B.",
+    "images": [
+      "https://unsplash.com/photos/JSJWpcBo8UE/download?w=1600"
+    ]
   },
   {
     "slug": "cargo-city-e",
@@ -213,7 +246,10 @@
     "consumption": "22 kWh/100 km",
     "year": 2025,
     "featured": false,
-    "description": "Utilitaire électrique silencieux pour les livraisons urbaines en zone à faibles émissions."
+    "description": "Utilitaire électrique silencieux pour les livraisons urbaines en zone à faibles émissions.",
+    "images": [
+      "https://unsplash.com/photos/JSJWpcBo8UE/download?w=1600"
+    ]
   },
   {
     "slug": "vortex-gt",
@@ -231,7 +267,10 @@
     "consumption": "9,8 L/100 km",
     "year": 2025,
     "featured": true,
-    "description": "Coupé grand tourisme aux performances exceptionnelles. Une expérience de conduite inoubliable."
+    "description": "Coupé grand tourisme aux performances exceptionnelles. Une expérience de conduite inoubliable.",
+    "images": [
+      "https://unsplash.com/photos/yRAb7f_LlfI/download?w=1600"
+    ]
   },
   {
     "slug": "vortex-gt-signature",
@@ -249,7 +288,10 @@
     "consumption": "10,9 L/100 km",
     "year": 2025,
     "featured": true,
-    "description": "L'édition signature TestLocation : teinte exclusive, finitions carbone et échappement sport."
+    "description": "L'édition signature TestLocation : teinte exclusive, finitions carbone et échappement sport.",
+    "images": [
+      "https://unsplash.com/photos/yRAb7f_LlfI/download?w=1600"
+    ]
   },
   {
     "slug": "aurelia-executive",
@@ -267,7 +309,10 @@
     "consumption": "2,1 L/100 km",
     "year": 2025,
     "featured": false,
-    "description": "Grande berline de prestige, sellerie cuir, sièges massants et silence de fonctionnement."
+    "description": "Grande berline de prestige, sellerie cuir, sièges massants et silence de fonctionnement.",
+    "images": [
+      "https://unsplash.com/photos/FMbWFDiVRPs/download?w=1600"
+    ]
   },
   {
     "slug": "volt-e",
@@ -285,7 +330,10 @@
     "consumption": "15 kWh/100 km",
     "year": 2025,
     "featured": true,
-    "description": "Berline électrique avec 520 km d'autonomie WLTP et recharge rapide 150 kW."
+    "description": "Berline électrique avec 520 km d'autonomie WLTP et recharge rapide 150 kW.",
+    "images": [
+      "https://unsplash.com/photos/T_D-vzJu5SU/download?w=1600"
+    ]
   },
   {
     "slug": "volt-e-performance",
@@ -303,7 +351,10 @@
     "consumption": "17 kWh/100 km",
     "year": 2025,
     "featured": false,
-    "description": "Double moteur, transmission intégrale et 0 à 100 km/h en 3,9 s. Zéro émission, 100 % frissons."
+    "description": "Double moteur, transmission intégrale et 0 à 100 km/h en 3,9 s. Zéro émission, 100 % frissons.",
+    "images": [
+      "https://unsplash.com/photos/T_D-vzJu5SU/download?w=1600"
+    ]
   },
   {
     "slug": "spark-mini-e",
@@ -321,6 +372,9 @@
     "consumption": "13 kWh/100 km",
     "year": 2025,
     "featured": false,
-    "description": "Petite électrique ultra-sobre, parfaite pour la ville et les trajets du quotidien."
+    "description": "Petite électrique ultra-sobre, parfaite pour la ville et les trajets du quotidien.",
+    "images": [
+      "https://unsplash.com/photos/T_D-vzJu5SU/download?w=1600"
+    ]
   }
 ]

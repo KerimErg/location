@@ -29,7 +29,8 @@ export function VehicleVisual({
   return (
     <div className={cn("relative overflow-hidden bg-surface", className)}>
       {src ? (
-        <Image src={src} alt={alt} fill priority={priority} sizes={sizes ?? "100vw"} className={cn("object-cover", imgClassName)} />
+        // Les URL distantes (Unsplash) redirigent vers leur CDN : on laisse le navigateur les charger directement.
+        <Image src={src} alt={alt} fill priority={priority} unoptimized={src.startsWith("http")} sizes={sizes ?? "100vw"} className={cn("object-cover", imgClassName)} />
       ) : (
         <div className="absolute inset-0" aria-label={alt} role="img">
           <div className="absolute -right-1/4 -bottom-1/3 size-[90%] rounded-full opacity-35 blur-3xl" style={{ background: color }} />

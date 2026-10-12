@@ -1,9 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Gauge, Headset, ShieldCheck, Star } from "lucide-react";
 import { BookingPanel, type AgencyOption } from "@/components/booking/booking-panel";
 import type { SearchInput } from "@/lib/validations";
+import { HERO_IMAGE } from "@/lib/constants";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -36,6 +38,9 @@ export function Hero({ agencies, defaults }: { agencies: AgencyOption[]; default
   return (
     <section className="relative isolate overflow-hidden bg-ink text-white">
       <div className="pointer-events-none absolute inset-0 -z-10">
+        <Image src={HERO_IMAGE} alt="" fill priority unoptimized className="object-cover opacity-45" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/80 to-[#0a0a0a]/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-[#0a0a0a]/60" />
         <div className="absolute -top-1/4 right-[-10%] h-[80vh] w-[70vw] rounded-full bg-[#ff5f00]/20 blur-[160px]" />
         <div className="absolute bottom-[-20%] left-[-10%] h-[50vh] w-[50vw] rounded-full bg-[#ff5f00]/10 blur-[140px]" />
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,.05)_1px,transparent_1px)] bg-[size:72px_72px] [mask-image:radial-gradient(ellipse_at_top_right,black,transparent_70%)]" />

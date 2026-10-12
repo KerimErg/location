@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Car, CarFront, Crown, Mountain, Truck, Zap } from "lucide-react";
 import type { Category } from "@prisma/client";
@@ -21,19 +22,14 @@ export function Categories({ counts }: { counts: Partial<Record<Category, number
               <Link
                 href={`/vehicules?categorie=${c.slug}`}
                 className={cn(
-                  "group relative flex h-64 flex-col justify-between overflow-hidden rounded-3xl border p-7 transition-all duration-500 hover:-translate-y-1 hover:shadow-lift",
-                  dark ? "border-transparent bg-ink text-white" : "bg-surface",
+                  "group relative flex h-72 flex-col justify-between overflow-hidden rounded-3xl border p-7 transition-all duration-500 hover:-translate-y-1 hover:shadow-lift",
+                  "border-transparent bg-ink text-white",
                 )}
               >
-                <Icon
-                  strokeWidth={1}
-                  className={cn(
-                    "absolute -right-6 -bottom-8 size-56 transition-all duration-700 ease-out group-hover:-translate-x-3 group-hover:-rotate-6",
-                    dark ? "text-primary/25" : "text-foreground/[0.06] group-hover:text-primary/20",
-                  )}
-                />
+                <Image src={c.image} alt={`Location ${c.label}`} fill unoptimized sizes="(min-width:1024px) 33vw, 100vw" className="object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/10" />
                 <div className="relative flex items-start justify-between">
-                  <span className={cn("flex size-12 items-center justify-center rounded-2xl", dark ? "bg-primary text-white" : "bg-background text-primary shadow-soft")}>
+                  <span className={cn("flex size-12 items-center justify-center rounded-2xl", dark ? "bg-primary text-white" : "bg-white/15 text-white backdrop-blur")}>
                     <Icon className="size-6" />
                   </span>
                   <span className="flex size-10 items-center justify-center rounded-full bg-background text-foreground shadow-soft transition-all duration-300 group-hover:rotate-45 group-hover:bg-primary group-hover:text-white">
@@ -42,11 +38,11 @@ export function Categories({ counts }: { counts: Partial<Record<Category, number
                 </div>
                 <div className="relative">
                   <h3 className="text-2xl font-bold">{c.label}</h3>
-                  <p className={cn("mt-1 text-sm", dark ? "text-white/60" : "text-muted-foreground")}>{c.tagline}</p>
+                  <p className={cn("mt-1 text-sm", "text-white/70")}>{c.tagline}</p>
                   <p className="mt-4 text-sm">
-                    <span className={dark ? "text-white/60" : "text-muted-foreground"}>dès </span>
+                    <span className={"text-white/70"}>dès </span>
                     <span className="font-display text-xl font-bold">{c.from} €</span>
-                    <span className={dark ? "text-white/60" : "text-muted-foreground"}> /jour · {counts[c.value] ?? 0} modèles</span>
+                    <span className={"text-white/70"}> /jour · {counts[c.value] ?? 0} modèles</span>
                   </p>
                 </div>
               </Link>

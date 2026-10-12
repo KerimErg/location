@@ -1,12 +1,16 @@
 import type { Category, Fuel, Protection, ReservationStatus, Transmission } from "@prisma/client";
 
-export const CATEGORIES: { value: Category; label: string; slug: string; tagline: string; from: number }[] = [
-  { value: "CITADINE", label: "Citadine", slug: "citadine", tagline: "Agile et économique en ville", from: 39 },
-  { value: "BERLINE", label: "Berline", slug: "berline", tagline: "Confort sur les longs trajets", from: 59 },
-  { value: "SUV", label: "SUV", slug: "suv", tagline: "Espace et polyvalence", from: 79 },
-  { value: "UTILITAIRE", label: "Utilitaire", slug: "utilitaire", tagline: "Pour vos projets et déménagements", from: 95 },
-  { value: "PREMIUM", label: "Premium", slug: "premium", tagline: "L'exception à chaque virage", from: 179 },
-  { value: "ELECTRIQUE", label: "Électrique", slug: "electrique", tagline: "Zéro émission, 100 % plaisir", from: 49 },
+/** Photos libres de droits (licence Unsplash : usage commercial autorisé, attribution facultative). */
+export const unsplash = (id: string, w = 1600) => `https://unsplash.com/photos/${id}/download?w=${w}`;
+export const HERO_IMAGE = unsplash("yRAb7f_LlfI", 2400);
+
+export const CATEGORIES: { value: Category; label: string; slug: string; tagline: string; from: number; image: string }[] = [
+  { value: "CITADINE", label: "Citadine", slug: "citadine", tagline: "Agile et économique en ville", from: 39, image: unsplash("SwJuiyGABEw", 1200) },
+  { value: "BERLINE", label: "Berline", slug: "berline", tagline: "Confort sur les longs trajets", from: 59, image: unsplash("FMbWFDiVRPs", 1200) },
+  { value: "SUV", label: "SUV", slug: "suv", tagline: "Espace et polyvalence", from: 79, image: unsplash("lPgikJiNI5o", 1200) },
+  { value: "UTILITAIRE", label: "Utilitaire", slug: "utilitaire", tagline: "Pour vos projets et déménagements", from: 95, image: unsplash("JSJWpcBo8UE", 1200) },
+  { value: "PREMIUM", label: "Premium", slug: "premium", tagline: "L'exception à chaque virage", from: 179, image: unsplash("yRAb7f_LlfI", 1200) },
+  { value: "ELECTRIQUE", label: "Électrique", slug: "electrique", tagline: "Zéro émission, 100 % plaisir", from: 49, image: unsplash("T_D-vzJu5SU", 1200) },
 ];
 
 export const CATEGORY_LABEL = Object.fromEntries(CATEGORIES.map((c) => [c.value, c.label])) as Record<Category, string>;

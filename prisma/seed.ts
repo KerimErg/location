@@ -51,7 +51,7 @@ async function main() {
         transmission: v.transmission as Transmission,
         fuel: v.fuel as Fuel,
         deposit: v.pricePerDay > 150 ? 2500 : v.pricePerDay > 80 ? 1200 : 800,
-        images: JSON.stringify([]), // ajoutez vos photos depuis l'admin (URL ou /public)
+        images: JSON.stringify(v.images), // photos libres de droits (licence Unsplash)
       },
     });
   }

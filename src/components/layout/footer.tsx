@@ -77,7 +77,7 @@ export function Footer() {
       <div className="border-t border-white/10">
         <div className="container-page flex flex-col items-center justify-between gap-3 py-6 text-xs text-white/40 sm:flex-row">
           <p>© {new Date().getFullYear()} TestLocation SAS. Tous droits réservés.</p>
-          <p>Paiement sécurisé · Visa · Mastercard · Apple Pay · Google Pay</p>
+          <p>Paiement sécurisé · Photos : <a href="https://unsplash.com/license" className="underline hover:text-primary">Unsplash</a> (libres de droits)</p>
         </div>
       </div>
     </footer>
