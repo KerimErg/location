@@ -4,8 +4,6 @@ import "./globals.css";
 import { site } from "@/config/site";
 import { PanierProvider } from "@/lib/panier";
 import { Panier } from "@/components/Panier";
-import { FicheProduit } from "@/components/FicheProduit";
-import { CarteDigitale } from "@/components/Carte";
 import { Notification } from "@/components/Notification";
 import { BarreCommande } from "@/components/BarreCommande";
 
@@ -41,8 +39,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <PanierProvider>
           {children}
-          <CarteDigitale />
-          <FicheProduit />
           <Panier />
           <BarreCommande />
           <Notification />

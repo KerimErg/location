@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { Pause, Play, ArrowDown } from "lucide-react";
 import { LienBouton, classesBouton } from "./Bouton";
 import { usePanier } from "@/lib/panier";
-import { ouvrirCarte } from "./Carte";
 
 /**
  * Ordinateur : trois vidéos verticales côte à côte (manti · lahmacun · manti), nettes car non étirées.
@@ -72,12 +71,12 @@ export function Hero() {
             <span className="inline-block -rotate-2 rounded-2xl bg-bleu px-[0.22em] pb-[0.06em]">autrement.</span>
           </h1>
           <div className="anim-monter flex w-full flex-col items-center justify-center gap-3 pt-2 [animation-delay:160ms] sm:w-auto sm:flex-row">
-            <LienBouton href="/#carte" style="bleu" taille="lg" className="w-full sm:w-auto">
+            <LienBouton href="/carte/" style="bleu" taille="lg" className="w-full sm:w-auto">
               Découvrir la carte
             </LienBouton>
             <button
               type="button"
-              onClick={() => (nbArticles > 0 ? ouvrirPanier() : ouvrirCarte())}
+              onClick={() => (nbArticles > 0 ? ouvrirPanier() : (window.location.href = "/carte/"))}
               className={classesBouton("blanc", "lg", "w-full sm:w-auto")}
             >
               Commander maintenant

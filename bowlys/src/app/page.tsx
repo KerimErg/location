@@ -1,7 +1,6 @@
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { Bienvenue, Specialites, Galerie, NousTrouver } from "@/components/Sections";
-import { Carte } from "@/components/Carte";
 import { Footer } from "@/components/Footer";
 import { site } from "@/config/site";
 import { CATEGORIES, PRODUITS } from "@/data/menu";
@@ -51,7 +50,6 @@ export default function Accueil() {
         <Hero />
         <Bienvenue />
         <Specialites />
-        <Carte />
         <Galerie />
         <NousTrouver />
       </main>

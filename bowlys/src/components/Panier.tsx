@@ -9,7 +9,6 @@ import { useFenetre } from "@/lib/useVerrouDefilement";
 import { site, adresseLigne, lienItineraire } from "@/config/site";
 import { Photo } from "./Photo";
 import { LienBouton } from "./Bouton";
-import { ouvrirCarte } from "./Carte";
 
 type Etape = "panier" | "mode" | "infos" | "envoi";
 type Infos = { prenom: string; telephone: string; note: string };
@@ -77,7 +76,7 @@ export function Panier() {
                 <span className="grid size-20 place-items-center rounded-full bg-bleu-ciel"><ShoppingBag className="size-9 text-bleu" /></span>
                 <p className="font-display text-xl font-black">Votre panier est vide</p>
                 <p className="max-w-[28ch] text-gris">Ajoutez un manti, un lahmacun ou un menu depuis la carte.</p>
-                <button type="button" onClick={() => { fermer(); ouvrirCarte(); }} className="mt-2 inline-flex h-12 items-center rounded-full bg-bleu px-6 font-display font-extrabold text-white hover:bg-bleu-fonce">Voir la carte</button>
+                <a href="/carte/" onClick={fermer} className="mt-2 inline-flex h-12 items-center rounded-full bg-bleu px-6 font-display font-extrabold text-white hover:bg-bleu-fonce">Voir la carte</a>
               </div>
             </div>
           ) : (

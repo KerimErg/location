@@ -136,6 +136,6 @@ src/
 ├── config/navigation.ts   liens du menu
 ├── data/menu.ts           produits, prix, options, allergènes
 ├── lib/panier.tsx         panier (état, calcul des prix, sauvegarde navigateur)
-├── components/            Header, Hero, Carte (carte digitale plein écran), Panier, Sections, Footer...
-└── app/                   pages (accueil, pages légales), sitemap, robots
+├── components/            Header, Hero, Sections, carte/ (éléments des pages de la carte), Panier, Footer...
+└── app/                   pages : accueil, carte (/carte, /carte/<catégorie>, /carte/<catégorie>/<plat>), pages légales, sitemap, robots
 ```

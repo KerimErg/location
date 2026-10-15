@@ -8,7 +8,6 @@ import { usePanier } from "@/lib/panier";
 import { site } from "@/config/site";
 import { useFenetre } from "@/lib/useVerrouDefilement";
 import { NAV } from "@/config/navigation";
-import { ouvrirCarte } from "./Carte";
 
 /** `transparent` : posé sur la vidéo d'accueil, devient blanc au défilement. */
 export function Header({ transparent = false }: { transparent?: boolean }) {
@@ -27,7 +26,7 @@ export function Header({ transparent = false }: { transparent?: boolean }) {
   }, [transparent]);
 
   const clair = !scrolle; // texte blanc sur la vidéo
-  const commander = () => (nbArticles > 0 ? ouvrirPanier() : ouvrirCarte());
+  const commander = () => (nbArticles > 0 ? ouvrirPanier() : (window.location.href = "/carte/"));
 
   return (
     <>
