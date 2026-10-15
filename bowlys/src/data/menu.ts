@@ -36,12 +36,13 @@ export type Produit = {
   vedette?: boolean;
 };
 
-export const CATEGORIES: { id: CategorieId; nom: string; accroche: string }[] = [
-  { id: "mantis", nom: "Mantis", accroche: "Les raviolis turcs, sauce yaourt" },
-  { id: "lahmacuns", nom: "Lahmacuns", accroche: "Pâte fine, cuite au four" },
-  { id: "menus", nom: "Menus", accroche: "Le repas complet" },
-  { id: "extras", nom: "Extras", accroche: "Pour compléter" },
-  { id: "boissons", nom: "Boissons", accroche: "Bien fraîches" },
+/** Catégories de la carte. `photo` : image de la tuile (null = tuile aux couleurs BOWLY'S). */
+export const CATEGORIES: { id: CategorieId; nom: string; accroche: string; photo: string | null }[] = [
+  { id: "mantis", nom: "Mantis", accroche: "Raviolis turcs, sauce yaourt", photo: "/images/illustration-manti-beurre.webp" },
+  { id: "lahmacuns", nom: "Lahmacuns", accroche: "Pâte fine, cuite au four", photo: "/images/illustration-lahmacun-garniture.webp" },
+  { id: "menus", nom: "Menus", accroche: "Le repas complet", photo: "/images/illustration-manti-assiette.webp" },
+  { id: "extras", nom: "Extras", accroche: "Pour compléter", photo: null },
+  { id: "boissons", nom: "Boissons", accroche: "Bien fraîches", photo: null },
 ];
 
 /** Options proposées dans la fiche produit (reprennent les prix des extras). */

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Pause, Play, ArrowDown } from "lucide-react";
 import { LienBouton, classesBouton } from "./Bouton";
 import { usePanier } from "@/lib/panier";
+import { ouvrirCarte } from "./Carte";
 
 /**
  * Ordinateur : trois vidéos verticales côte à côte (manti · lahmacun · manti), nettes car non étirées.
@@ -76,7 +77,7 @@ export function Hero() {
             </LienBouton>
             <button
               type="button"
-              onClick={() => (nbArticles > 0 ? ouvrirPanier() : document.getElementById("carte")?.scrollIntoView({ behavior: "smooth" }))}
+              onClick={() => (nbArticles > 0 ? ouvrirPanier() : ouvrirCarte())}
               className={classesBouton("blanc", "lg", "w-full sm:w-auto")}
             >
               Commander maintenant

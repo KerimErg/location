@@ -1,6 +1,6 @@
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
-import { Bienvenue, Specialites, Menus, Galerie, NousTrouver } from "@/components/Sections";
+import { Bienvenue, Specialites, Galerie, NousTrouver } from "@/components/Sections";
 import { Carte } from "@/components/Carte";
 import { Footer } from "@/components/Footer";
 import { site } from "@/config/site";
@@ -51,7 +51,6 @@ export default function Accueil() {
         <Hero />
         <Bienvenue />
         <Specialites />
-        <Menus />
         <Carte />
         <Galerie />
         <NousTrouver />

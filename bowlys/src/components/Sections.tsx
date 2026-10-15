@@ -3,18 +3,15 @@
 import { useEffect, useState } from "react";
 import { ArrowRight, ArrowUpRight, MapPin, Pause, Play } from "lucide-react";
 import { produitsDe, type CategorieId } from "@/data/menu";
-import { prix } from "@/lib/format";
-import { usePanier } from "@/lib/panier";
 import { statut, maintenantParis } from "@/lib/horaires";
 import { site, adresseLigne, lienItineraire, lienPlanIntegre, JOURS } from "@/config/site";
 import { Photo } from "./Photo";
 import { LienBouton, classesBouton } from "./Bouton";
 import { Logo } from "./Logo";
 
-/** Demande à la carte d'afficher une catégorie, puis y fait défiler. */
+/** Ouvre la carte digitale directement sur une catégorie. */
 export function allerALaCarte(cat: CategorieId) {
-  window.dispatchEvent(new CustomEvent("bowlys-filtre", { detail: cat }));
-  document.getElementById("carte")?.scrollIntoView({ behavior: "smooth" });
+  window.dispatchEvent(new CustomEvent("bowlys-carte", { detail: cat }));
 }
 
 const conteneur = "mx-auto max-w-[1180px] px-[max(20px,env(safe-area-inset-left))]";
@@ -134,42 +131,6 @@ export function Specialites() {
               </span>
             </button>
           ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ─────────── Les menus ─────────── */
-export function Menus() {
-  const { ajouter, ouvrirProduit } = usePanier();
-  const menus = produitsDe("menus");
-  return (
-    <section id="menus" aria-labelledby="menus-titre" className="sur-sombre feuille sous-feuille overflow-hidden bg-bleu pt-24 text-white sm:pt-32">
-      <Logo variante="icone" titre="" className="pointer-events-none absolute -right-24 -top-16 w-[460px] text-white/[0.07]" />
-      <div className={`${conteneur} relative`}>
-        <EnTete id="menus-titre" surtitre="Les menus" titre="Le repas complet." clair sousTitre="Le plus simple pour bien manger : choisissez votre menu." />
-        <div className="mt-14 grid gap-5 md:grid-cols-3">
-          {menus.map((m, k) => {
-            const mix = m.id === "menu-mix";
-            return (
-              <article key={m.id} className={`${["apparait", "apparait-2", "apparait-3"][k]} relative flex flex-col overflow-hidden rounded-[26px] p-8 ${mix ? "bg-encre text-white" : "bg-white text-encre"}`}>
-                {mix && <span className="absolute right-6 top-6 rounded-full bg-bleu px-3 py-1 text-[0.68rem] font-extrabold uppercase tracking-[0.14em] text-white">Le plus complet</span>}
-                <p className={`text-[0.75rem] font-extrabold uppercase tracking-[0.22em] ${mix ? "text-white/70" : "text-bleu"}`}>Menu</p>
-                <h3 className="mt-2 font-display text-3xl font-black">
-                  <button type="button" onClick={() => ouvrirProduit(m)} className="text-left hover:underline">{m.nom.replace("Menu ", "")}</button>
-                </h3>
-                <p className={`mt-3 font-semibold ${mix ? "text-white/85" : "text-gris"}`}>{m.description}</p>
-                <div className={`my-8 h-px ${mix ? "bg-white/15" : "bg-trait"}`} />
-                <p className={`font-display text-5xl font-black tracking-tight ${mix ? "text-white" : "text-bleu"}`}>{prix(m.prix)}</p>
-                {site.commande.panierActif && (
-                  <button type="button" onClick={() => ajouter(m.id)} className={classesBouton(mix ? "bleu" : "encre", "lg", "mt-8 w-full")}>
-                    Ajouter ce menu
-                  </button>
-                )}
-              </article>
-            );
-          })}
         </div>
       </div>
     </section>

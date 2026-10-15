@@ -79,3 +79,13 @@ h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; }
 @keyframes kenburns { from { transform: scale(1.02); } to { transform: scale(1.12); } }
 .story-barre { transform-origin: left; animation: barre 4.5s linear forwards; }
 .story-zoom { animation: kenburns 4.5s ease-out both; }
+
+/* Carte digitale : ouverture et passage d'une vue à l'autre */
+@keyframes carte-ouverture { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+@keyframes vue-avant { from { opacity: .001; transform: translateX(36px); } to { opacity: 1; transform: none; } }
+@keyframes vue-arriere { from { opacity: .001; transform: translateX(-36px); } to { opacity: 1; transform: none; } }
+@keyframes zoom-photo { from { transform: scale(.96); } to { transform: none; } }
+.anim-carte { animation: carte-ouverture .45s var(--ease-pro) both; }
+.anim-vue-avant { animation: vue-avant .4s var(--ease-pro) both; }
+.anim-vue-arriere { animation: vue-arriere .4s var(--ease-pro) both; }
+.anim-zoom { animation: zoom-photo .6s var(--ease-pro) both; }

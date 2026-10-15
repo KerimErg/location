@@ -67,6 +67,7 @@ horaires: {
 | Emplacement | Fichier | Format conseillé |
 |---|---|---|
 | Fiches produits | `public/images/<nom>.webp` puis `photo:` dans `menu.ts` | carré 1:1, 1200 × 1200 px |
+| Tuiles de catégories de la carte | `photo:` dans `CATEGORIES` (`menu.ts`) | carré 1:1, 1200 × 1200 px |
 | Bloc « Les Mantis » / « Les Lahmacuns » | `src/components/Sections.tsx` (bloc `Specialites`) | 1200 × 1500 px |
 | Bannière vidéo (ordinateur) | `public/videos/hero-1.mp4`, `hero-2.mp4`, `hero-3.mp4` | verticale 9:16, 720 × 1280, MP4, sans son, < 5 Mo |
 | Bannière vidéo (mobile) | `public/videos/hero-mobile.mp4` | verticale 9:16 |
@@ -135,6 +136,6 @@ src/
 ├── config/navigation.ts   liens du menu
 ├── data/menu.ts           produits, prix, options, allergènes
 ├── lib/panier.tsx         panier (état, calcul des prix, sauvegarde navigateur)
-├── components/            Header, Hero, Carte, FicheProduit, Panier, Sections, Footer...
+├── components/            Header, Hero, Carte (carte digitale plein écran), Panier, Sections, Footer...
 └── app/                   pages (accueil, pages légales), sitemap, robots
 ```
