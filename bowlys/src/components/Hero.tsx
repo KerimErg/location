@@ -39,7 +39,7 @@ export function Hero() {
   }, [lecture]);
 
   return (
-    <section aria-labelledby="hero-titre" className="sur-sombre relative h-[100svh] min-h-[620px] max-h-[1000px] overflow-hidden bg-encre text-white">
+    <section aria-labelledby="hero-titre" className="sur-sombre hero-sortie relative h-[100svh] min-h-[620px] max-h-[1000px] overflow-hidden bg-encre text-white">
       <div className="absolute inset-0 grid grid-cols-1 md:grid-cols-3" aria-hidden="true">
         {PANNEAUX.map((p, i) => (
           <div key={p.video} className={`relative overflow-hidden ${p.mobile ? "md:hidden" : "hidden md:block"} ${i === 1 ? "md:border-x md:border-white/10" : ""}`}>

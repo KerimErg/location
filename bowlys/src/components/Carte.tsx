@@ -14,7 +14,7 @@ function LigneProduit({ p }: { p: Produit }) {
   const { ajouter, ouvrirProduit } = usePanier();
   const aOptions = (p.options?.length ?? 0) > 0;
   return (
-    <li className="group relative flex items-center gap-4 rounded-[20px] bg-white p-3 pr-4 ring-1 ring-trait transition-[box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_40px_-26px_rgba(11,15,26,.5)] hover:ring-bleu/40 sm:gap-5">
+    <li className="group relative flex items-center gap-4 rounded-[20px] bg-white p-3 pr-4 ring-1 ring-trait shadow-[0_2px_0_rgba(11,15,26,.02)] transition-[box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_40px_-26px_rgba(11,15,26,.5)] hover:ring-bleu/40 sm:gap-5">
       <Photo src={p.photo} alt={p.nom} vignette className="size-20 shrink-0 rounded-2xl sm:size-24" sizes="96px" />
       <div className="min-w-0 flex-1">
         <h3 className="font-display text-[1.05rem] font-black leading-tight sm:text-lg">
@@ -22,8 +22,8 @@ function LigneProduit({ p }: { p: Produit }) {
             {p.nom}
           </button>
         </h3>
-        <p className="mt-0.5 line-clamp-2 text-sm text-gris">{p.description}</p>
-        <p className="mt-1.5 font-display font-black text-bleu">{prix(p.prix)}</p>
+        <p className="mt-1 line-clamp-2 text-[0.95rem] text-gris">{p.description}</p>
+        <p className="mt-2 font-display text-lg font-black text-bleu">{prix(p.prix)}</p>
       </div>
       {site.commande.panierActif && (
         <button
@@ -51,12 +51,12 @@ export function Carte() {
   const liste = PRODUITS.filter((p) => p.categorie === cat);
 
   return (
-    <section id="carte" aria-labelledby="carte-titre" className="bg-doux py-24 sm:py-32">
+    <section id="carte" aria-labelledby="carte-titre" className="feuille sous-feuille bg-white pt-24 sm:pt-32">
       <div className="mx-auto max-w-[1000px] px-[max(20px,env(safe-area-inset-left))]">
-        <EnTete id="carte-titre" surtitre="Notre carte" titre="La carte" centre />
+        <EnTete id="carte-titre" surtitre="Notre carte" titre="La carte" />
 
-        <div className="sticky top-[72px] z-20 -mx-[max(20px,env(safe-area-inset-left))] mt-10 bg-doux/95 px-[max(20px,env(safe-area-inset-left))] py-3 backdrop-blur-md lg:top-20">
-          <div role="tablist" aria-label="Catégories" className="sans-barre mx-auto flex w-fit max-w-full gap-1 overflow-x-auto rounded-full bg-white p-1.5 ring-1 ring-trait">
+        <div className="sticky top-[72px] z-20 -mx-[max(20px,env(safe-area-inset-left))] mt-10 bg-white/95 px-[max(20px,env(safe-area-inset-left))] py-3 backdrop-blur-md lg:top-20">
+          <div role="tablist" aria-label="Catégories" className="sans-barre mx-auto flex w-fit max-w-full gap-1 overflow-x-auto rounded-full bg-doux p-1.5">
             {CATEGORIES.map((x) => (
               <button
                 key={x.id}
@@ -66,7 +66,7 @@ export function Carte() {
                 aria-selected={cat === x.id}
                 aria-controls="carte-liste"
                 onClick={() => setCat(x.id)}
-                className={`h-11 shrink-0 rounded-full px-5 font-display font-extrabold transition-colors ${cat === x.id ? "bg-bleu text-white" : "text-gris hover:text-encre"}`}
+                className={`h-11 shrink-0 rounded-full px-5 font-display font-extrabold transition-colors ${cat === x.id ? "bg-bleu text-white shadow-[0_8px_18px_-8px_rgba(0,87,231,.7)]" : "text-encre hover:text-bleu"}`}
               >
                 {x.nom}
               </button>
@@ -75,13 +75,13 @@ export function Carte() {
         </div>
 
         <div id="carte-liste" role="tabpanel" aria-labelledby={`onglet-${cat}`} key={cat} className="anim-monter mt-8">
-          <p className="text-center font-semibold text-gris">{c.accroche}</p>
+          <p className="text-center text-lg font-bold text-encre">{c.accroche}</p>
           <ul className="mt-6 grid gap-3 md:grid-cols-2">
             {liste.map((p) => <LigneProduit key={p.id} p={p} />)}
           </ul>
         </div>
 
-        <p className="mt-10 text-center text-sm text-gris">Prix TTC · Allergènes : demandez-les au comptoir.</p>
+        <p className="mt-10 text-center text-sm font-semibold text-gris">Prix TTC · Allergènes : demandez-les au comptoir.</p>
       </div>
     </section>
   );

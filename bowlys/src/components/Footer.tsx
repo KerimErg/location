@@ -12,7 +12,7 @@ export function Footer() {
     ...(site.commande.panierActif ? [{ href: "/cgv/", label: "Conditions générales de vente" }] : []),
   ];
   return (
-    <footer className="sur-sombre relative overflow-hidden bg-encre text-white">
+    <footer className="sur-sombre feuille overflow-hidden bg-encre text-white">
       <div className="relative z-10 mx-auto max-w-[1240px] px-[max(20px,env(safe-area-inset-left))] pb-10 pt-20">
         <div className="grid gap-12 md:grid-cols-[1.3fr_1fr_1fr_1fr]">
           <div>

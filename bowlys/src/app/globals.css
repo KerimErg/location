@@ -9,16 +9,16 @@
   --color-bleu-ciel: #e8f0ff;
   --color-encre: #0b0f1a;
   --color-encre-2: #151c2c;
-  --color-doux: #f4f7fd;
+  --color-doux: #f2f5fb;
   --color-trait: #e2e8f3;
-  --color-gris: #5b6478;
+  --color-gris: #3d4558;   /* texte secondaire, contraste renforcé */
   --font-display: var(--font-nunito), ui-rounded, system-ui, sans-serif;
   --font-sans: var(--font-nunito-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
   --ease-pro: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 html { scroll-behavior: smooth; scroll-padding-top: 88px; -webkit-text-size-adjust: 100%; }
-body { background: #fff; color: var(--color-encre); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+body { background: #fff; color: var(--color-encre); font-family: var(--font-sans); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
 h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; }
 :focus-visible { outline: 3px solid var(--color-bleu); outline-offset: 3px; }
 .sur-sombre :focus-visible { outline-color: #fff; }
@@ -47,10 +47,23 @@ h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; }
 
 /* Apparition au défilement : progressive, le contenu reste visible sans support. */
 /* Le contenu n'est jamais invisible : seul un léger glissement accompagne l'arrivée. */
-@keyframes arriver { from { transform: translateY(40px) scale(.985); } to { transform: none; } }
+@keyframes arriver { from { transform: translateY(70px) scale(.96); } to { transform: none; } }
+@keyframes hero-sortie { to { transform: scale(.9); border-radius: 56px; filter: brightness(.7); } }
+@keyframes parallaxe { from { transform: translateY(-7%) scale(1.14); } to { transform: translateY(7%) scale(1.14); } }
+@keyframes feuille-entree { from { border-top-left-radius: 140px; border-top-right-radius: 140px; } to { border-top-left-radius: 56px; border-top-right-radius: 56px; } }
 @supports (animation-timeline: view()) {
-  .apparait { animation: arriver linear both; animation-timeline: view(); animation-range: entry 0% cover 25%; }
+  .apparait { animation: arriver linear both; animation-timeline: view(); animation-range: entry 0% cover 28%; }
+  .apparait-2 { animation: arriver linear both; animation-timeline: view(); animation-range: entry 8% cover 34%; }
+  .apparait-3 { animation: arriver linear both; animation-timeline: view(); animation-range: entry 16% cover 40%; }
+  .hero-sortie { animation: hero-sortie linear both; animation-timeline: view(); animation-range: exit 0% exit 90%; transform-origin: 50% 100%; }
+  .parallaxe img { animation: parallaxe linear both; animation-timeline: view(); animation-range: cover; }
+  .feuille { animation: feuille-entree linear both; animation-timeline: view(); animation-range: entry 0% entry 60%; }
 }
+
+/* Sections empilées : chaque partie vient recouvrir la précédente avec un bord arrondi. */
+.feuille { position: relative; z-index: 10; margin-top: -56px; border-top-left-radius: 56px; border-top-right-radius: 56px; box-shadow: 0 -24px 50px -30px rgba(11,15,26,.35); }
+@media (max-width: 640px) { .feuille { margin-top: -36px; border-top-left-radius: 32px; border-top-right-radius: 32px; } }
+.sous-feuille { padding-bottom: calc(6rem + 56px); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -60,3 +73,9 @@ h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; }
 /* Masquer la barre de défilement horizontale des filtres */
 .sans-barre { scrollbar-width: none; }
 .sans-barre::-webkit-scrollbar { display: none; }
+
+/* Story façon Instagram (galerie) */
+@keyframes barre { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes kenburns { from { transform: scale(1.02); } to { transform: scale(1.12); } }
+.story-barre { transform-origin: left; animation: barre 4.5s linear forwards; }
+.story-zoom { animation: kenburns 4.5s ease-out both; }
