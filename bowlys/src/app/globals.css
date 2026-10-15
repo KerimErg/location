@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+/* ── Charte BOWLY'S ─────────────────────────────────────────
+   Bleu #0057E7 + blanc, noir bleuté pour les fonds forts.
+   Titres : Nunito (épais, arrondi). Texte : Nunito Sans. */
+@theme {
+  --color-bleu: #0057e7;
+  --color-bleu-fonce: #0046bd;
+  --color-bleu-ciel: #e8f0ff;
+  --color-encre: #0b0f1a;
+  --color-encre-2: #151c2c;
+  --color-doux: #f4f7fd;
+  --color-trait: #e2e8f3;
+  --color-gris: #5b6478;
+  --font-display: var(--font-nunito), ui-rounded, system-ui, sans-serif;
+  --font-sans: var(--font-nunito-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ease-pro: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 88px; -webkit-text-size-adjust: 100%; }
+body { background: #fff; color: var(--color-encre); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; }
+:focus-visible { outline: 3px solid var(--color-bleu); outline-offset: 3px; }
+.sur-sombre :focus-visible { outline-color: #fff; }
+
+/* Logo recolorable : le PNG sert de masque, la couleur vient de `color`. */
+.logo-masque { display: block; background: currentColor; -webkit-mask: var(--m) center / contain no-repeat; mask: var(--m) center / contain no-repeat; }
+
+/* Entrées */
+@keyframes monter { from { opacity: .001; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+@keyframes fondu { from { opacity: 0; } to { opacity: 1; } }
+@keyframes glisser-droite { from { transform: translateX(100%); } to { transform: none; } }
+@keyframes glisser-haut { from { transform: translateY(100%); } to { transform: none; } }
+@keyframes zoom-in { from { opacity: .001; transform: translateY(16px) scale(.98); } to { opacity: 1; transform: none; } }
+@keyframes pop { 0% { transform: scale(1); } 40% { transform: scale(1.35); } 100% { transform: scale(1); } }
+@keyframes defiler { to { transform: translateX(-50%); } }
+@keyframes toast { from { opacity: 0; transform: translate(-50%, 16px); } to { opacity: 1; transform: translate(-50%, 0); } }
+
+.anim-monter { animation: monter .9s var(--ease-pro) both; }
+.anim-fondu { animation: fondu .35s var(--ease-pro) both; }
+.anim-tiroir { animation: glisser-droite .5s var(--ease-pro) both; }
+.anim-feuille { animation: zoom-in .45s var(--ease-pro) both; }
+@media (max-width: 767px) { .anim-feuille { animation: glisser-haut .45s var(--ease-pro) both; } }
+.anim-pop { animation: pop .45s var(--ease-pro); }
+.anim-toast { animation: toast .35s var(--ease-pro) both; }
+.defilement { animation: defiler 30s linear infinite; }
+
+/* Apparition au défilement : progressive, le contenu reste visible sans support. */
+/* Le contenu n'est jamais invisible : seul un léger glissement accompagne l'arrivée. */
+@keyframes arriver { from { transform: translateY(40px) scale(.985); } to { transform: none; } }
+@supports (animation-timeline: view()) {
+  .apparait { animation: arriver linear both; animation-timeline: view(); animation-range: entry 0% cover 25%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+}
+
+/* Masquer la barre de défilement horizontale des filtres */
+.sans-barre { scrollbar-width: none; }
+.sans-barre::-webkit-scrollbar { display: none; }
