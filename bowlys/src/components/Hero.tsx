@@ -70,10 +70,7 @@ export function Hero() {
             La street food turque,{" "}
             <span className="inline-block -rotate-2 rounded-2xl bg-bleu px-[0.22em] pb-[0.06em]">autrement.</span>
           </h1>
-          <p className="anim-monter max-w-[34ch] text-[clamp(1.05rem,1.8vw,1.3rem)] font-semibold text-white/90 [animation-delay:160ms]">
-            Manti généreux, lahmacuns croustillants et recettes pleines de saveurs.
-          </p>
-          <div className="anim-monter flex w-full flex-col items-center justify-center gap-3 pt-2 [animation-delay:240ms] sm:w-auto sm:flex-row">
+          <div className="anim-monter flex w-full flex-col items-center justify-center gap-3 pt-2 [animation-delay:160ms] sm:w-auto sm:flex-row">
             <LienBouton href="/#carte" style="bleu" taille="lg" className="w-full sm:w-auto">
               Découvrir la carte
             </LienBouton>

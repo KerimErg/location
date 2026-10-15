@@ -34,8 +34,20 @@ export const site = {
   telephone: null as string | null, // ex. "+33 3 88 00 00 00"
   email: null as string | null, // ex. "contact@bowlys.fr"
 
-  /** Horaires par jour. `null` = horaires pas encore communiqués (le site affiche « Horaires à venir »). */
-  horaires: null as Record<Jour, Plage[]> | null,
+  /**
+   * Horaires par jour (heure de Paris). `null` = pas encore communiqués.
+   * ⚠️ HORAIRES PROVISOIRES à confirmer avant la mise en ligne.
+   * Fermeture après minuit : écrire "00:00", "01:00"...
+   */
+  horaires: {
+    lundi: [{ ouverture: "11:30", fermeture: "23:00" }],
+    mardi: [{ ouverture: "11:30", fermeture: "23:00" }],
+    mercredi: [{ ouverture: "11:30", fermeture: "23:00" }],
+    jeudi: [{ ouverture: "11:30", fermeture: "23:00" }],
+    vendredi: [{ ouverture: "11:30", fermeture: "00:00" }],
+    samedi: [{ ouverture: "11:30", fermeture: "00:00" }],
+    dimanche: [{ ouverture: "12:00", fermeture: "23:00" }],
+  } as Record<Jour, Plage[]> | null,
 
   reseaux: {
     instagram: "https://www.instagram.com/bowlys/" as string | null,
@@ -66,6 +78,12 @@ export const site = {
 export function adresseLigne(): string | null {
   const r = site.restaurant;
   return r ? `${r.rue}, ${r.codePostal} ${r.ville}` : null;
+}
+
+/** Plan Google Maps intégrable (chargé seulement quand le visiteur le demande). */
+export function lienPlanIntegre(): string | null {
+  const a = adresseLigne();
+  return a ? `https://maps.google.com/maps?q=${encodeURIComponent(a)}&z=16&output=embed` : null;
 }
 
 export function lienItineraire(): string | null {

@@ -1,10 +1,12 @@
 "use client";
 
-import { ArrowRight, Check, MapPin, Clock, Phone, Mail } from "lucide-react";
-import { PRODUITS, produitsDe, type CategorieId } from "@/data/menu";
+import { useEffect, useState } from "react";
+import { ArrowRight, ArrowUpRight, MapPin } from "lucide-react";
+import { produitsDe, type CategorieId } from "@/data/menu";
 import { prix } from "@/lib/format";
 import { usePanier } from "@/lib/panier";
-import { site, adresseLigne, lienItineraire, JOURS } from "@/config/site";
+import { statut, maintenantParis } from "@/lib/horaires";
+import { site, adresseLigne, lienItineraire, lienPlanIntegre, JOURS } from "@/config/site";
 import { Photo } from "./Photo";
 import { LienBouton, classesBouton } from "./Bouton";
 import { Logo } from "./Logo";
@@ -15,62 +17,66 @@ export function allerALaCarte(cat: CategorieId) {
   document.getElementById("carte")?.scrollIntoView({ behavior: "smooth" });
 }
 
-const Surtitre = ({ children, clair = false }: { children: React.ReactNode; clair?: boolean }) => (
-  <p className={`font-display text-sm font-extrabold uppercase tracking-[0.2em] ${clair ? "text-white/80" : "text-bleu"}`}>{children}</p>
-);
+const conteneur = "mx-auto max-w-[1180px] px-[max(20px,env(safe-area-inset-left))]";
 
-/* ─────────── Bandeau défilant ─────────── */
-export function Bandeau() {
-  const mots = ["Manti", "Lahmacun", "Sur place", "À emporter", "Street food turque"];
-  const suite = [...mots, ...mots, ...mots, ...mots];
+export function EnTete({ surtitre, titre, id, clair = false, centre = false }: { surtitre: string; titre: React.ReactNode; id: string; clair?: boolean; centre?: boolean }) {
   return (
-    <div aria-hidden="true" className="overflow-hidden bg-bleu py-4 text-white">
-      <div className="defilement flex w-max gap-8 whitespace-nowrap font-display text-xl font-black uppercase tracking-wide sm:text-2xl">
-        {[...suite, ...suite].map((m, i) => (
-          <span key={i} className="flex items-center gap-8">{m}<Logo variante="icone" titre="" className="w-7 text-white/70" /></span>
-        ))}
-      </div>
+    <div className={`apparait ${centre ? "mx-auto max-w-[720px] text-center" : ""}`}>
+      <p className={`font-display text-[0.8rem] font-extrabold uppercase tracking-[0.22em] ${clair ? "text-white/75" : "text-bleu"}`}>{surtitre}</p>
+      <h2 id={id} className="mt-3 font-display text-[clamp(2.2rem,5vw,3.8rem)] font-black leading-[0.98] tracking-[-0.02em]">{titre}</h2>
     </div>
+  );
+}
+
+/* ─────────── Notre concept : une phrase, pas plus ─────────── */
+export function Concept() {
+  return (
+    <section id="concept" aria-labelledby="concept-titre" className="py-24 sm:py-32">
+      <div className={`${conteneur} apparait grid justify-items-center text-center`}>
+        <Logo variante="icone" titre="" className="w-14 text-bleu" />
+        <p className="mt-6 font-display text-[0.8rem] font-extrabold uppercase tracking-[0.22em] text-bleu">Notre concept</p>
+        <h2 id="concept-titre" className="mt-4 max-w-[18ch] font-display text-[clamp(2.2rem,5vw,3.8rem)] font-black leading-[1.02] tracking-[-0.02em]">
+          Les spécialités turques, version street food.
+        </h2>
+        <p className="mt-6 max-w-[52ch] text-lg text-gris">
+          Deux grands classiques, le manti et le lahmacun, servis généreusement dans un univers moderne. Une carte courte, des prix clairs, et un seul objectif : se faire plaisir.
+        </p>
+      </div>
+    </section>
   );
 }
 
 /* ─────────── Nos spécialités ─────────── */
 export function Specialites() {
   const blocs = [
-    {
-      cat: "mantis" as CategorieId, titre: "Les Mantis", sombre: false,
-      texte: "De petits raviolis turcs servis généreusement, avec leur sauce yaourt et une touche de beurre pimenté.",
-      photo: "/images/illustration-manti-beurre.webp", illustration: true, n: produitsDe("mantis").length,
-    },
-    {
-      cat: "lahmacuns" as CategorieId, titre: "Les Lahmacuns", sombre: true,
-      texte: "Une pâte fine et dorée, garnie puis cuite au four pour rester croustillante.",
-      photo: "/images/illustration-lahmacun-garniture.webp", illustration: true, n: produitsDe("lahmacuns").length,
-    },
+    { cat: "mantis" as CategorieId, titre: "Les Mantis", texte: "Petits raviolis turcs, sauce yaourt et beurre pimenté.", photo: "/images/illustration-manti-beurre.webp" },
+    { cat: "lahmacuns" as CategorieId, titre: "Les Lahmacuns", texte: "Pâte fine, garnie et cuite au four.", photo: "/images/illustration-lahmacun-garniture.webp" },
   ];
   return (
-    <section id="specialites" aria-labelledby="spe-titre" className="py-20 sm:py-28">
-      <div className="mx-auto max-w-[1240px] px-[max(20px,env(safe-area-inset-left))]">
-        <div className="apparait mx-auto max-w-[760px] text-center">
-          <Surtitre>Nos spécialités</Surtitre>
-          <h2 id="spe-titre" className="mt-3 font-display text-[clamp(2.4rem,5.6vw,4.4rem)] font-black leading-[0.95] tracking-[-0.02em]">
-            Deux recettes. Zéro compromis sur le goût.
-          </h2>
-        </div>
-        <div className="mt-14 grid gap-5 md:grid-cols-2">
+    <section id="specialites" aria-labelledby="spe-titre" className="pb-24 sm:pb-32">
+      <div className={conteneur}>
+        <EnTete id="spe-titre" surtitre="Nos spécialités" titre="Manti ou lahmacun ?" centre />
+        <div className="mt-12 grid gap-5 md:grid-cols-2">
           {blocs.map((b) => (
-            <article key={b.cat} className={`apparait group relative flex min-h-[560px] flex-col overflow-hidden rounded-[28px] sm:min-h-[640px] ${b.sombre ? "sur-sombre bg-encre text-white" : "bg-bleu-ciel"}`}>
-              <Photo src={b.photo} alt={b.titre} illustration={b.illustration} sombre={b.sombre} className="absolute inset-0" sizes="(max-width: 768px) 100vw, 50vw" />
-              {b.photo && <div className="absolute inset-0 bg-gradient-to-t from-encre/90 via-encre/25 to-transparent" />}
-              <div className={`relative mt-auto grid gap-4 p-7 sm:p-10 ${b.photo ? "text-white" : ""}`}>
-                <span className="w-fit rounded-full bg-bleu px-3 py-1 text-xs font-extrabold uppercase tracking-[0.14em] text-white">{b.n} recettes</span>
-                <h3 className="font-display text-[clamp(2.4rem,4.6vw,3.6rem)] font-black leading-none">{b.titre}</h3>
-                <p className="max-w-[40ch] text-[1.05rem] font-semibold opacity-90">{b.texte}</p>
-                <button type="button" onClick={() => allerALaCarte(b.cat)} className={classesBouton(b.photo || b.sombre ? "blanc" : "bleu", "lg", "mt-2 w-fit")}>
-                  Découvrir <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
-                </button>
-              </div>
-            </article>
+            <button
+              key={b.cat}
+              type="button"
+              onClick={() => allerALaCarte(b.cat)}
+              className="apparait group relative aspect-[4/5] overflow-hidden rounded-[28px] bg-encre text-left text-white sm:aspect-[5/6]"
+            >
+              <Photo src={b.photo} alt={b.titre} illustration className="absolute inset-0" sizes="(max-width: 768px) 100vw, 50vw" />
+              <span className="absolute inset-0 bg-gradient-to-t from-encre/85 via-encre/10 to-transparent" />
+              <span className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-7 sm:p-9">
+                <span>
+                  <span className="block font-display text-[clamp(2.2rem,4vw,3.2rem)] font-black leading-none">{b.titre}</span>
+                  <span className="mt-3 block max-w-[30ch] font-semibold text-white/85">{b.texte}</span>
+                </span>
+                <span className="grid size-14 shrink-0 place-items-center rounded-full bg-white text-bleu transition-transform duration-500 group-hover:-rotate-45">
+                  <ArrowRight className="size-6" strokeWidth={2.6} />
+                </span>
+              </span>
+              <span className="sr-only">Voir les {b.titre.toLowerCase()} sur la carte</span>
+            </button>
           ))}
         </div>
       </div>
@@ -78,48 +84,32 @@ export function Specialites() {
   );
 }
 
-/* ─────────── Les menus ─────────── */
+/* ─────────── Les menus : sans photo, lisibles d'un coup d'œil ─────────── */
 export function Menus() {
-  const { ajouter } = usePanier();
+  const { ajouter, ouvrirProduit } = usePanier();
   const menus = produitsDe("menus");
   return (
-    <section id="menus" aria-labelledby="menus-titre" className="sur-sombre bg-bleu py-20 text-white sm:py-28">
-      <div className="mx-auto max-w-[1240px] px-[max(20px,env(safe-area-inset-left))]">
-        <div className="apparait flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
-          <div>
-            <Surtitre clair>Les menus</Surtitre>
-            <h2 id="menus-titre" className="mt-3 font-display text-[clamp(2.4rem,5.6vw,4.4rem)] font-black leading-[0.95] tracking-[-0.02em]">
-              Le repas complet,<br />en un clic.
-            </h2>
-          </div>
-          <p className="max-w-[36ch] font-semibold text-white/85">Choisissez votre menu, on s&apos;occupe du reste.</p>
-        </div>
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
-          {menus.map((m, i) => {
-            const vedette = m.id === "menu-mix";
+    <section id="menus" aria-labelledby="menus-titre" className="sur-sombre bg-bleu py-24 text-white sm:py-28">
+      <div className={conteneur}>
+        <EnTete id="menus-titre" surtitre="Les menus" titre="Le repas complet." clair centre />
+        <div className="mt-12 grid gap-4 md:grid-cols-3">
+          {menus.map((m) => {
+            const mix = m.id === "menu-mix";
             return (
-              <article key={m.id} className={`apparait group relative flex flex-col overflow-hidden rounded-[26px] bg-white text-encre ${vedette ? "ring-4 ring-white md:-translate-y-4" : ""}`} style={{ animationDelay: `${i * 80}ms` }}>
-                {vedette && <span className="absolute right-4 top-4 z-10 rounded-full bg-encre px-3 py-1 text-xs font-extrabold uppercase tracking-[0.12em] text-white">Manti + Lahmacun</span>}
-                <Photo src={m.photo} alt={m.nom} illustration={m.illustration} className="aspect-[4/3]" sizes="(max-width: 768px) 100vw, 33vw" />
-                <div className="flex flex-1 flex-col gap-3 p-6 sm:p-7">
-                  <div className="flex items-baseline justify-between gap-4">
-                    <h3 className="font-display text-2xl font-black sm:text-3xl">{m.nom}</h3>
-                    <span className="font-display text-2xl font-black text-bleu sm:text-3xl">{prix(m.prix)}</span>
-                  </div>
-                  <p className="text-gris">{m.description}</p>
-                  {m.composition && m.composition.length > 0 ? (
-                    <ul className="grid gap-1.5 text-sm font-semibold">
-                      {m.composition.map((c) => <li key={c} className="flex items-center gap-2"><Check className="size-4 text-bleu" strokeWidth={3} />{c}</li>)}
-                    </ul>
-                  ) : (
-                    <p className="text-sm font-semibold text-gris/80">Composition détaillée bientôt en ligne.</p>
-                  )}
-                  {site.commande.panierActif && (
-                    <button type="button" onClick={() => ajouter(m.id)} className={classesBouton(vedette ? "bleu" : "encre", "md", "mt-auto w-full")}>
-                      Ajouter ce menu
-                    </button>
-                  )}
+              <article key={m.id} className={`apparait flex flex-col rounded-[24px] p-7 sm:p-8 ${mix ? "bg-encre" : "bg-white text-encre"}`}>
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="font-display text-2xl font-black">
+                    <button type="button" onClick={() => ouvrirProduit(m)} className="text-left hover:underline">{m.nom}</button>
+                  </h3>
+                  {mix && <span className="rounded-full bg-white/15 px-3 py-1 text-[0.7rem] font-extrabold uppercase tracking-[0.12em]">Manti + Lahmacun</span>}
                 </div>
+                <p className={`mt-2 ${mix ? "text-white/75" : "text-gris"}`}>{m.description}</p>
+                <p className={`mt-8 font-display text-5xl font-black tracking-tight ${mix ? "" : "text-bleu"}`}>{prix(m.prix)}</p>
+                {site.commande.panierActif && (
+                  <button type="button" onClick={() => ajouter(m.id)} className={classesBouton(mix ? "blanc" : "bleu", "md", "mt-6 w-full")}>
+                    Ajouter ce menu
+                  </button>
+                )}
               </article>
             );
           })}
@@ -129,104 +119,115 @@ export function Menus() {
   );
 }
 
-/* ─────────── Notre concept ─────────── */
-export function Concept() {
-  const piliers = [
-    { t: "Deux spécialités", d: "Le manti et le lahmacun, travaillés en plusieurs recettes." },
-    { t: "Une carte claire", d: "Des plats, des menus, des prix lisibles. On choisit vite." },
-    { t: "Sur place ou à emporter", d: "Pour une pause rapide ou un repas à partager." },
-  ];
+/* ─────────── Nous trouver : adresse, horaires, plan ─────────── */
+function Statut() {
+  const [s, setS] = useState<{ ouvert: boolean; texte: string } | null>(null);
+  useEffect(() => {
+    if (!site.horaires) return;
+    const maj = () => setS(statut(site.horaires!));
+    maj();
+    const t = setInterval(maj, 60_000);
+    return () => clearInterval(t);
+  }, []);
+  if (!s) return null;
   return (
-    <section id="concept" aria-labelledby="concept-titre" className="py-20 sm:py-28">
-      <div className="mx-auto grid max-w-[1240px] items-center gap-12 px-[max(20px,env(safe-area-inset-left))] md:grid-cols-2 lg:gap-20">
-        <div className="apparait relative">
-          <Photo src="/images/illustration-manti-yaourt.webp" alt="Sauce yaourt versée sur des mantis" illustration className="aspect-[4/5] rounded-[28px]" sizes="(max-width: 768px) 100vw, 50vw" zoom={false} />
-          <div className="absolute -bottom-6 -right-3 hidden rounded-[22px] bg-bleu p-6 text-white shadow-xl sm:block md:-right-8">
-            <Logo variante="complet" titre="BOWLY'S" className="w-40 text-white" />
-          </div>
-        </div>
-        <div className="apparait">
-          <Surtitre>Notre concept</Surtitre>
-          <h2 id="concept-titre" className="mt-3 font-display text-[clamp(2.2rem,4.8vw,3.8rem)] font-black leading-[0.98] tracking-[-0.02em]">
-            Les spécialités turques, version street food.
-          </h2>
-          <p className="mt-6 max-w-[48ch] text-lg text-gris">
-            BOWLY&apos;S met à l&apos;honneur deux grands classiques turcs dans un univers moderne et accessible. Des portions généreuses, une carte courte et claire, et un seul objectif : se faire plaisir.
-          </p>
-          <ul className="mt-10 grid gap-4">
-            {piliers.map((p, i) => (
-              <li key={p.t} className="flex gap-5 rounded-2xl bg-doux p-5">
-                <span className="grid size-11 shrink-0 place-items-center rounded-full bg-bleu font-display font-black text-white">{i + 1}</span>
-                <div>
-                  <h3 className="font-display text-lg font-black">{p.t}</h3>
-                  <p className="text-gris">{p.d}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </section>
+    <span className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-bold ${s.ouvert ? "bg-bleu-ciel text-bleu" : "bg-doux text-gris"}`}>
+      <span className={`size-2 rounded-full ${s.ouvert ? "bg-bleu" : "bg-gris"}`} />
+      {s.texte}
+    </span>
   );
 }
 
-/* ─────────── Contact & infos pratiques ─────────── */
-export function Contact() {
-  const adresse = adresseLigne();
+function Plan() {
+  const [charge, setCharge] = useState(false);
+  const [encadre, setEncadre] = useState(false);
+  useEffect(() => { setEncadre(window.self !== window.top); }, []);
+  const src = lienPlanIntegre();
   const itin = lienItineraire();
-  const h = site.horaires;
+  if (!src) return null;
   return (
-    <section id="contact" aria-labelledby="contact-titre" className="bg-doux py-20 sm:py-28">
-      <div className="mx-auto max-w-[1240px] px-[max(20px,env(safe-area-inset-left))]">
-        <div className="apparait mx-auto max-w-[760px] text-center">
-          <Surtitre>Contact</Surtitre>
-          <h2 id="contact-titre" className="mt-3 font-display text-[clamp(2.4rem,5.6vw,4.4rem)] font-black leading-[0.95] tracking-[-0.02em]">On vous attend.</h2>
+    <div className="relative h-full min-h-[360px] overflow-hidden rounded-[28px] bg-bleu-ciel">
+      {charge ? (
+        <iframe src={src} title={`Plan d'accès BOWLY'S, ${adresseLigne()}`} className="absolute inset-0 size-full border-0" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+      ) : (
+        <div className="absolute inset-0 grid place-items-center p-8 text-center">
+          {/* quadrillage discret façon plan */}
+          <div aria-hidden="true" className="absolute inset-0 opacity-60 [background-image:linear-gradient(var(--color-trait)_1px,transparent_1px),linear-gradient(90deg,var(--color-trait)_1px,transparent_1px)] [background-size:44px_44px]" />
+          <div className="relative grid justify-items-center gap-4">
+            <span className="grid size-16 place-items-center rounded-full bg-bleu text-white shadow-[0_14px_30px_-12px_rgba(0,87,231,.8)]"><MapPin className="size-7" strokeWidth={2.4} /></span>
+            <p className="font-display text-xl font-black">{site.restaurant!.rue}<br />{site.restaurant!.codePostal} {site.restaurant!.ville}</p>
+            {encadre ? (
+              itin && <LienBouton href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(adresseLigne()!)}`} externe style="bleu">Ouvrir le plan <ArrowUpRight className="size-4" /></LienBouton>
+            ) : (
+              <button type="button" onClick={() => setCharge(true)} className={classesBouton("bleu", "md")}>Afficher le plan</button>
+            )}
+            {!encadre && <p className="max-w-[30ch] text-xs text-gris">Le plan est fourni par Google Maps et ne se charge que si vous le demandez.</p>}
+          </div>
         </div>
-        <div className="mt-12 grid gap-5 lg:grid-cols-[1.25fr_1fr]">
-          {adresse && (
-            <div className="sur-sombre apparait flex flex-col justify-between gap-10 rounded-[28px] bg-encre p-8 text-white sm:p-10">
-              <div>
-                <MapPin className="size-8 text-bleu" strokeWidth={2.4} />
-                <p className="mt-6 text-sm font-bold uppercase tracking-[0.18em] text-white/60">Le restaurant</p>
-                <p className="mt-2 font-display text-[clamp(1.9rem,3.6vw,2.8rem)] font-black leading-[1.05]">
-                  {site.restaurant!.rue}<br />{site.restaurant!.codePostal} {site.restaurant!.ville}
-                </p>
-              </div>
-              <div className="flex flex-col gap-3 sm:flex-row">
-                {itin && <LienBouton href={itin} externe style="bleu" taille="lg">Itinéraire <ArrowRight className="size-5" /></LienBouton>}
-                {site.telephone && <LienBouton href={`tel:${site.telephone.replace(/\s/g, "")}`} style="contour-blanc" taille="lg"><Phone className="size-5" />{site.telephone}</LienBouton>}
-              </div>
-            </div>
-          )}
-          <div className="grid gap-5">
-            <div className="apparait rounded-[28px] bg-white p-8 ring-1 ring-trait">
-              <div className="flex items-center gap-3"><Clock className="size-6 text-bleu" strokeWidth={2.4} /><h3 className="font-display text-xl font-black">Horaires</h3></div>
-              {h ? (
-                <dl className="mt-5 grid gap-2">
-                  {JOURS.map((j) => (
-                    <div key={j} className="flex justify-between border-b border-trait pb-2 text-sm">
-                      <dt className="font-bold capitalize">{j}</dt>
-                      <dd className="tabular-nums text-gris">{h[j].length ? h[j].map((p) => `${p.ouverture} – ${p.fermeture}`).join(" · ") : "Fermé"}</dd>
-                    </div>
-                  ))}
-                </dl>
-              ) : (
-                <p className="mt-4 text-gris">Les horaires d&apos;ouverture seront affichés ici très bientôt.</p>
+      )}
+    </div>
+  );
+}
+
+export function NousTrouver() {
+  const h = site.horaires;
+  const itin = lienItineraire();
+  const [aujourdhui, setAujourdhui] = useState<string | null>(null);
+  useEffect(() => { setAujourdhui(maintenantParis().jour); }, []);
+  if (!site.restaurant) return null;
+  return (
+    <section id="contact" aria-labelledby="contact-titre" className="py-24 sm:py-32">
+      <div className={conteneur}>
+        <EnTete id="contact-titre" surtitre="Contact" titre="Nous trouver" centre />
+        <div className="mt-14 grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:gap-14">
+          <div className="apparait grid content-start gap-10 sm:grid-cols-2 lg:grid-cols-1">
+            <div>
+              <p className="text-[0.75rem] font-extrabold uppercase tracking-[0.2em] text-gris">Adresse</p>
+              <address className="mt-3 font-display text-[1.9rem] font-black not-italic leading-[1.1]">
+                {site.restaurant.rue}<br />{site.restaurant.codePostal} {site.restaurant.ville}
+              </address>
+              {itin && (
+                <a href={itin} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-1.5 font-display font-extrabold text-bleu underline-offset-4 hover:underline">
+                  Itinéraire <ArrowUpRight className="size-4" />
+                </a>
+              )}
+              {(site.telephone || site.reseaux.instagram || site.email) && (
+                <div className="mt-8">
+                  <p className="text-[0.75rem] font-extrabold uppercase tracking-[0.2em] text-gris">Contact</p>
+                  <ul className="mt-3 grid gap-2 font-semibold">
+                    {site.telephone && <li><a href={`tel:${site.telephone.replace(/\s/g, "")}`} className="hover:text-bleu">{site.telephone}</a></li>}
+                    {site.email && <li><a href={`mailto:${site.email}`} className="hover:text-bleu">{site.email}</a></li>}
+                    {site.reseaux.instagram && <li><a href={site.reseaux.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-bleu">Instagram · @bowlys</a></li>}
+                    {site.reseaux.tiktok && <li><a href={site.reseaux.tiktok} target="_blank" rel="noopener noreferrer" className="hover:text-bleu">TikTok</a></li>}
+                  </ul>
+                </div>
               )}
             </div>
-            <div className="apparait rounded-[28px] bg-white p-8 ring-1 ring-trait">
-              <h3 className="font-display text-xl font-black">Suivez-nous</h3>
-              <div className="mt-5 flex flex-wrap gap-3">
-                {site.reseaux.instagram && <LienBouton href={site.reseaux.instagram} externe style="contour">Instagram</LienBouton>}
-                {site.reseaux.tiktok && <LienBouton href={site.reseaux.tiktok} externe style="contour">TikTok</LienBouton>}
-                {site.email && <LienBouton href={`mailto:${site.email}`} style="contour"><Mail className="size-4" />{site.email}</LienBouton>}
+            <div>
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <p className="text-[0.75rem] font-extrabold uppercase tracking-[0.2em] text-gris">Horaires</p>
+                <Statut />
               </div>
+              {h ? (
+                <dl className="mt-4">
+                  {JOURS.map((j) => {
+                    const actif = j === aujourdhui;
+                    return (
+                      <div key={j} className={`flex justify-between gap-6 border-b border-trait py-2.5 ${actif ? "font-extrabold text-encre" : "text-gris"}`}>
+                        <dt className="capitalize">{j}</dt>
+                        <dd className="tabular-nums">{h[j].length ? h[j].map((p) => `${p.ouverture} – ${p.fermeture}`).join(" · ") : "Fermé"}</dd>
+                      </div>
+                    );
+                  })}
+                </dl>
+              ) : (
+                <p className="mt-4 text-gris">Horaires bientôt disponibles.</p>
+              )}
             </div>
           </div>
+          <div className="apparait"><Plan /></div>
         </div>
       </div>
     </section>
   );
 }
-
-export const nbProduits = PRODUITS.length;

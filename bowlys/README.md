@@ -49,7 +49,7 @@ Chaque produit ressemble à ceci :
 
 - `telephone`, `email`, `reseaux.tiktok`, `avisGoogle` : remplacez `null` par la valeur entre guillemets.
   Un champ à `null` est simplement masqué sur le site.
-- `horaires` : remplacez `null` par :
+- `horaires` : des horaires **provisoires** sont en place, à corriger. Format :
 
 ```ts
 horaires: {
@@ -123,7 +123,7 @@ de `src/components/Panier.tsx`.
 
 - [ ] Allergènes renseignés pour chaque produit (`menu.ts`)
 - [ ] Compositions des menus
-- [ ] Horaires, téléphone, e-mail, TikTok (`site.ts`)
+- [ ] **Horaires provisoires à confirmer** (`site.ts`), téléphone, e-mail, TikTok
 - [ ] Pages légales complétées : chercher `[À COMPLÉTER` dans `src/app/`
 - [ ] Photos officielles (et droits des vidéos)
 
