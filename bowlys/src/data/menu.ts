@@ -16,7 +16,7 @@ export type Allergene =
   | "gluten" | "crustacés" | "œufs" | "poissons" | "arachides" | "soja" | "lait"
   | "fruits à coque" | "céleri" | "moutarde" | "sésame" | "sulfites" | "lupin" | "mollusques";
 
-export type CategorieId = "mantis" | "lahmacuns" | "menus" | "extras" | "boissons";
+export type CategorieId = "mantis" | "lahmacuns" | "menus" | "accompagnements" | "boissons";
 
 export type Option = { id: string; nom: string; prix: number };
 
@@ -41,11 +41,11 @@ export const CATEGORIES: { id: CategorieId; nom: string; accroche: string; photo
   { id: "mantis", nom: "Mantis", accroche: "Raviolis turcs, sauce yaourt", photo: "/images/illustration-manti-beurre.webp" },
   { id: "lahmacuns", nom: "Lahmacuns", accroche: "Pâte fine, cuite au four", photo: "/images/illustration-lahmacun-garniture.webp" },
   { id: "menus", nom: "Menus", accroche: "Le repas complet", photo: "/images/illustration-manti-assiette.webp" },
-  { id: "extras", nom: "Extras", accroche: "Pour compléter", photo: null },
+  { id: "accompagnements", nom: "Accompagnements", accroche: "Pour compléter votre repas", photo: null },
   { id: "boissons", nom: "Boissons", accroche: "Bien fraîches", photo: null },
 ];
 
-/** Options proposées dans la fiche produit (reprennent les prix des extras). */
+/** Options proposées dans la fiche produit (reprennent les prix des accompagnements). */
 export const OPTIONS: Option[] = [
   { id: "sauce-piquante", nom: "Sauce piquante", prix: 0.5 },
   { id: "fromage", nom: "Fromage", prix: 1.0 },
@@ -107,11 +107,11 @@ export const PRODUITS: Produit[] = [
     photo: null, allergenes: null, composition: [],
   },
 
-  // ── EXTRAS ──────────────────────────────────────────
-  { id: "extra-sauce-piquante", categorie: "extras", nom: "Sauce piquante", prix: 0.5, description: "Pour relever votre plat.", photo: null, allergenes: null },
-  { id: "extra-fromage", categorie: "extras", nom: "Fromage", prix: 1.0, description: "Une portion de fromage.", photo: null, allergenes: null },
-  { id: "extra-pain", categorie: "extras", nom: "Pain supplémentaire", prix: 1.0, description: "Pour saucer jusqu'au bout.", photo: null, allergenes: null },
-  { id: "extra-boisson", categorie: "extras", nom: "Boisson 33 cl", prix: 1.5, description: "Une canette au choix.", photo: null, allergenes: null },
+  // ── ACCOMPAGNEMENTS ─────────────────────────────────
+  { id: "extra-sauce-piquante", categorie: "accompagnements", nom: "Sauce piquante", prix: 0.5, description: "Pour relever votre plat.", photo: null, allergenes: null },
+  { id: "extra-fromage", categorie: "accompagnements", nom: "Fromage", prix: 1.0, description: "Une portion de fromage.", photo: null, allergenes: null },
+  { id: "extra-pain", categorie: "accompagnements", nom: "Pain supplémentaire", prix: 1.0, description: "Pour saucer jusqu'au bout.", photo: null, allergenes: null },
+  { id: "extra-boisson", categorie: "accompagnements", nom: "Boisson 33 cl", prix: 1.5, description: "Une canette au choix.", photo: null, allergenes: null },
 
   // ── BOISSONS ────────────────────────────────────────
   { id: "coca-cola", categorie: "boissons", nom: "Coca-Cola", prix: 1.5, description: "33 cl.", photo: null, allergenes: null },

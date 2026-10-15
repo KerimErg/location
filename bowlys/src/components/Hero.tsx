@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Pause, Play, ArrowDown } from "lucide-react";
 import { LienBouton, classesBouton } from "./Bouton";
 import { usePanier } from "@/lib/panier";
+import { PastilleStatut } from "./StatutLive";
 
 /**
  * Ordinateur : trois vidéos verticales côte à côte (manti · lahmacun · manti), nettes car non étirées.
@@ -82,6 +83,7 @@ export function Hero() {
               Commander maintenant
             </button>
           </div>
+          <PastilleStatut ton="clair" className="anim-monter [animation-delay:240ms]" />
         </div>
       </div>
 

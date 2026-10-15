@@ -7,7 +7,7 @@ import { BandeauCarte, Medaillon, RondCategorie } from "@/components/carte/Eleme
 
 export const metadata: Metadata = {
   title: "La carte",
-  description: "La carte BOWLY'S : mantis, lahmacuns, menus, extras et boissons, avec les prix.",
+  description: "La carte BOWLY'S : mantis, lahmacuns, menus, accompagnements et boissons, avec les prix.",
 };
 
 export default function PageCarte() {

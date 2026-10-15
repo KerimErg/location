@@ -5,6 +5,7 @@ import { CATEGORIES, PRODUITS, type CategorieId, type Produit } from "@/data/men
 import { prix } from "@/lib/format";
 import { Logo } from "../Logo";
 import { IconeCategorie } from "./IconeCategorie";
+import { AjoutRapide } from "./AjoutRapide";
 
 /** Liens de la carte (une seule source pour les adresses). */
 export const lienCategorie = (c: CategorieId) => `/carte/${c}/`;
@@ -107,10 +108,11 @@ export function TuileProduit({ p, i, petit = false }: { p: Produit; i: number; p
         <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-encre/85 via-encre/5 to-transparent" />
         <span className="absolute right-4 top-4 font-display text-xs font-black tracking-[0.2em] text-white/85">{num(i)}</span>
         {p.illustration && <span className="absolute left-3 top-3 rounded-full bg-black/40 px-2 py-0.5 text-[0.55rem] font-bold uppercase tracking-[0.12em] backdrop-blur-sm">Illustration</span>}
-        <span className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
+        <span className="absolute inset-x-0 bottom-0 p-4 pr-16 sm:p-5 sm:pr-16">
           <span className="block font-display text-[1.15rem] font-black leading-tight sm:text-xl">{p.nom}</span>
           <span className="mt-1.5 inline-block rounded-full bg-white px-2.5 py-0.5 font-display text-sm font-black text-bleu">{prix(p.prix)}</span>
         </span>
+        {!(p.options?.length) && <AjoutRapide p={p} />}
       </span>
     </Link>
   );

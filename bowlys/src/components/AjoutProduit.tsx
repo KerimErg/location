@@ -12,6 +12,7 @@ export function AjoutProduit({ p, apresAjout }: { p: Produit; apresAjout?: () =>
   const { ajouter } = usePanier();
   const [choix, setChoix] = useState<string[]>([]);
   const [qte, setQte] = useState(1);
+  const [ajoute, setAjoute] = useState(false);
   useEffect(() => { setChoix([]); setQte(1); }, [p]);
 
   const options = optionsDe(p);
@@ -62,11 +63,14 @@ export function AjoutProduit({ p, apresAjout }: { p: Produit; apresAjout?: () =>
           </div>
           <button
             type="button"
-            onClick={() => { ajouter(p.id, choix, qte); setChoix([]); setQte(1); apresAjout?.(); }}
+            onClick={() => { ajouter(p.id, choix, qte); setChoix([]); setQte(1); setAjoute(true); setTimeout(() => setAjoute(false), 1400); apresAjout?.(); }}
             className="flex h-14 flex-1 items-center justify-between gap-3 rounded-full bg-bleu px-6 font-display text-base font-black text-white shadow-[0_12px_28px_-12px_rgba(0,87,231,.7)] transition-colors hover:bg-bleu-fonce"
           >
-            <span>Ajouter</span>
-            <span className="tabular-nums">{prix(unitaire * qte)}</span>
+            {ajoute ? (
+              <span className="flex w-full items-center justify-center gap-2"><Check className="size-5" strokeWidth={3} />Ajouté au panier</span>
+            ) : (
+              <><span>Ajouter</span><span className="tabular-nums">{prix(unitaire * qte)}</span></>
+            )}
           </button>
         </div>
       )}

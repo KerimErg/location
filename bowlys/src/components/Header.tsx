@@ -8,6 +8,7 @@ import { usePanier } from "@/lib/panier";
 import { site } from "@/config/site";
 import { useFenetre } from "@/lib/useVerrouDefilement";
 import { NAV } from "@/config/navigation";
+import { PastilleStatut } from "./StatutLive";
 
 /** `transparent` : posé sur la vidéo d'accueil, devient blanc au défilement. */
 export function Header({ transparent = false }: { transparent?: boolean }) {
@@ -59,6 +60,7 @@ export function Header({ transparent = false }: { transparent?: boolean }) {
           </nav>
 
           <div className="flex items-center gap-2">
+            <span className="hidden 2xl:block"><PastilleStatut ton={clair ? "clair" : "fonce"} /></span>
             {site.commande.panierActif && (
               <button
                 type="button"

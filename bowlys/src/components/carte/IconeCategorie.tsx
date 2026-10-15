@@ -19,7 +19,7 @@ export function IconeCategorie({ id, className = "" }: { id: CategorieId; classN
         <path d="M17 28h14" />
       </>
     ),
-    extras: (
+    accompagnements: (
       <>
         <path d="M20 6h8v6l3 4v26H17V16l3-4z" />
         <path d="M17 25h14M17 33h14" />

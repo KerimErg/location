@@ -13,7 +13,7 @@ export function Footer() {
   ];
   return (
     <footer className="sur-sombre feuille overflow-hidden bg-encre text-white">
-      <div className="relative z-10 mx-auto max-w-[1240px] px-[max(20px,env(safe-area-inset-left))] pb-10 pt-20">
+      <div className="relative z-10 mx-auto max-w-[1240px] px-[max(20px,env(safe-area-inset-left))] pb-28 pt-20 md:pb-10">
         <div className="grid gap-12 md:grid-cols-[1.3fr_1fr_1fr_1fr]">
           <div>
             <Logo variante="complet" className="w-44 text-white" />

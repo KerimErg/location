@@ -23,7 +23,7 @@ export default async function PageCategorie({ params }: Params) {
   const c = CATEGORIES.find((x) => x.id === categorie);
   if (!c) notFound();
   const liste = PRODUITS.filter((p) => p.categorie === (c.id as CategorieId));
-  const petit = c.id === "extras" || c.id === "boissons";
+  const petit = c.id === "accompagnements" || c.id === "boissons";
 
   return (
     <>

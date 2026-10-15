@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Minus, Plus, X, ShoppingBag, ArrowLeft, Store, Bike, Info, Trash2 } from "lucide-react";
-import { OPTIONS } from "@/data/menu";
+import { OPTIONS, PRODUITS } from "@/data/menu";
 import { prix } from "@/lib/format";
 import { usePanier, produitParId, prixLigne } from "@/lib/panier";
 import { useFenetre } from "@/lib/useVerrouDefilement";
@@ -19,7 +19,7 @@ type Infos = { prenom: string; telephone: string; note: string };
  * que rien n'est transmis ni payé, et propose les moyens de commander qui existent.
  */
 export function Panier() {
-  const { lignes, total, nbArticles, changerQte, retirer, vider, panierOuvert, ouvrirPanier } = usePanier();
+  const { lignes, total, nbArticles, changerQte, retirer, vider, panierOuvert, ouvrirPanier, ajouter } = usePanier();
   const [etape, setEtape] = useState<Etape>("panier");
   const [mode, setMode] = useState<"retrait" | "livraison">("retrait");
   const [infos, setInfos] = useState<Infos>({ prenom: "", telephone: "", note: "" });
@@ -105,6 +105,18 @@ export function Panier() {
                 );
               })}
               <li><button type="button" onClick={vider} className="text-sm font-semibold text-gris underline underline-offset-4 hover:text-encre">Vider le panier</button></li>
+              {!lignes.some((l) => produitParId(l.produitId)?.categorie === "boissons") && (
+                <li className="mt-2 rounded-2xl bg-doux p-4">
+                  <p className="font-display font-black">Une boisson avec ça ?</p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {PRODUITS.filter((p) => p.categorie === "boissons").map((p) => (
+                      <button key={p.id} type="button" onClick={() => ajouter(p.id)} className="inline-flex h-10 items-center gap-1.5 rounded-full bg-white px-4 text-sm font-extrabold ring-1 ring-trait transition-colors hover:bg-bleu hover:text-white hover:ring-bleu">
+                        <Plus className="size-3.5" strokeWidth={3} />{p.nom} · {prix(p.prix)}
+                      </button>
+                    ))}
+                  </div>
+                </li>
+              )}
             </ul>
           ))}
 

@@ -31,7 +31,7 @@ export const site = {
     pays: "FR",
   } as { rue: string; codePostal: string; ville: string; pays: string } | null,
 
-  telephone: null as string | null, // ex. "+33 3 88 00 00 00"
+  telephone: "06 06 06 06 06" as string | null,
   email: null as string | null, // ex. "contact@bowlys.fr"
 
   /**

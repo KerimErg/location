@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, MapPin, Pause, Play } from "lucide-react";
-import { produitsDe, type CategorieId } from "@/data/menu";
-import { statut, maintenantParis } from "@/lib/horaires";
+import { ArrowRight, ArrowUpRight, Check, Copy, Navigation, Pause, Phone, Play } from "lucide-react";
+import { CATEGORIES, produitsDe, type CategorieId } from "@/data/menu";
+import { prix } from "@/lib/format";
+import { maintenantParis, duree } from "@/lib/horaires";
+import { PastilleStatut, useStatut } from "./StatutLive";
 import { site, adresseLigne, lienItineraire, lienPlanIntegre, JOURS } from "@/config/site";
 import { Photo } from "./Photo";
 import { LienBouton, classesBouton } from "./Bouton";
@@ -91,39 +93,137 @@ export function Bienvenue() {
   );
 }
 
-/* ─────────── Nos spécialités : trois arches vers la carte ─────────── */
+/* ─────────── Notre carte : vitrine interactive ─────────── */
+const VITRINE: { cat: CategorieId; photo: string | null; phrase: string }[] = [
+  { cat: "mantis", photo: "/images/illustration-manti-beurre.webp", phrase: "Petits raviolis turcs, yaourt frais et beurre pimenté versé à la cuillère." },
+  { cat: "lahmacuns", photo: "/images/illustration-lahmacun-garniture.webp", phrase: "Une pâte fine, une garniture généreuse, cuite au four jusqu'à être croustillante." },
+  { cat: "accompagnements", photo: null, phrase: "Sauce piquante, fromage, pain ou boisson : de quoi compléter votre repas." },
+];
+
 export function Specialites() {
-  const arches = [
-    { cat: "mantis" as CategorieId, titre: "Mantis", sous: produitsDe("mantis").map((p) => p.nom.replace("Manti ", "")).join(" · "), photo: "/images/illustration-manti-beurre.webp", lettre: "M" },
-    { cat: "lahmacuns" as CategorieId, titre: "Lahmacuns", sous: produitsDe("lahmacuns").map((p) => p.nom.replace("Lahmacun ", "")).join(" · "), photo: "/images/illustration-lahmacun-garniture.webp", lettre: "L" },
-    { cat: "menus" as CategorieId, titre: "Menus", sous: produitsDe("menus").map((p) => p.nom.replace("Menu ", "")).join(" · "), photo: "/images/illustration-manti-assiette.webp", lettre: "M" },
-  ];
+  const [actif, setActif] = useState(0);
+  const v = VITRINE[actif];
+  const cat = CATEGORIES.find((c) => c.id === v.cat)!;
+  const produits = produitsDe(v.cat);
+  const desPrix = Math.min(...produits.map((p) => p.prix));
   return (
-    <section id="specialites" aria-labelledby="spe-titre" className="feuille sous-feuille overflow-hidden bg-doux pt-24 sm:pt-32">
-      <div className={conteneur}>
-        <EnTete id="spe-titre" surtitre="Nos spécialités" titre="Notre carte" />
-        <div className="mx-auto mt-16 grid max-w-[1040px] gap-14 sm:grid-cols-3 sm:gap-8">
-          {arches.map((a, k) => (
-            <Link key={a.cat} href={`/carte/${a.cat}/`} className={`${["apparait", "apparait-2", "apparait-3"][k]} group relative block text-center`}>
-              <span className="relative mx-auto block w-[min(100%,300px)] rounded-t-full border border-bleu/25 p-2.5">
-                <span className="relative block aspect-[3/4] overflow-hidden rounded-t-full bg-encre">
-                  <Photo src={a.photo} alt={a.titre} className="absolute inset-0" sizes="(max-width: 640px) 80vw, 300px" />
-                </span>
-              </span>
-              <span className="relative mt-7 block font-display text-[2rem] font-black leading-none">{a.titre}</span>
-              <span className="relative mt-2.5 block text-[0.95rem] font-semibold text-gris">{a.sous}</span>
-              <span className="relative mt-4 inline-flex items-center gap-2 border-b-2 border-bleu/30 pb-1 text-[0.72rem] font-extrabold uppercase tracking-[0.22em] text-bleu transition-colors group-hover:border-bleu">
-                Découvrir <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
-              </span>
-            </Link>
-          ))}
+    <section id="specialites" aria-labelledby="spe-titre" className="sur-sombre feuille sous-feuille overflow-hidden bg-bleu pt-24 text-white sm:pt-32">
+      <Logo variante="icone" titre="" className="pointer-events-none absolute -left-24 bottom-10 w-[420px] text-white/[0.06]" />
+      <div className={`${conteneur} relative grid items-center gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-20`}>
+        <div className="apparait min-w-0">
+          <Surtitre clair centre={false}>Notre carte</Surtitre>
+          <h2 id="spe-titre" className="sr-only">Notre carte</h2>
+
+          {/* Sélecteur : grands titres sur ordinateur, pastilles sur mobile */}
+          <div role="tablist" aria-label="Spécialités" className="mt-8 hidden gap-1 lg:grid">
+            {VITRINE.map((x, i) => {
+              const c = CATEGORIES.find((k) => k.id === x.cat)!;
+              const on = i === actif;
+              return (
+                <button key={x.cat} role="tab" aria-selected={on} aria-controls="vitrine" onMouseEnter={() => setActif(i)} onFocus={() => setActif(i)} onClick={() => setActif(i)}
+                  className={`group flex items-baseline gap-5 text-left font-display text-[clamp(2.2rem,3.4vw,3.4rem)] font-black leading-[1.08] tracking-[-0.02em] transition-colors duration-300 ${on ? "text-white" : "text-white/35 hover:text-white/70"}`}>
+                  <span className="w-8 text-sm font-black tracking-[0.2em] opacity-80">{String(i + 1).padStart(2, "0")}</span>
+                  {c.nom}
+                  <ArrowRight className={`size-8 self-center transition-all duration-300 ${on ? "translate-x-0 opacity-100" : "-translate-x-3 opacity-0"}`} strokeWidth={2.6} />
+                </button>
+              );
+            })}
+          </div>
+          <div role="tablist" aria-label="Spécialités" className="sans-barre -mx-1 mt-7 flex gap-2 overflow-x-auto px-1 lg:hidden">
+            {VITRINE.map((x, i) => {
+              const c = CATEGORIES.find((k) => k.id === x.cat)!;
+              return (
+                <button key={x.cat} role="tab" aria-selected={i === actif} aria-controls="vitrine" onClick={() => setActif(i)}
+                  className={`h-11 shrink-0 rounded-full px-5 font-display font-extrabold transition-colors ${i === actif ? "bg-white text-bleu" : "bg-white/15 text-white"}`}>
+                  {c.nom}
+                </button>
+              );
+            })}
+          </div>
+
+          <div key={v.cat} className="anim-monter mt-8 hidden lg:block">
+            <p className="max-w-[40ch] text-lg font-semibold text-white/90">{v.phrase}</p>
+            <ListeVitrine produits={produits} />
+            <div className="mt-8 flex flex-wrap gap-3">
+              <LienBouton href={`/carte/${cat.id}/`} style="blanc" taille="lg">Voir les {cat.nom.toLowerCase()} <ArrowRight className="size-5" /></LienBouton>
+              <LienBouton href="/carte/" style="contour-blanc" taille="lg">Toute la carte</LienBouton>
+            </div>
+          </div>
         </div>
-        <div className="apparait mt-16 flex justify-center">
-          <LienBouton href="/carte/" taille="lg">Voir toute la carte</LienBouton>
+
+        <div id="vitrine" role="tabpanel" className="apparait-2 min-w-0">
+          <Link href={`/carte/${cat.id}/`} className="group relative block aspect-[4/5] overflow-hidden rounded-[2rem] bg-encre shadow-[0_50px_90px_-40px_rgba(0,0,0,.6)] sm:aspect-square lg:aspect-[4/5]">
+            {VITRINE.map((x, i) => (
+              <span key={x.cat} aria-hidden={i !== actif} className={`absolute inset-0 transition-opacity duration-700 ${i === actif ? "opacity-100" : "opacity-0"}`}>
+                {x.photo ? (
+                  <Photo src={x.photo} alt="" className={`absolute inset-0 ${i === actif ? "[&_img]:scale-100" : "[&_img]:scale-110"} [&_img]:transition-transform [&_img]:duration-[1.4s]`} sizes="(max-width: 1024px) 100vw, 560px" zoom={false} />
+                ) : (
+                  <span className="absolute inset-0 grid place-items-center bg-white text-bleu">
+                    <span className="grid justify-items-center gap-5">
+                      <IconeAccomp />
+                      <span className="flex flex-wrap justify-center gap-2 px-6">
+                        {produitsDe("accompagnements").map((p) => <span key={p.id} className="rounded-full bg-bleu-ciel px-3 py-1.5 text-sm font-extrabold">{p.nom}</span>)}
+                      </span>
+                    </span>
+                  </span>
+                )}
+              </span>
+            ))}
+            {v.photo && <span className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-encre/80 to-transparent" />}
+            <span className={`absolute right-5 top-5 grid size-24 -rotate-6 place-items-center rounded-full text-center shadow-xl transition-transform duration-500 group-hover:rotate-0 sm:size-28 ${v.photo ? "bg-white text-bleu" : "bg-bleu text-white"}`}>
+              <span className="leading-none">
+                <span className="block text-[0.65rem] font-extrabold uppercase tracking-[0.16em]">dès</span>
+                <span className="mt-1 block font-display text-2xl font-black sm:text-[1.7rem]">{prix(desPrix).replace(",00", "")}</span>
+              </span>
+            </span>
+            <span className={`absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-6 sm:p-8 ${v.photo ? "" : "text-encre"}`}>
+              <span>
+                <span className={`block text-[0.72rem] font-extrabold uppercase tracking-[0.22em] ${v.photo ? "text-white/80" : "text-bleu"}`}>{produits.length} {v.cat === "accompagnements" ? "choix" : "recettes"}</span>
+                <span className={`mt-1 block font-display font-black leading-none ${cat.nom.length > 10 ? "text-[clamp(1.6rem,3.2vw,2.2rem)]" : "text-[clamp(2rem,4vw,2.8rem)]"}`}>{cat.nom}</span>
+              </span>
+              <span className="grid size-14 shrink-0 place-items-center rounded-full bg-bleu text-white transition-transform duration-500 group-hover:-rotate-45"><ArrowRight className="size-6" strokeWidth={2.6} /></span>
+            </span>
+            {v.photo && <span className="absolute left-5 top-5 rounded-full bg-black/40 px-2.5 py-1 text-[0.6rem] font-bold uppercase tracking-[0.12em] backdrop-blur-sm">Photo d&apos;illustration</span>}
+          </Link>
+
+          {/* Mobile : texte et liste sous la photo */}
+          <div key={`m-${v.cat}`} className="anim-monter mt-7 lg:hidden">
+            <p className="text-[1.05rem] font-semibold text-white/90">{v.phrase}</p>
+            <ListeVitrine produits={produits} />
+            <div className="mt-7 grid gap-3">
+              <LienBouton href={`/carte/${cat.id}/`} style="blanc" taille="lg" className="w-full">Voir les {cat.nom.toLowerCase()}</LienBouton>
+              <LienBouton href="/carte/" style="contour-blanc" taille="lg" className="w-full">Toute la carte</LienBouton>
+            </div>
+          </div>
         </div>
-        <p className="mt-6 text-center text-xs font-semibold uppercase tracking-[0.18em] text-gris">Photos d&apos;illustration</p>
       </div>
     </section>
+  );
+}
+
+function ListeVitrine({ produits }: { produits: ReturnType<typeof produitsDe> }) {
+  return (
+    <ul className="mt-6 grid gap-0.5">
+      {produits.map((p) => (
+        <li key={p.id}>
+          <Link href={`/carte/${p.categorie}/${p.id}/`} className="group flex items-baseline gap-3 border-b border-white/15 py-3 font-display text-lg font-extrabold">
+            <span className="transition-transform duration-300 group-hover:translate-x-1">{p.nom}</span>
+            <span aria-hidden="true" className="flex-1 border-b-2 border-dotted border-white/25" />
+            <span className="tabular-nums">{prix(p.prix)}</span>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function IconeAccomp() {
+  return (
+    <svg viewBox="0 0 48 48" aria-hidden="true" className="w-24">
+      <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M20 6h8v6l3 4v26H17V16l3-4z" /><path d="M17 25h14M17 33h14" />
+      </g>
+    </svg>
   );
 }
 
@@ -193,24 +293,6 @@ export function Galerie() {
 }
 
 /* ─────────── Nous trouver ─────────── */
-function Statut() {
-  const [s, setS] = useState<{ ouvert: boolean; texte: string } | null>(null);
-  useEffect(() => {
-    if (!site.horaires) return;
-    const maj = () => setS(statut(site.horaires!));
-    maj();
-    const t = setInterval(maj, 60_000);
-    return () => clearInterval(t);
-  }, []);
-  if (!s) return null;
-  return (
-    <span className={`inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm font-extrabold ${s.ouvert ? "bg-bleu text-white" : "bg-encre text-white"}`}>
-      <span className={`size-2 rounded-full ${s.ouvert ? "animate-pulse bg-white" : "bg-white/50"}`} />
-      {s.texte}
-    </span>
-  );
-}
-
 function Plan() {
   const [charge, setCharge] = useState(false);
   const [encadre, setEncadre] = useState(false);
@@ -218,16 +300,23 @@ function Plan() {
   const src = lienPlanIntegre();
   if (!src) return null;
   return (
-    <div className="sur-sombre relative h-full min-h-[420px] overflow-hidden rounded-[30px] bg-encre text-white">
+    <div className="sur-sombre relative h-full min-h-[340px] overflow-hidden rounded-[2rem] bg-encre text-white">
       {charge ? (
         <iframe src={src} title={`Plan d'accès BOWLY'S, ${adresseLigne()}`} className="absolute inset-0 size-full border-0" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
       ) : (
         <div className="absolute inset-0 grid place-items-center p-8 text-center">
-          <div aria-hidden="true" className="absolute inset-0 [background-image:linear-gradient(rgba(255,255,255,.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.06)_1px,transparent_1px)] [background-size:48px_48px]" />
-          <div aria-hidden="true" className="absolute left-1/2 top-1/2 size-[380px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-bleu/25 blur-3xl" />
+          {/* rues stylisées */}
+          <svg aria-hidden="true" className="absolute inset-0 size-full opacity-[0.14]" preserveAspectRatio="none" viewBox="0 0 400 300">
+            <g fill="none" stroke="#fff" strokeWidth="10" strokeLinecap="round"><path d="M-20 210 C 80 190 140 120 420 140" /><path d="M120 -20 L 170 320" /><path d="M300 -20 C 280 80 300 200 260 320" /></g>
+            <g fill="none" stroke="#fff" strokeWidth="3"><path d="M-20 60 L 420 90" /><path d="M-20 270 L 420 250" /><path d="M40 -20 L 70 320" /><path d="M360 -20 L 380 320" /></g>
+          </svg>
+          <div aria-hidden="true" className="absolute left-1/2 top-[44%] size-[340px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-bleu/30 blur-3xl" />
           <div className="relative grid justify-items-center gap-5">
-            <span className="relative grid size-20 place-items-center rounded-full bg-bleu shadow-[0_0_0_10px_rgba(0,87,231,.25),0_0_0_22px_rgba(0,87,231,.12)]">
-              <MapPin className="size-8" strokeWidth={2.4} />
+            <span className="relative grid size-20 place-items-center">
+              <span className="absolute inset-0 animate-ping rounded-full bg-bleu/50" />
+              <span className="relative grid size-20 place-items-center rounded-full bg-bleu shadow-[0_0_0_10px_rgba(0,87,231,.25)]">
+                <Logo variante="icone" titre="" className="w-10 text-white" />
+              </span>
             </span>
             <p className="font-display text-2xl font-black leading-tight">{site.restaurant!.rue}<br />{site.restaurant!.codePostal} {site.restaurant!.ville}</p>
             {encadre ? (
@@ -235,7 +324,6 @@ function Plan() {
             ) : (
               <button type="button" onClick={() => setCharge(true)} className={classesBouton("blanc", "lg")}>Afficher le plan</button>
             )}
-            {!encadre && <p className="max-w-[32ch] text-sm text-white/75">Plan fourni par Google Maps, chargé uniquement si vous le demandez.</p>}
           </div>
         </div>
       )}
@@ -243,54 +331,107 @@ function Plan() {
   );
 }
 
+function BoutonCopier() {
+  const [ok, setOk] = useState(false);
+  const copier = async () => {
+    const a = adresseLigne()!;
+    try { await navigator.clipboard.writeText(a); setOk(true); }
+    catch {
+      const t = document.getElementById("adresse-texte");
+      if (t) { const r = document.createRange(); r.selectNodeContents(t); const sel = getSelection(); sel?.removeAllRanges(); sel?.addRange(r); }
+    }
+    setTimeout(() => setOk(false), 1800);
+  };
+  return (
+    <button type="button" onClick={copier} className="inline-flex h-10 items-center gap-2 rounded-full bg-white/15 px-4 text-sm font-extrabold text-white transition-colors hover:bg-white/25">
+      {ok ? <Check className="size-4" strokeWidth={3} /> : <Copy className="size-4" />}{ok ? "Adresse copiée" : "Copier l'adresse"}
+    </button>
+  );
+}
+
 export function NousTrouver() {
   const h = site.horaires;
-  const itin = lienItineraire();
+  const s = useStatut();
   const [aujourdhui, setAujourdhui] = useState<string | null>(null);
   useEffect(() => { setAujourdhui(maintenantParis().jour); }, []);
   if (!site.restaurant) return null;
+  const a = encodeURIComponent(adresseLigne()!);
+  const itineraires = [
+    { nom: "Google Maps", href: lienItineraire()! },
+    { nom: "Waze", href: `https://waze.com/ul?q=${a}&navigate=yes` },
+    { nom: "Plans", href: `https://maps.apple.com/?daddr=${a}` },
+  ];
+  const tel = site.telephone;
+
   return (
     <section id="contact" aria-labelledby="contact-titre" className="feuille sous-feuille bg-doux pt-24 sm:pt-32">
       <div className={conteneur}>
-        <EnTete id="contact-titre" surtitre="Contact" titre="Nous trouver" />
-        <div className="mt-14 grid gap-6 lg:grid-cols-[1fr_1.1fr]">
-          <div className="apparait grid content-start gap-6 rounded-[30px] bg-white p-8 ring-1 ring-trait sm:p-10">
-            <div>
-              <p className="text-[0.75rem] font-extrabold uppercase tracking-[0.22em] text-bleu">Adresse</p>
-              <address className="mt-3 font-display text-[clamp(1.8rem,3vw,2.3rem)] font-black not-italic leading-[1.1]">
-                {site.restaurant.rue}<br />{site.restaurant.codePostal} {site.restaurant.ville}
-              </address>
-              <div className="mt-6 flex flex-wrap gap-3">
-                {itin && <LienBouton href={itin} externe>Itinéraire <ArrowUpRight className="size-4" /></LienBouton>}
-                {site.telephone && <LienBouton href={`tel:${site.telephone.replace(/\s/g, "")}`} style="contour">{site.telephone}</LienBouton>}
-                {site.reseaux.instagram && <LienBouton href={site.reseaux.instagram} externe style="contour">Instagram</LienBouton>}
-              </div>
-            </div>
-            <div className="h-px bg-trait" />
-            <div>
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <p className="text-[0.75rem] font-extrabold uppercase tracking-[0.22em] text-bleu">Horaires</p>
-                <Statut />
-              </div>
-              {h ? (
-                <dl className="mt-4">
-                  {JOURS.map((j) => {
-                    const actif = j === aujourdhui;
-                    return (
-                      <div key={j} className={`flex justify-between gap-6 rounded-xl px-3 py-2.5 ${actif ? "bg-bleu-ciel font-extrabold text-bleu" : "font-semibold text-encre"}`}>
-                        <dt className="capitalize">{j}{actif && <span className="sr-only"> (aujourd&apos;hui)</span>}</dt>
-                        <dd className="tabular-nums">{h[j].length ? h[j].map((p) => `${p.ouverture} – ${p.fermeture}`).join(" · ") : "Fermé"}</dd>
-                      </div>
-                    );
-                  })}
-                </dl>
-              ) : (
-                <p className="mt-4 font-semibold text-gris">Horaires bientôt disponibles.</p>
+        <EnTete id="contact-titre" surtitre="Contact" titre="On vous attend." />
+
+        <div className="mt-14 grid gap-5 lg:grid-cols-[1.1fr_1fr]">
+          {/* Carte vivante : statut, compte à rebours, actions */}
+          <div className="sur-sombre apparait relative overflow-hidden rounded-[2rem] bg-bleu p-7 text-white sm:p-10">
+            <Logo variante="icone" titre="" className="pointer-events-none absolute -bottom-10 -right-10 w-72 text-white/10" />
+            <div className="relative">
+              <PastilleStatut ton="clair" />
+              <p className="mt-6 font-display text-[clamp(2.2rem,5vw,3.4rem)] font-black leading-[1.02] tracking-[-0.02em]">
+                {s ? (s.ouvert ? <>On est ouverts,<br />venez vite !</> : <>Bientôt l&apos;heure<br />du manti.</>) : <>Le manti<br />vous attend.</>}
+              </p>
+              {s?.dans != null && (
+                <p className="mt-3 text-lg font-semibold text-white/90">
+                  {s.ouvert ? <>Encore <strong className="text-white">{duree(s.dans)}</strong> avant la fermeture.</> : <>Ouverture dans <strong className="text-white">{duree(s.dans)}</strong>.</>}
+                </p>
               )}
+
+              <address className="mt-8 not-italic">
+                <span className="text-[0.72rem] font-extrabold uppercase tracking-[0.22em] text-white/70">Adresse</span>
+                <span id="adresse-texte" className="mt-1 block font-display text-2xl font-black">{site.restaurant.rue}, {site.restaurant.codePostal} {site.restaurant.ville}</span>
+              </address>
+              <div className="mt-4"><BoutonCopier /></div>
+
+              <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                {tel && (
+                  <a href={`tel:${tel.replace(/\s/g, "")}`} className="group flex h-16 items-center gap-4 rounded-2xl bg-white px-5 text-bleu transition-transform hover:-translate-y-0.5">
+                    <span className="grid size-10 place-items-center rounded-full bg-bleu text-white"><Phone className="size-5" /></span>
+                    <span className="leading-tight"><span className="block text-xs font-extrabold uppercase tracking-[0.16em] text-bleu/70">Appeler</span><span className="font-display text-lg font-black tabular-nums">{tel}</span></span>
+                  </a>
+                )}
+                <a href={itineraires[0].href} target="_blank" rel="noopener noreferrer" className="group flex h-16 items-center gap-4 rounded-2xl bg-encre px-5 text-white transition-transform hover:-translate-y-0.5">
+                  <span className="grid size-10 place-items-center rounded-full bg-white/15"><Navigation className="size-5" /></span>
+                  <span className="leading-tight"><span className="block text-xs font-extrabold uppercase tracking-[0.16em] text-white/70">Y aller</span><span className="font-display text-lg font-black">Itinéraire</span></span>
+                </a>
+              </div>
+              <p className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-semibold text-white/80">
+                Ouvrir avec :
+                {itineraires.map((x) => <a key={x.nom} href={x.href} target="_blank" rel="noopener noreferrer" className="underline decoration-white/40 underline-offset-4 hover:decoration-white">{x.nom}</a>)}
+              </p>
             </div>
           </div>
-          <div className="apparait-2"><Plan /></div>
+
+          <div className="apparait-2 min-h-[360px]"><Plan /></div>
         </div>
+
+        {/* La semaine en un coup d'œil */}
+        {h && (
+          <div className="apparait mt-5 rounded-[2rem] bg-white p-6 ring-1 ring-trait sm:p-8">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <p className="font-display text-xl font-black">Horaires de la semaine</p>
+              <PastilleStatut />
+            </div>
+            <ol className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-7">
+              {JOURS.map((j) => {
+                const on = j === aujourdhui;
+                return (
+                  <li key={j} className={`rounded-2xl p-4 transition-colors ${on ? "bg-bleu text-white shadow-[0_14px_30px_-14px_rgba(0,87,231,.8)]" : "bg-doux"}`}>
+                    <span className={`block text-[0.7rem] font-extrabold uppercase tracking-[0.18em] ${on ? "text-white/80" : "text-gris"}`}>{on ? "Aujourd'hui" : j}</span>
+                    <span className="mt-1 block font-display font-black capitalize">{on ? j : ""}</span>
+                    <span className={`block font-display font-black tabular-nums ${on ? "" : "text-encre"}`}>{h[j].length ? h[j].map((p) => `${p.ouverture} – ${p.fermeture}`).join(" · ") : "Fermé"}</span>
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
+        )}
       </div>
     </section>
   );
