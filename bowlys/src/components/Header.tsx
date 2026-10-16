@@ -15,6 +15,7 @@ export function Header({ transparent = false }: { transparent?: boolean }) {
   const { nbArticles, ouvrirPanier, bump } = usePanier();
   const [scrolle, setScrolle] = useState(!transparent);
   const [cache, setCache] = useState(false);
+  const garde = useRef(0);
   const [menu, setMenu] = useState(false);
   const panneau = useRef<HTMLDivElement>(null);
   useFenetre(menu, panneau, () => setMenu(false));
@@ -25,12 +26,15 @@ export function Header({ transparent = false }: { transparent?: boolean }) {
     const f = () => {
       const y = window.scrollY;
       if (transparent) setScrolle(y > 40);
-      if (Math.abs(y - avant) > 6) { setCache(y > avant && y > 480); avant = y; }
+      if (Math.abs(y - avant) > 6) { setCache(y > avant && y > 480 && Date.now() > garde.current); avant = y; }
     };
     f();
     window.addEventListener("scroll", f, { passive: true });
     return () => window.removeEventListener("scroll", f);
   }, [transparent]);
+
+  // Un article vient d'être ajouté : l'en-tête revient pour montrer le panier.
+  useEffect(() => { if (bump) { garde.current = Date.now() + 2500; setCache(false); } }, [bump]);
 
   const clair = !scrolle; // texte blanc sur la vidéo
   const commander = () => (nbArticles > 0 ? ouvrirPanier() : (window.location.href = "/carte/"));

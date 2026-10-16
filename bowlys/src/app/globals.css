@@ -49,16 +49,14 @@ h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; }
 /* Apparition au défilement : progressive, le contenu reste visible sans support. */
 /* Le contenu n'est jamais invisible : seul un léger glissement accompagne l'arrivée. */
 @keyframes arriver { from { transform: translateY(70px) scale(.96); } to { transform: none; } }
-@keyframes hero-sortie { to { transform: scale(.9); border-radius: 56px; filter: brightness(.7); } }
+@keyframes hero-sortie { to { transform: scale(.92); } }
 @keyframes parallaxe { from { transform: translateY(-7%) scale(1.14); } to { transform: translateY(7%) scale(1.14); } }
-@keyframes feuille-entree { from { border-top-left-radius: 140px; border-top-right-radius: 140px; } to { border-top-left-radius: 56px; border-top-right-radius: 56px; } }
 @supports (animation-timeline: view()) {
   .apparait { animation: arriver linear both; animation-timeline: view(); animation-range: entry 0% cover 28%; }
   .apparait-2 { animation: arriver linear both; animation-timeline: view(); animation-range: entry 8% cover 34%; }
   .apparait-3 { animation: arriver linear both; animation-timeline: view(); animation-range: entry 16% cover 40%; }
   .hero-sortie { animation: hero-sortie linear both; animation-timeline: view(); animation-range: exit 0% exit 90%; transform-origin: 50% 100%; }
   .parallaxe img { animation: parallaxe linear both; animation-timeline: view(); animation-range: cover; }
-  .feuille { animation: feuille-entree linear both; animation-timeline: view(); animation-range: entry 0% entry 60%; }
 }
 
 /* Sections empilées : chaque partie vient recouvrir la précédente avec un bord arrondi. */
@@ -108,10 +106,8 @@ h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; }
 }
 
 /* ── Photos qui se dévoilent en entrant à l'écran ── */
-@keyframes revele-cadre { from { clip-path: inset(10% 6% 0 6% round 1.4rem); } to { clip-path: inset(0 0 0 0 round 0); } }
 @keyframes revele-photo { from { scale: 1.18; } to { scale: 1; } }
 @supports (animation-timeline: view()) {
-  .revele { animation: revele-cadre linear both; animation-timeline: view(); animation-range: entry 0% cover 32%; }
   .revele img { animation: revele-photo linear both; animation-timeline: view(); animation-range: entry 0% cover 45%; }
 }
 

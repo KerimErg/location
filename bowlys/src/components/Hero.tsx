@@ -21,27 +21,38 @@ const PANNEAUX = [
 export function Hero() {
   const refs = useRef<(HTMLVideoElement | null)[]>([]);
   const [lecture, setLecture] = useState(true);
+  const [visible, setVisible] = useState(true);
+  const zone = useRef<HTMLElement>(null);
   const { nbArticles, ouvrirPanier } = usePanier();
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) setLecture(false);
   }, []);
 
+  // Les vidéos se mettent en pause dès que la bannière sort de l'écran (moins de batterie, défilement plus fluide).
+  useEffect(() => {
+    const el = zone.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setVisible(e.isIntersecting), { threshold: 0.05 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   useEffect(() => {
     const sync = () =>
       refs.current.forEach((v) => {
         if (!v) return;
-        const visible = v.offsetParent !== null;
-        if (lecture && visible) v.play().catch(() => {});
+        const affiche = v.offsetParent !== null;
+        if (lecture && visible && affiche) v.play().catch(() => {});
         else v.pause();
       });
     sync();
     window.addEventListener("resize", sync);
     return () => window.removeEventListener("resize", sync);
-  }, [lecture]);
+  }, [lecture, visible]);
 
   return (
-    <section aria-labelledby="hero-titre" className="sur-sombre hero-sortie relative h-[100svh] min-h-[620px] max-h-[1000px] overflow-hidden bg-encre text-white">
+    <section ref={zone} aria-labelledby="hero-titre" className="sur-sombre hero-sortie relative h-[100svh] min-h-[620px] max-h-[1000px] overflow-hidden bg-encre text-white">
       <div className="absolute inset-0 grid grid-cols-1 md:grid-cols-3" aria-hidden="true">
         {PANNEAUX.map((p, i) => (
           <div key={p.video} className={`relative overflow-hidden ${p.mobile ? "md:hidden" : "hidden md:block"} ${i === 1 ? "md:border-x md:border-white/10" : ""}`}>

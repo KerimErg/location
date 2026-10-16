@@ -59,15 +59,14 @@ export function EnTete({ surtitre, titre, id, clair = false, sousTitre }: { surt
 }
 
 /* ─────────── Bienvenue chez BOWLY'S ─────────── */
-/** Ingrédients détourés qui flottent autour du panneau. */
+/** Petits lahmacuns qui flottent autour du panneau. */
 const INGREDIENTS = [
-  { src: "/images/choix/tomate.webp", classe: "left-[46%] -top-7 w-16 sm:w-20 [--r:-10deg]", delai: "0s" },
-  { src: "/images/choix/salade.webp", classe: "-right-3 top-[38%] w-14 sm:-right-6 sm:w-[4.5rem] [--r:12deg]", delai: "-2s" },
-  { src: "/images/choix/sauce-blanche.webp", classe: "-bottom-8 right-[22%] w-[4.5rem] sm:w-24 [--r:6deg]", delai: "-4s" },
+  { src: "/images/choix/lahmacun-nature.webp", classe: "left-[46%] -top-8 w-[4.5rem] sm:w-24 [--r:-10deg]", delai: "0s" },
+  { src: "/images/choix/lahmacun-poulet.webp", classe: "-right-3 top-[14%] w-16 sm:-right-7 sm:w-20 lg:top-[38%] [--r:14deg]", delai: "-2s" },
+  { src: "/images/choix/lahmacun-boeuf.webp", classe: "-bottom-9 right-[22%] w-[4.5rem] sm:w-[5.5rem] [--r:6deg]", delai: "-4s" },
 ];
 
 export function Bienvenue() {
-  const box = produitsDe("box");
   const durum = produitsDe("durum")[0];
   return (
     <section id="concept" aria-labelledby="bienvenue-titre" className="sous-feuille relative bg-white pt-20 [overflow-x:clip] sm:pt-28">
@@ -75,7 +74,7 @@ export function Bienvenue() {
         <div className="apparait relative">
           <div className="sur-sombre relative grid overflow-hidden rounded-[2.2rem] bg-vin text-white shadow-[0_60px_120px_-60px_rgba(45,4,6,.9)] lg:grid-cols-[1.1fr_1fr] lg:rounded-[3rem]">
             {/* Halo chaud derrière le plat */}
-            <div aria-hidden="true" className="absolute right-[-10%] top-1/2 size-[70%] -translate-y-1/2 rounded-full bg-rouge/30 blur-[100px]" />
+            <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(55%_70%_at_78%_50%,rgba(140,2,10,.35),transparent_70%)]" />
 
             {/* Photo : le fond bordeaux du menu se fond dans le panneau (bords estompés) */}
             <div className="relative order-1 lg:order-2">
@@ -91,12 +90,14 @@ export function Bienvenue() {
               <h2 id="bienvenue-titre" className="mt-5">
                 <Logo variante="nom" titre="BOWLY'S" className="mx-auto w-[min(88%,400px)] text-white lg:mx-0" />
               </h2>
-              <p className="mt-6 font-display text-[clamp(1.35rem,2.4vw,1.9rem)] font-bold leading-tight">Le lahmacun, fin et généreux.</p>
-              <p className="mx-auto mt-3 max-w-[38ch] text-[1.05rem] text-white/75 lg:mx-0">En box à partager ou en dürüm à composer, sur place ou à emporter.</p>
-              <ul className="mt-7 flex flex-wrap justify-center gap-2 lg:justify-start">
-                <li className="rounded-full bg-white/10 px-4 py-2 text-sm font-bold ring-1 ring-white/20">Box dès {prix(Math.min(...box.map((p) => p.prix)))}</li>
-                <li className="rounded-full bg-white/10 px-4 py-2 text-sm font-bold ring-1 ring-white/20">Dürüm {prix(durum.prix)}</li>
-              </ul>
+              <div className="mx-auto mt-7 grid max-w-[44ch] gap-4 text-[1.05rem] leading-relaxed text-white/80 lg:mx-0">
+                <p>
+                  Chez BOWLY&apos;S, tout tourne autour du lahmacun. Une pâte fine, une garniture parfumée, des crudités fraîches et la sauce que vous aimez.
+                </p>
+                <p>
+                  BOWLY&apos;S est né d&apos;une idée simple : donner au lahmacun la place qu&apos;il mérite, avec une carte courte pensée entièrement autour de lui. En box de petits formats pour partager, ou en dürüm grand format composé à votre goût. Sur place ou à emporter.
+                </p>
+              </div>
               <div className="mt-8 flex flex-col flex-wrap justify-center gap-3 sm:flex-row lg:justify-start">
                 <LienBouton href="/carte/" style="blanc" taille="lg">Découvrir la carte <ArrowRight className="size-5" /></LienBouton>
                 <LienBouton href={`/carte/durum/${durum.id}/`} style="contour-blanc" taille="lg">Composer mon dürüm</LienBouton>
@@ -202,7 +203,7 @@ export function Galerie() {
     <section aria-labelledby="galerie-titre" className="sur-sombre feuille sous-feuille overflow-hidden bg-encre pt-24 text-white sm:pt-32">
       <div className={`${conteneur} grid items-center gap-16 md:grid-cols-2 md:gap-24`}>
         <div className="apparait relative mx-auto w-[min(78vw,340px)] md:order-2">
-          <div aria-hidden="true" className="absolute -inset-12 -z-10 rounded-full bg-rouge/45 blur-3xl" />
+          <div aria-hidden="true" className="absolute -inset-16 -z-10 rounded-full bg-[radial-gradient(closest-side,rgba(140,2,10,.55),transparent)]" />
           <div className="relative aspect-[9/16] overflow-hidden rounded-[34px] bg-encre shadow-[0_50px_90px_-40px_rgba(11,15,26,.7)] ring-8 ring-white/10">
             {STORIES.map((s, k) => (
               <div key={s.src} className={`absolute inset-0 transition-opacity duration-700 ${k === i ? "opacity-100" : "opacity-0"}`} aria-hidden={k !== i}>
@@ -270,7 +271,7 @@ function Plan() {
             <g fill="none" stroke="#fff" strokeWidth="10" strokeLinecap="round"><path d="M-20 210 C 80 190 140 120 420 140" /><path d="M120 -20 L 170 320" /><path d="M300 -20 C 280 80 300 200 260 320" /></g>
             <g fill="none" stroke="#fff" strokeWidth="3"><path d="M-20 60 L 420 90" /><path d="M-20 270 L 420 250" /><path d="M40 -20 L 70 320" /><path d="M360 -20 L 380 320" /></g>
           </svg>
-          <div aria-hidden="true" className="absolute left-1/2 top-[44%] size-[340px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-rouge/30 blur-3xl" />
+          <div aria-hidden="true" className="absolute left-1/2 top-[44%] size-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(140,2,10,.4),transparent)]" />
           <div className="relative grid justify-items-center gap-5">
             <span className="relative grid size-20 place-items-center">
               <span className="absolute inset-0 animate-ping rounded-full bg-rouge/50" />
