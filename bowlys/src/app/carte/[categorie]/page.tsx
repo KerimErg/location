@@ -39,15 +39,15 @@ export default async function PageCategorie({ params }: Params) {
           </div>
         </Medaillon>
         <TitreCarte titre={c.nom} accroche={c.accroche} />
-        <div className="entree mt-10 [animation-delay:.2s]"><NavCategories actif={c.id} /></div>
-        <ul className={`mx-auto mt-12 grid gap-3 px-4 sm:gap-6 sm:px-8 ${liste.length === 1 ? "max-w-2xl grid-cols-1" : petit ? "max-w-5xl grid-cols-2 md:grid-cols-4" : liste.length % 2 === 0 ? "max-w-4xl grid-cols-2" : "max-w-5xl grid-cols-2 md:grid-cols-3"}`}>
+        <div className="entree mt-6 [animation-delay:.2s] sm:mt-10"><NavCategories actif={c.id} /></div>
+        <ul className={`mx-auto mt-7 grid gap-3 sm:mt-12 px-4 sm:gap-6 sm:px-8 ${liste.length === 1 ? "max-w-2xl grid-cols-1" : petit ? "max-w-5xl grid-cols-2 md:grid-cols-4" : liste.length % 2 === 0 ? "max-w-4xl grid-cols-2" : "max-w-5xl grid-cols-2 md:grid-cols-3"}`}>
           {liste.map((p, i) => (
             <li key={p.id} className="entree" style={{ animationDelay: `${0.28 + i * 0.07}s` }}>
               <TuileProduit p={p} i={i} petit={petit} />
             </li>
           ))}
         </ul>
-        <p className="mt-14 px-5 text-center text-sm font-semibold text-gris">Prix TTC · Allergènes : demandez-les au comptoir.</p>
+        <p className="mt-8 px-5 sm:mt-14 text-center text-sm font-semibold text-gris">Prix TTC · Allergènes : demandez-les au comptoir.</p>
       </main>
       <Footer />
     </>

@@ -41,7 +41,7 @@ export default async function PageProduit({ params }: Params) {
         <div className="mx-auto grid max-w-[1180px] md:grid-cols-[1.05fr_1fr] md:gap-14 md:px-[max(20px,env(safe-area-inset-left))]">
           {/* Photo */}
           <div className="entree relative md:sticky md:top-28 md:self-start">
-            <div className={`relative w-full overflow-hidden bg-encre md:rounded-[2rem] ${p.categorie === "box" || p.categorie === "durum" ? "aspect-[4/3]" : "aspect-[4/5] max-h-[78vh]"}`}>
+            <div className={`relative w-full overflow-hidden bg-encre md:rounded-[2rem] ${p.categorie === "box" || p.categorie === "durum" ? "aspect-[4/3]" : "aspect-square max-h-[78vh] md:aspect-[4/5]"}`}>
               {p.photo ? (
                 <Image src={p.photo} alt={p.nom} fill priority sizes="(max-width: 768px) 100vw, 600px" className="lent-zoom object-cover" />
               ) : (

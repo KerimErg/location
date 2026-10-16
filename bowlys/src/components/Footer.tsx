@@ -13,13 +13,13 @@ export function Footer() {
   ];
   return (
     <footer className="sur-sombre feuille overflow-hidden bg-encre text-white">
-      <div className="relative z-10 mx-auto max-w-[1240px] px-[max(20px,env(safe-area-inset-left))] pb-28 pt-20 md:pb-10">
-        <div className="grid gap-12 md:grid-cols-[1.3fr_1fr_1fr_1fr]">
-          <div>
-            <Logo variante="complet" className="w-44 text-white" />
-            <p className="mt-6 max-w-[30ch] text-white/70">Le lahmacun autrement.</p>
+      <div className="relative z-10 mx-auto max-w-[1240px] px-[max(20px,env(safe-area-inset-left))] pb-28 pt-12 md:pb-10 md:pt-20">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-[1.3fr_1fr_1fr_1fr] md:gap-12">
+          <div className="col-span-2 flex items-center gap-4 md:col-span-1 md:block">
+            <Logo variante="complet" className="w-20 text-white md:w-44" />
+            <p className="max-w-[30ch] text-white/70 md:mt-6">Le lahmacun autrement.</p>
           </div>
-          <nav aria-label="Pied de page">
+          <nav aria-label="Pied de page" className="hidden md:block">
             <h2 className="font-display text-sm font-extrabold uppercase tracking-[0.18em] text-white/50">Navigation</h2>
             <ul className="mt-4 grid gap-2.5">
               {NAV.map((n) => <li key={n.href}><Link href={n.href} className="font-semibold hover:text-creme hover:underline">{n.label}</Link></li>)}
@@ -41,7 +41,7 @@ export function Footer() {
             </ul>
           </div>
         </div>
-        <div className="mt-16 flex flex-col gap-4 border-t border-white/15 pt-6 text-sm text-white/60 md:flex-row md:items-center md:justify-between">
+        <div className="mt-10 flex flex-col gap-4 border-t border-white/15 pt-6 md:mt-16 text-sm text-white/60 md:flex-row md:items-center md:justify-between">
           <p>© {new Date().getFullYear()} {site.nom}</p>
           <ul className="flex flex-wrap gap-x-6 gap-y-2">
             {legal.map((l) => <li key={l.href}><Link href={l.href} className="hover:text-white hover:underline">{l.label}</Link></li>)}

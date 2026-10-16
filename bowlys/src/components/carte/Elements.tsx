@@ -15,7 +15,7 @@ export const num = (i: number) => String(i + 1).padStart(2, "0");
 /** Bandeau photo coupé en biais, avec fil d'Ariane. */
 export function BandeauCarte({ photo, ariane }: { photo: string | null; ariane: { href?: string; label: string }[] }) {
   return (
-    <div className="sur-sombre relative h-[46vh] min-h-[320px] overflow-hidden bg-encre text-white [clip-path:polygon(0_0,100%_0,100%_78%,0_100%)]">
+    <div className="sur-sombre relative h-[30vh] min-h-[220px] overflow-hidden sm:h-[46vh] sm:min-h-[320px] bg-encre text-white [clip-path:polygon(0_0,100%_0,100%_78%,0_100%)]">
       {photo ? (
         <Image src={photo} alt="" fill priority sizes="100vw" className="lent-zoom object-cover opacity-80" />
       ) : (
@@ -25,7 +25,7 @@ export function BandeauCarte({ photo, ariane }: { photo: string | null; ariane: 
       )}
       <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(11,15,26,.72),rgba(11,15,26,.2)_45%,rgba(11,15,26,.55))]" />
       {ariane.length > 0 && (
-        <nav aria-label="Fil d'Ariane" className="relative mx-auto max-w-[1180px] px-[max(20px,env(safe-area-inset-left))] pt-28">
+        <nav aria-label="Fil d'Ariane" className="relative mx-auto max-w-[1180px] px-[max(20px,env(safe-area-inset-left))] pt-24 sm:pt-28">
           <ol className="flex flex-wrap items-center gap-2 text-[0.68rem] font-extrabold uppercase tracking-[0.24em] text-white/80">
             {ariane.map((a, i) => (
               <li key={a.label} className="flex items-center gap-2">
@@ -43,8 +43,8 @@ export function BandeauCarte({ photo, ariane }: { photo: string | null; ariane: 
 /** Carte blanche flottante à cheval sur le bandeau. */
 export function Medaillon({ children }: { children: React.ReactNode }) {
   return (
-    <div className="entree relative z-10 -mt-24 flex justify-center px-5 sm:-mt-28">
-      <div className="grid size-44 place-items-center rounded-[2.2rem] bg-white shadow-[0_30px_60px_-28px_rgba(11,15,26,.45)] sm:size-52">{children}</div>
+    <div className="entree relative z-10 -mt-16 flex justify-center px-5 sm:-mt-28">
+      <div className="grid size-28 place-items-center rounded-[1.6rem] sm:rounded-[2.2rem] [&>*]:scale-[.7] sm:[&>*]:scale-100 bg-white shadow-[0_30px_60px_-28px_rgba(11,15,26,.45)] sm:size-52">{children}</div>
     </div>
   );
 }
@@ -84,8 +84,8 @@ export function NavCategories({ actif }: { actif: CategorieId }) {
 /** Titre de page de la carte : grand nom + accroche entre deux traits. */
 export function TitreCarte({ titre, accroche }: { titre: string; accroche: string }) {
   return (
-    <header className="entree mt-8 px-5 text-center [animation-delay:.1s]">
-      <h1 className="font-display text-[clamp(2.8rem,8vw,4.6rem)] font-extrabold leading-none tracking-[-0.02em]">{titre}</h1>
+    <header className="entree mt-5 px-5 text-center [animation-delay:.1s] sm:mt-8">
+      <h1 className="font-display text-[clamp(2.2rem,8vw,4.6rem)] font-extrabold leading-none tracking-[-0.02em]">{titre}</h1>
       <p className="mt-5 flex items-center justify-center gap-4 text-[0.7rem] font-extrabold uppercase tracking-[0.26em] text-rouge">
         <span aria-hidden="true" className="h-px w-10 bg-rouge/40 sm:w-16" />{accroche}<span aria-hidden="true" className="h-px w-10 bg-rouge/40 sm:w-16" />
       </p>

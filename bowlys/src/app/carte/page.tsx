@@ -22,17 +22,17 @@ export default function PageCarte() {
           </div>
         </Medaillon>
         <h1 className="sr-only">La carte</h1>
-        <p className="entree mt-10 text-center text-[0.72rem] font-extrabold uppercase tracking-[0.28em] text-rouge [animation-delay:.1s]">
+        <p className="entree mt-6 text-center sm:mt-10 text-[0.72rem] font-extrabold uppercase tracking-[0.28em] text-rouge [animation-delay:.1s]">
           Choisissez une catégorie
         </p>
-        <ul className="mx-auto mt-10 flex max-w-4xl flex-wrap justify-center gap-x-6 gap-y-10 px-5 sm:gap-x-12">
+        <ul className="mx-auto mt-7 flex max-w-4xl flex-wrap justify-center gap-x-6 gap-y-7 px-5 sm:mt-10 sm:gap-x-12 sm:gap-y-10">
           {CATEGORIES.map((c, i) => (
             <li key={c.id} className="entree" style={{ animationDelay: `${0.15 + i * 0.07}s` }}>
               <RondCategorie id={c.id} nom={c.nom} />
             </li>
           ))}
         </ul>
-        <p className="mt-16 px-5 text-center text-sm font-semibold text-gris">Prix TTC · Allergènes : demandez-les au comptoir.</p>
+        <p className="mt-10 px-5 text-center text-sm font-semibold text-gris sm:mt-16">Prix TTC · Allergènes : demandez-les au comptoir.</p>
       </main>
       <Footer />
     </>

@@ -63,6 +63,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; }
 .feuille { position: relative; z-index: 10; margin-top: -56px; border-top-left-radius: 56px; border-top-right-radius: 56px; box-shadow: 0 -24px 50px -30px rgba(30,11,14,.4); }
 @media (max-width: 640px) { .feuille { margin-top: -36px; border-top-left-radius: 32px; border-top-right-radius: 32px; } }
 .sous-feuille { padding-bottom: calc(6rem + 56px); }
+@media (max-width: 640px) { .sous-feuille { padding-bottom: calc(2.75rem + 36px); } body { font-size: 16px; } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }

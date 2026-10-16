@@ -42,7 +42,7 @@ export function EnTete({ surtitre, titre, id, clair = false, sousTitre }: { surt
   return (
     <div className="apparait mx-auto max-w-[760px] text-center">
       <Surtitre clair={clair}>{surtitre}</Surtitre>
-      <h2 id={id} className="mt-5 font-display text-[clamp(2.4rem,5.4vw,4.2rem)] font-extrabold leading-[0.98] tracking-[-0.025em]">
+      <h2 id={id} className="mt-3 font-display text-[clamp(1.95rem,5.4vw,4.2rem)] sm:mt-5 font-extrabold leading-[0.98] tracking-[-0.025em]">
         {typeof titre === "string"
           ? titre.split(" ").map((m, i) => (
               <Fragment key={i}>
@@ -52,8 +52,8 @@ export function EnTete({ surtitre, titre, id, clair = false, sousTitre }: { surt
             ))
           : titre}
       </h2>
-      <Ornement clair={clair} className="mt-6" />
-      {sousTitre && <p className={`mx-auto mt-6 max-w-[48ch] text-lg font-semibold ${clair ? "text-white/90" : "text-gris"}`}>{sousTitre}</p>}
+      <Ornement clair={clair} className="mt-6 hidden sm:flex" />
+      {sousTitre && <p className={`mx-auto mt-3 max-w-[48ch] text-base font-semibold sm:mt-6 sm:text-lg ${clair ? "text-white/90" : "text-gris"}`}>{sousTitre}</p>}
     </div>
   );
 }
@@ -62,7 +62,7 @@ export function EnTete({ surtitre, titre, id, clair = false, sousTitre }: { surt
 export function Bienvenue() {
   const durum = produitsDe("durum")[0];
   return (
-    <section id="concept" aria-labelledby="bienvenue-titre" className="sortie feuille sous-feuille relative bg-white pt-20 [overflow-x:clip] sm:pt-28">
+    <section id="concept" aria-labelledby="bienvenue-titre" className="sortie feuille sous-feuille relative bg-white pt-8 [overflow-x:clip] sm:pt-28">
       <div className={conteneur}>
         <div className="apparait relative">
           <div className="sur-sombre relative grid overflow-hidden rounded-[2.2rem] bg-vin text-white shadow-[0_60px_120px_-60px_rgba(45,4,6,.9)] lg:grid-cols-[1.1fr_1fr] lg:rounded-[3rem]">
@@ -78,12 +78,12 @@ export function Bienvenue() {
               </div>
             </div>
 
-            <div className="relative order-2 px-7 pb-10 pt-2 text-center sm:px-12 sm:pb-14 lg:order-1 lg:py-24 lg:pl-16 lg:pr-0 lg:text-left">
+            <div className="relative order-2 px-5 pb-7 pt-0 text-center sm:px-12 sm:pb-14 sm:pt-2 lg:order-1 lg:py-24 lg:pl-16 lg:pr-0 lg:text-left">
               <div className="lg:[&_p]:justify-start"><Surtitre clair centre={false}>Bienvenue chez</Surtitre></div>
-              <h2 id="bienvenue-titre" className="mt-5">
-                <Logo variante="nom" titre="BOWLY'S" className="mx-auto w-[min(88%,400px)] text-white lg:mx-0" />
+              <h2 id="bienvenue-titre" className="mt-3 sm:mt-5">
+                <Logo variante="nom" titre="BOWLY'S" className="mx-auto w-[min(62%,400px)] text-white sm:w-[min(88%,400px)] lg:mx-0" />
               </h2>
-              <div className="mx-auto mt-7 grid max-w-[44ch] gap-4 text-[1.05rem] leading-relaxed text-white/80 lg:mx-0">
+              <div className="mx-auto mt-4 grid max-w-[44ch] gap-3 text-[0.95rem] leading-relaxed text-white/80 sm:mt-7 sm:gap-4 sm:text-[1.05rem] lg:mx-0">
                 <p>
                   Chez BOWLY&apos;S, tout tourne autour du lahmacun. Une pâte fine, une garniture parfumée, des crudités fraîches et la sauce que vous aimez.
                 </p>
@@ -91,9 +91,9 @@ export function Bienvenue() {
                   BOWLY&apos;S est né d&apos;une idée simple : donner au lahmacun la place qu&apos;il mérite, avec une carte courte pensée entièrement autour de lui. En box de petits formats pour partager, ou en dürüm grand format composé à votre goût. Sur place ou à emporter.
                 </p>
               </div>
-              <div className="mt-8 flex flex-col flex-wrap justify-center gap-3 sm:flex-row lg:justify-start">
-                <LienBouton href="/carte/" style="blanc" taille="lg">Découvrir la carte <ArrowRight className="size-5" /></LienBouton>
-                <LienBouton href={`/carte/durum/${durum.id}/`} style="contour-blanc" taille="lg">Composer mon dürüm</LienBouton>
+              <div className="mt-6 grid grid-cols-2 gap-2 sm:mt-8 sm:flex sm:flex-wrap sm:justify-center sm:gap-3 lg:justify-start">
+                <LienBouton href="/carte/" style="blanc" taille="lg" className="!h-12 !px-3 text-[0.9rem] sm:!h-14 sm:!px-8 sm:text-base">La carte <ArrowRight className="hidden size-5 sm:block" /></LienBouton>
+                <LienBouton href={`/carte/durum/${durum.id}/`} style="contour-blanc" taille="lg" className="!h-12 !px-3 text-[0.9rem] sm:!h-14 sm:!px-8 sm:text-base">Mon dürüm</LienBouton>
               </div>
             </div>
           </div>
@@ -125,31 +125,31 @@ function redresser(e: React.PointerEvent<HTMLElement>) {
 
 export function Specialites() {
   return (
-    <section id="specialites" aria-labelledby="spe-titre" className="sortie feuille sous-feuille overflow-hidden bg-doux pt-24 text-encre sm:pt-32">
+    <section id="specialites" aria-labelledby="spe-titre" className="sortie feuille sous-feuille overflow-hidden bg-doux pt-14 text-encre sm:pt-32">
       <Logo variante="icone" titre="" className="pointer-events-none absolute -left-24 top-24 w-[420px] text-rouge/[0.05]" />
       <div className={`${conteneur} relative`}>
         <EnTete id="spe-titre" surtitre="Notre carte" titre="Fait pour donner faim." sousTitre="Un avant-goût de ce qui vous attend." />
 
-        <ul className="sans-barre -mx-[max(20px,env(safe-area-inset-left))] mt-14 flex snap-x snap-mandatory gap-4 overflow-x-auto px-[max(20px,env(safe-area-inset-left))] pb-4 md:mx-0 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-0 md:pb-0">
+        <ul className="sans-barre -mx-[max(20px,env(safe-area-inset-left))] mt-7 flex snap-x snap-mandatory gap-3 overflow-x-auto sm:mt-14 sm:gap-4 px-[max(20px,env(safe-area-inset-left))] pb-4 md:mx-0 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-0 md:pb-0">
           {APERCU.map((a, i) => {
             const c = CATEGORIES.find((k) => k.id === a.cat)!;
             const desPrix = Math.min(...produitsDe(a.cat).map((p) => p.prix));
             return (
-              <li key={a.cat} className={`w-[80%] shrink-0 snap-center md:w-auto ${i === 0 ? "apparait" : i === 1 ? "apparait-2" : "apparait-3"}`}>
+              <li key={a.cat} className={`w-[68%] shrink-0 snap-center md:w-auto ${i === 0 ? "apparait" : i === 1 ? "apparait-2" : "apparait-3"}`}>
                 <Link href={`/carte/${a.cat}/`} onPointerMove={incliner} onPointerLeave={redresser} className="sur-sombre group flex h-full flex-col overflow-hidden rounded-[2rem] bg-vin text-white shadow-[0_40px_80px_-40px_rgba(45,4,6,.8)] transition-transform duration-300 ease-out [transform:perspective(900px)_rotateX(var(--rx,0deg))_rotateY(var(--ry,0deg))_translateY(var(--ty,0px))]">
-                  <span className={`revele relative grid aspect-[4/3] overflow-hidden ${a.photos.length > 1 ? "grid-cols-2" : ""}`}>
+                  <span className={`revele relative grid aspect-[5/4] overflow-hidden sm:aspect-[4/3] ${a.photos.length > 1 ? "grid-cols-2" : ""}`}>
                     {a.photos.map((src) => (
                       <Photo key={src} src={src} alt="" className="h-full !bg-vin" sizes="(max-width: 768px) 80vw, 380px" />
                     ))}
                     {a.cat === "box" && <span className="absolute left-4 top-4 rounded-full bg-white px-3 py-1.5 text-[0.68rem] font-extrabold uppercase tracking-[0.14em] text-rouge shadow-lg">★ Best seller</span>}
                   </span>
-                  <span className="flex flex-1 flex-col p-6 sm:p-7">
+                  <span className="flex flex-1 flex-col p-4 sm:p-7">
                     <span className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
                       <span className="font-display text-[clamp(1.35rem,2.2vw,1.6rem)] font-extrabold leading-none whitespace-nowrap">{c.nom}</span>
                       <span className="shrink-0 text-sm font-semibold text-white/75">dès <strong className="font-display text-lg font-extrabold text-white">{prix(desPrix)}</strong></span>
                     </span>
-                    <span className="mt-3 text-white/80">{a.accroche}</span>
-                    <span className="mt-auto flex items-center gap-2 pt-6 font-display font-extrabold">
+                    <span className="mt-2 text-sm text-white/80 sm:mt-3 sm:text-base">{a.accroche}</span>
+                    <span className="mt-auto flex items-center gap-2 pt-4 font-display text-sm font-extrabold sm:pt-6 sm:text-base">
                       Découvrir
                       <span className="grid size-9 place-items-center rounded-full bg-white text-rouge transition-transform duration-500 group-hover:translate-x-1"><ArrowRight className="size-4" strokeWidth={2.8} /></span>
                     </span>
@@ -160,9 +160,9 @@ export function Specialites() {
           })}
         </ul>
 
-        <div className="apparait mt-12 flex flex-col items-center gap-4 text-center">
+        <div className="apparait mt-7 flex flex-col items-center gap-4 text-center sm:mt-12">
           <LienBouton href="/carte/" taille="lg">Voir toute la carte <ArrowRight className="size-5" /></LienBouton>
-          <p className="text-sm font-semibold text-gris">Boissons, options et dürüm à composer : tout est sur la carte.</p>
+          <p className="hidden text-sm font-semibold text-gris sm:block">Boissons, options et dürüm à composer : tout est sur la carte.</p>
         </div>
       </div>
     </section>
@@ -188,9 +188,9 @@ export function Galerie() {
   }, [i, lecture]);
   if (!site.reseaux.instagram) return null;
   return (
-    <section aria-labelledby="galerie-titre" className="sortie sur-sombre feuille sous-feuille overflow-hidden bg-encre pt-24 text-white sm:pt-32">
-      <div className={`${conteneur} grid items-center gap-16 md:grid-cols-2 md:gap-24`}>
-        <div className="apparait relative mx-auto w-[min(78vw,340px)] md:order-2">
+    <section aria-labelledby="galerie-titre" className="sortie sur-sombre feuille sous-feuille overflow-hidden bg-encre pt-12 text-white sm:pt-32">
+      <div className={`${conteneur} grid items-center gap-8 md:grid-cols-2 md:gap-24`}>
+        <div className="apparait relative mx-auto w-[min(48vw,340px)] md:order-2 md:w-[min(78vw,340px)]">
           <div aria-hidden="true" className="absolute -inset-16 -z-10 rounded-full bg-[radial-gradient(closest-side,rgba(140,2,10,.55),transparent)]" />
           <div className="relative aspect-[9/16] overflow-hidden rounded-[34px] bg-encre shadow-[0_50px_90px_-40px_rgba(11,15,26,.7)] ring-8 ring-white/10">
             {STORIES.map((s, k) => (
@@ -221,17 +221,17 @@ export function Galerie() {
         </div>
         <div className="apparait text-center md:text-left">
           <div className="md:[&_p]:justify-start"><Surtitre centre={false} clair>Galerie</Surtitre></div>
-          <h2 id="galerie-titre" className="mt-5 font-display text-[clamp(2.4rem,5vw,4rem)] font-extrabold leading-[0.98] tracking-[-0.025em]">
+          <h2 id="galerie-titre" className="mt-3 font-display text-[clamp(1.8rem,5vw,4rem)] sm:mt-5 font-extrabold leading-[0.98] tracking-[-0.025em]">
             Suivez-nous sur les réseaux.
           </h2>
-          <p className="mx-auto mt-6 max-w-[40ch] text-lg text-white/85 md:mx-0">Les nouveautés, les coulisses et les plats du moment : suivez-nous.</p>
-          <div className="mt-9 flex flex-wrap justify-center gap-3 md:justify-start">
-            <LienBouton href={site.reseaux.instagram} externe style="blanc" taille="lg">
-              Instagram · @bowlys.fr <ArrowUpRight className="size-5" />
+          <p className="mx-auto mt-3 max-w-[40ch] text-base text-white/85 sm:mt-6 sm:text-lg md:mx-0">Les nouveautés, les coulisses et les plats du moment : suivez-nous.</p>
+          <div className="mt-6 grid grid-cols-2 gap-2 sm:mt-9 sm:flex sm:flex-wrap sm:justify-center sm:gap-3 md:justify-start">
+            <LienBouton href={site.reseaux.instagram} externe style="blanc" taille="lg" className="!h-12 !px-3 text-[0.9rem] sm:!h-14 sm:!px-8 sm:text-base">
+              Instagram <ArrowUpRight className="size-5" />
             </LienBouton>
             {site.reseaux.tiktok && (
-              <LienBouton href={site.reseaux.tiktok} externe style="contour-blanc" taille="lg">
-                TikTok · @bowlys.fr <ArrowUpRight className="size-5" />
+              <LienBouton href={site.reseaux.tiktok} externe style="contour-blanc" taille="lg" className="!h-12 !px-3 text-[0.9rem] sm:!h-14 sm:!px-8 sm:text-base">
+                TikTok <ArrowUpRight className="size-5" />
               </LienBouton>
             )}
           </div>
@@ -249,25 +249,25 @@ function Plan() {
   const src = lienPlanIntegre();
   if (!src) return null;
   return (
-    <div className="sur-sombre relative h-full min-h-[340px] overflow-hidden rounded-[2rem] bg-encre text-white">
+    <div className="sur-sombre relative h-full min-h-[200px] overflow-hidden rounded-[1.6rem] bg-encre text-white sm:min-h-[340px] sm:rounded-[2rem]">
       {charge ? (
         <iframe src={src} title={`Plan d'accès BOWLY'S, ${adresseLigne()}`} className="absolute inset-0 size-full border-0" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
       ) : (
-        <div className="absolute inset-0 grid place-items-center p-8 text-center">
+        <div className="absolute inset-0 grid place-items-center p-5 text-center sm:p-8">
           {/* rues stylisées */}
           <svg aria-hidden="true" className="absolute inset-0 size-full opacity-[0.14]" preserveAspectRatio="none" viewBox="0 0 400 300">
             <g fill="none" stroke="#fff" strokeWidth="10" strokeLinecap="round"><path d="M-20 210 C 80 190 140 120 420 140" /><path d="M120 -20 L 170 320" /><path d="M300 -20 C 280 80 300 200 260 320" /></g>
             <g fill="none" stroke="#fff" strokeWidth="3"><path d="M-20 60 L 420 90" /><path d="M-20 270 L 420 250" /><path d="M40 -20 L 70 320" /><path d="M360 -20 L 380 320" /></g>
           </svg>
           <div aria-hidden="true" className="absolute left-1/2 top-[44%] size-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(140,2,10,.4),transparent)]" />
-          <div className="relative grid justify-items-center gap-5">
-            <span className="relative grid size-20 place-items-center">
+          <div className="relative grid justify-items-center gap-3 sm:gap-5">
+            <span className="relative hidden size-20 place-items-center sm:grid">
               <span className="absolute inset-0 animate-ping rounded-full bg-rouge/50" />
               <span className="relative grid size-20 place-items-center rounded-full bg-rouge shadow-[0_0_0_10px_rgba(140,2,10,.25)]">
                 <Logo variante="icone" titre="" className="w-10 text-white" />
               </span>
             </span>
-            <p className="font-display text-2xl font-extrabold leading-tight">{site.restaurant!.rue}<br />{site.restaurant!.codePostal} {site.restaurant!.ville}</p>
+            <p className="font-display text-lg font-extrabold leading-tight sm:text-2xl">{site.restaurant!.rue}<br />{site.restaurant!.codePostal} {site.restaurant!.ville}</p>
             {encadre ? (
               <LienBouton href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(adresseLigne()!)}`} externe style="blanc" taille="lg">Ouvrir le plan <ArrowUpRight className="size-5" /></LienBouton>
             ) : (
@@ -313,62 +313,66 @@ export function NousTrouver() {
   const tel = site.telephone;
 
   return (
-    <section id="contact" aria-labelledby="contact-titre" className="sortie feuille sous-feuille bg-doux pt-24 sm:pt-32">
+    <section id="contact" aria-labelledby="contact-titre" className="sortie feuille sous-feuille bg-doux pt-12 sm:pt-32">
       <div className={conteneur}>
         <EnTete id="contact-titre" surtitre="Contact" titre="On vous attend." />
 
-        <div className="mt-14 grid gap-5 lg:grid-cols-[1.1fr_1fr]">
+        <div className="mt-7 grid gap-3 sm:mt-14 sm:gap-5 lg:grid-cols-[1.1fr_1fr]">
           {/* Carte vivante : statut, compte à rebours, actions */}
-          <div className="sur-sombre apparait relative overflow-hidden rounded-[2rem] bg-rouge p-7 text-white sm:p-10">
+          <div className="sur-sombre apparait relative overflow-hidden rounded-[1.6rem] bg-rouge p-5 text-white sm:rounded-[2rem] sm:p-10">
             <Logo variante="icone" titre="" className="pointer-events-none absolute -bottom-10 -right-10 w-72 text-white/10" />
             <div className="relative">
               <PastilleStatut ton="clair" />
-              <p className="mt-6 font-display text-[clamp(2.2rem,5vw,3.4rem)] font-extrabold leading-[1.02] tracking-[-0.02em]">
+              <p className="mt-4 font-display text-[clamp(1.6rem,5vw,3.4rem)] sm:mt-6 font-extrabold leading-[1.02] tracking-[-0.02em]">
                 {s ? (s.ouvert ? <>On est ouverts,<br />venez vite !</> : <>Bientôt l&apos;heure<br />du lahmacun.</>) : <>Le lahmacun<br />vous attend.</>}
               </p>
-              <address className="mt-8 not-italic">
+              <address className="mt-5 not-italic sm:mt-8">
                 <span className="text-[0.72rem] font-extrabold uppercase tracking-[0.22em] text-white/70">Adresse</span>
-                <span id="adresse-texte" className="mt-1 block font-display text-2xl font-extrabold">{site.restaurant.rue}, {site.restaurant.codePostal} {site.restaurant.ville}</span>
+                <span id="adresse-texte" className="mt-1 block font-display text-lg font-extrabold sm:text-2xl">{site.restaurant.rue}, {site.restaurant.codePostal} {site.restaurant.ville}</span>
               </address>
-              <div className="mt-4"><BoutonCopier /></div>
+              <div className="mt-3 sm:mt-4"><BoutonCopier /></div>
 
-              <div className="mt-8 grid gap-3 sm:grid-cols-2">
+              <div className="mt-5 grid grid-cols-2 gap-2 sm:mt-8 sm:gap-3">
                 {tel && (
-                  <a href={`tel:${tel.replace(/\s/g, "")}`} className="group flex h-16 items-center gap-4 rounded-2xl bg-white px-5 text-rouge transition-transform hover:-translate-y-0.5">
-                    <span className="grid size-10 place-items-center rounded-full bg-rouge text-white"><Phone className="size-5" /></span>
-                    <span className="leading-tight"><span className="block text-xs font-extrabold uppercase tracking-[0.16em] text-rouge/70">Appeler</span><span className="font-display text-lg font-extrabold tabular-nums">{tel}</span></span>
+                  <a href={`tel:${tel.replace(/\s/g, "")}`} className="group flex h-14 items-center gap-2.5 rounded-2xl bg-white px-3 text-rouge sm:h-16 sm:gap-4 sm:px-5 transition-transform hover:-translate-y-0.5">
+                    <span className="grid size-9 shrink-0 place-items-center rounded-full bg-rouge text-white sm:size-10"><Phone className="size-5" /></span>
+                    <span className="leading-tight"><span className="hidden text-xs font-extrabold uppercase tracking-[0.16em] text-rouge/70 sm:block">Appeler</span><span className="font-display font-extrabold sm:hidden">Appeler</span><span className="hidden font-display text-lg font-extrabold tabular-nums sm:inline">{tel}</span></span>
                   </a>
                 )}
-                <a href={itineraires[0].href} target="_blank" rel="noopener noreferrer" className="group flex h-16 items-center gap-4 rounded-2xl bg-encre px-5 text-white transition-transform hover:-translate-y-0.5">
-                  <span className="grid size-10 place-items-center rounded-full bg-white/15"><Navigation className="size-5" /></span>
-                  <span className="leading-tight"><span className="block text-xs font-extrabold uppercase tracking-[0.16em] text-white/70">Y aller</span><span className="font-display text-lg font-extrabold">Itinéraire</span></span>
+                <a href={itineraires[0].href} target="_blank" rel="noopener noreferrer" className="group flex h-14 items-center gap-2.5 rounded-2xl bg-encre px-3 text-white sm:h-16 sm:gap-4 sm:px-5 transition-transform hover:-translate-y-0.5">
+                  <span className="grid size-9 shrink-0 place-items-center rounded-full bg-white/15 sm:size-10"><Navigation className="size-5" /></span>
+                  <span className="leading-tight"><span className="hidden text-xs font-extrabold uppercase tracking-[0.16em] text-white/70 sm:block">Y aller</span><span className="font-display font-extrabold sm:text-lg">Itinéraire</span></span>
                 </a>
               </div>
-              <p className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-semibold text-white/80">
+              <p className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-semibold text-white/80 sm:mt-4">
                 Ouvrir avec :
                 {itineraires.map((x) => <a key={x.nom} href={x.href} target="_blank" rel="noopener noreferrer" className="underline decoration-white/40 underline-offset-4 hover:decoration-white">{x.nom}</a>)}
               </p>
             </div>
           </div>
 
-          <div className="apparait-2 min-h-[360px]"><Plan /></div>
+          <div className="apparait-2 min-h-[200px] sm:min-h-[360px]"><Plan /></div>
         </div>
 
         {/* La semaine en un coup d'œil */}
         {h && (
-          <div className="apparait mt-5 rounded-[2rem] bg-white p-6 ring-1 ring-trait sm:p-8">
+          <div className="apparait mt-3 rounded-[1.6rem] bg-white p-5 ring-1 ring-trait sm:mt-5 sm:rounded-[2rem] sm:p-8">
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <p className="font-display text-xl font-extrabold">Horaires de la semaine</p>
+              <p className="font-display text-lg font-extrabold sm:text-xl">Horaires</p>
               <PastilleStatut />
             </div>
-            <ol className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-7">
+            <ol className="mt-3 grid gap-0.5 sm:mt-5 sm:grid-cols-4 sm:gap-2 lg:grid-cols-7">
               {JOURS.map((j) => {
                 const on = j === aujourdhui;
+                const heures = h[j].length ? h[j].map((p) => `${p.ouverture} – ${p.fermeture}`).join(" · ") : "Fermé";
                 return (
-                  <li key={j} className={`rounded-2xl p-4 transition-colors ${on ? "bg-rouge text-white shadow-[0_14px_30px_-14px_rgba(140,2,10,.8)]" : "bg-doux"}`}>
-                    <span className={`block text-[0.7rem] font-extrabold uppercase tracking-[0.18em] ${on ? "text-white/80" : "text-gris"}`}>{on ? "Aujourd'hui" : j}</span>
-                    <span className="mt-1 block font-display font-extrabold capitalize">{on ? j : ""}</span>
-                    <span className={`block font-display font-extrabold tabular-nums ${on ? "" : "text-encre"}`}>{h[j].length ? h[j].map((p) => `${p.ouverture} – ${p.fermeture}`).join(" · ") : "Fermé"}</span>
+                  <li key={j} className={`flex items-center justify-between rounded-xl px-3 py-2 transition-colors sm:block sm:rounded-2xl sm:p-4 ${on ? "bg-rouge text-white shadow-[0_14px_30px_-14px_rgba(140,2,10,.8)]" : "sm:bg-doux"}`}>
+                    {/* Téléphone : une ligne par jour */}
+                    <span className="text-[0.95rem] font-bold capitalize sm:hidden">{j}{on && <span className="ml-2 text-xs font-extrabold uppercase tracking-[0.12em] text-white/80">aujourd&apos;hui</span>}</span>
+                    {/* Ordinateur : tuiles */}
+                    <span className={`hidden text-[0.7rem] font-extrabold uppercase tracking-[0.18em] sm:block ${on ? "text-white/80" : "text-gris"}`}>{on ? "Aujourd'hui" : j}</span>
+                    <span className="mt-1 hidden font-display font-extrabold capitalize sm:block">{on ? j : ""}</span>
+                    <span className={`font-display text-[0.95rem] font-extrabold tabular-nums sm:block sm:text-base ${on ? "" : "text-encre"}`}>{heures}</span>
                   </li>
                 );
               })}
