@@ -100,3 +100,43 @@ h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; }
 /* Ingrédients qui flottent doucement (section Bienvenue) */
 @keyframes flotter { 0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); } 50% { transform: translateY(-10px) rotate(var(--r, 0deg)); } }
 .flotte { animation: flotter 6s ease-in-out infinite; }
+
+/* ── Manifeste (Bienvenue) : les mots s'allument au défilement ── */
+.manifeste .mot { display: inline-block; color: color-mix(in srgb, var(--color-encre) 14%, transparent); transition: color .45s var(--ease-pro); }
+.manifeste .mot.allume { color: var(--color-encre); }
+.manifeste .mot-img { scale: .2; rotate: -30deg; opacity: 0; transition: scale .6s cubic-bezier(.3,1.6,.5,1), rotate .6s var(--ease-pro), opacity .3s; }
+.manifeste .mot-img.allume { scale: 1; rotate: 0deg; opacity: 1; }
+
+/* ── Photos qui se dévoilent en entrant à l'écran ── */
+@keyframes revele-cadre { from { clip-path: inset(10% 6% 0 6% round 1.4rem); } to { clip-path: inset(0 0 0 0 round 0); } }
+@keyframes revele-photo { from { scale: 1.18; } to { scale: 1; } }
+@supports (animation-timeline: view()) {
+  .revele { animation: revele-cadre linear both; animation-timeline: view(); animation-range: entry 0% cover 32%; }
+  .revele img { animation: revele-photo linear both; animation-timeline: view(); animation-range: entry 0% cover 45%; }
+}
+
+/* ── Barre de progression de lecture ── */
+@keyframes progression { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.barre-progression { display: none; }
+@supports (animation-timeline: scroll()) {
+  .barre-progression { display: block; position: fixed; inset: 0 0 auto 0; z-index: 60; height: 3px; background: var(--color-rouge); transform-origin: 0 50%; animation: progression linear both; animation-timeline: scroll(root); pointer-events: none; }
+}
+
+/* ── Titre d'accueil : les mots montent derrière un cache ── */
+@keyframes masque-monter { from { transform: translateY(105%); } to { transform: none; } }
+.masque { display: inline-block; overflow: hidden; padding-bottom: .12em; margin-bottom: -.12em; vertical-align: top; }
+.masque > span { display: inline-block; animation: masque-monter 1s var(--ease-pro) both; }
+
+/* ── Transition douce entre les pages (navigateurs compatibles) ── */
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: .25s ease both vt-sortie; }
+::view-transition-new(root) { animation: .45s var(--ease-pro) both vt-entree; }
+@keyframes vt-sortie { to { opacity: 0; } }
+@keyframes vt-entree { from { opacity: 0; transform: translateY(14px); } }
+.entete-vt { view-transition-name: entete; }
+
+/* ── Soulignement animé des liens de navigation ── */
+.lien-nav { position: relative; }
+.lien-nav::after { content: ""; position: absolute; left: 1rem; right: 1rem; bottom: .3rem; height: 2px; border-radius: 2px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .45s var(--ease-pro); }
+.lien-nav:hover::after { transform: scaleX(1); transform-origin: left; }
+@keyframes souligner { from { transform: scaleX(0); } to { transform: scaleX(1); } }

@@ -14,13 +14,19 @@ import { PastilleStatut } from "./StatutLive";
 export function Header({ transparent = false }: { transparent?: boolean }) {
   const { nbArticles, ouvrirPanier, bump } = usePanier();
   const [scrolle, setScrolle] = useState(!transparent);
+  const [cache, setCache] = useState(false);
   const [menu, setMenu] = useState(false);
   const panneau = useRef<HTMLDivElement>(null);
   useFenetre(menu, panneau, () => setMenu(false));
 
+  // Fond blanc dès qu'on quitte la vidéo ; l'en-tête s'efface quand on descend et revient dès qu'on remonte.
   useEffect(() => {
-    if (!transparent) return;
-    const f = () => setScrolle(window.scrollY > 40);
+    let avant = window.scrollY;
+    const f = () => {
+      const y = window.scrollY;
+      if (transparent) setScrolle(y > 40);
+      if (Math.abs(y - avant) > 6) { setCache(y > avant && y > 480); avant = y; }
+    };
     f();
     window.addEventListener("scroll", f, { passive: true });
     return () => window.removeEventListener("scroll", f);
@@ -32,7 +38,7 @@ export function Header({ transparent = false }: { transparent?: boolean }) {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-40 pt-[env(safe-area-inset-top)] transition-[background,box-shadow,color] duration-500 ${
+        className={`entete-vt fixed inset-x-0 top-0 z-40 pt-[env(safe-area-inset-top)] transition-[background,box-shadow,color,transform] duration-500 ease-[var(--ease-pro)] ${cache && !menu ? "-translate-y-full" : ""} ${
           clair ? "text-white" : "bg-white/95 text-encre shadow-[0_1px_0_var(--color-trait)] backdrop-blur-md"
         }`}
       >
@@ -47,8 +53,8 @@ export function Header({ transparent = false }: { transparent?: boolean }) {
                 <li key={n.href}>
                   <Link
                     href={n.href}
-                    className={`rounded-full px-4 py-2 font-display text-[0.95rem] font-bold transition-colors ${
-                      clair ? "hover:bg-white/15" : "hover:bg-creme hover:text-rouge"
+                    className={`lien-nav rounded-full px-4 py-2 font-display text-[0.95rem] font-bold transition-colors ${
+                      clair ? "" : "hover:text-rouge"
                     }`}
                   >
                     {n.label}

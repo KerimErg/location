@@ -97,7 +97,7 @@ export function TitreCarte({ titre, accroche }: { titre: string; accroche: strin
 export function TuileProduit({ p, i, petit = false }: { p: Produit; i: number; petit?: boolean }) {
   return (
     <Link href={lienProduit(p)} className="group relative block overflow-hidden rounded-[1.4rem] bg-encre text-white shadow-[0_20px_40px_-28px_rgba(11,15,26,.6)] transition-[transform,box-shadow] duration-500 ease-[var(--ease-pro)] hover:-translate-y-1 hover:shadow-[0_30px_60px_-30px_rgba(11,15,26,.7)]">
-      <span className={`relative block ${petit ? "aspect-square" : "aspect-[4/3]"}`}>
+      <span className={`revele relative block ${petit ? "aspect-square" : "aspect-[4/3]"}`}>
         {p.photo ? (
           <Image src={p.photo} alt={p.nom} fill sizes="(max-width: 768px) 50vw, 33vw" className="object-cover transition-transform duration-[1.2s] ease-[var(--ease-pro)] group-hover:scale-[1.06]" />
         ) : (

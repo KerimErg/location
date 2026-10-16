@@ -39,6 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Aller au contenu
         </a>
         <RetourHaut />
+        <div className="barre-progression" aria-hidden="true" />
         <PanierProvider>
           {children}
           <Panier />

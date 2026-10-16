@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Check, Copy, Navigation, Pause, Phone, Play } from "lucide-react";
 import { CATEGORIES, produitsDe, type CategorieId } from "@/data/menu";
@@ -49,73 +49,80 @@ export function EnTete({ surtitre, titre, id, clair = false, sousTitre }: { surt
   );
 }
 
-/* ─────────── Bienvenue chez BOWLY'S : notre histoire ─────────── */
-/** Texte d'ambiance : à remplacer par votre propre histoire si vous le souhaitez. */
-const PILIERS = [
-  { n: "01", titre: "La pâte", texte: "Fine, dorée, juste croustillante." },
-  { n: "02", titre: "La garniture", texte: "Généreuse, parfumée, relevée d'épices." },
-  { n: "03", titre: "Le partage", texte: "En box pour les amis, en dürüm pour soi." },
-];
-
-const INGREDIENTS = [
-  { src: "/images/choix/tomate.webp", classe: "-left-3 top-[8%] w-[17%] [--r:-8deg] sm:-left-7", delai: "0s" },
-  { src: "/images/choix/salade.webp", classe: "-right-2 bottom-[16%] w-[16%] [--r:10deg] sm:-right-6", delai: "-3s" },
+/* ─────────── Bienvenue chez BOWLY'S : le manifeste ─────────── */
+/**
+ * Le texte s'éclaire mot à mot pendant le défilement (la section reste épinglée à l'écran),
+ * et de petites photos rondes viennent se glisser dans la phrase.
+ * Texte d'ambiance : à remplacer par votre propre histoire si vous le souhaitez.
+ */
+type Segment = string | { img: string; alt: string };
+const MANIFESTE: Segment[] = [
+  "Chez BOWLY'S, tout tourne autour du lahmacun", { img: "/images/choix/lahmacun-nature.webp", alt: "Lahmacun" },
+  ". Une pâte fine, une garniture généreuse", { img: "/images/choix/tomate.webp", alt: "Tomates" },
+  ", des crudités", { img: "/images/choix/salade.webp", alt: "Salade" },
+  "et la sauce que vous aimez", { img: "/images/choix/sauce-blanche.webp", alt: "Sauce blanche" },
+  ". En box pour partager, ou en dürüm rien que pour vous.",
 ];
 
 export function Bienvenue() {
+  const zone = useRef<HTMLElement>(null);
+  const texte = useRef<HTMLParagraphElement>(null);
+  const embleme = useRef<HTMLDivElement>(null);
+  const [fin, setFin] = useState(false);
+
+  useEffect(() => {
+    const z = zone.current, t = texte.current;
+    if (!z || !t) return;
+    const elements = Array.from(t.querySelectorAll<HTMLElement>("[data-m]"));
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      elements.forEach((e) => e.classList.add("allume"));
+      setFin(true);
+      return;
+    }
+    let raf = 0;
+    const maj = () => {
+      raf = 0;
+      const r = z.getBoundingClientRect();
+      const course = Math.max(1, r.height - window.innerHeight);
+      const p = Math.min(1, Math.max(0, -r.top / course));
+      const n = Math.round(Math.min(1, p / 0.8) * elements.length);
+      elements.forEach((e, i) => e.classList.toggle("allume", i < n));
+      setFin(p > 0.82);
+      if (embleme.current) embleme.current.style.transform = `translate(-50%, -50%) rotate(${p * 120}deg)`;
+    };
+    const demande = () => { if (!raf) raf = requestAnimationFrame(maj); };
+    maj();
+    window.addEventListener("scroll", demande, { passive: true });
+    window.addEventListener("resize", demande);
+    return () => { window.removeEventListener("scroll", demande); window.removeEventListener("resize", demande); cancelAnimationFrame(raf); };
+  }, []);
+
   return (
-    <section id="concept" aria-labelledby="bienvenue-titre" className="sous-feuille relative overflow-hidden bg-doux pt-24 sm:pt-36">
-      <div className={conteneur}>
-        <div className="apparait mx-auto max-w-[760px] text-center">
-          <Surtitre>Notre histoire</Surtitre>
-          <h2 id="bienvenue-titre" className="mt-7 font-display font-extrabold tracking-[-0.02em]">
-            <span className="block text-[clamp(1.4rem,2.6vw,2rem)] font-semibold leading-tight text-gris">Bienvenue chez</span>
-            <Logo variante="nom" titre="BOWLY'S" className="mx-auto mt-4 w-[min(86%,420px)] text-rouge" />
-          </h2>
-          <Ornement className="mt-8" />
+    <section ref={zone} id="concept" aria-labelledby="bienvenue-titre" className="relative h-[230vh] bg-doux [overflow-x:clip]">
+      <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden">
+        <div ref={embleme} aria-hidden="true" className="pointer-events-none absolute left-1/2 top-1/2 w-[min(120vw,1100px)] -translate-x-1/2 -translate-y-1/2 will-change-transform">
+          <Logo variante="icone" titre="" className="w-full text-rouge/[0.045]" />
         </div>
-
-        <div className="mt-16 grid items-center gap-16 lg:grid-cols-2 lg:gap-20">
-          {/* Photos du menu, posées comme sur une table */}
-          <div className="apparait relative mx-auto w-full max-w-[540px]">
-            <div aria-hidden="true" className="absolute inset-[8%_6%_6%_8%] -rotate-3 rounded-[2.5rem] bg-rouge" />
-            <Logo variante="icone" titre="" className="pointer-events-none absolute right-[4%] top-[6%] w-[30%] text-white/10" />
-            <div className="relative grid gap-4 p-[7%] pb-[9%]">
-              <div className="relative ml-[12%] aspect-[1020/582] overflow-hidden rounded-[1.6rem] bg-vin shadow-[0_30px_60px_-28px_rgba(30,11,14,.8)] ring-4 ring-white">
-                <Photo src="/images/carte/durum.webp" alt="Dürüm lahmacun garni de crudités" className="absolute inset-0 !bg-vin" sizes="(max-width: 640px) 80vw, 440px" zoom={false} />
-              </div>
-              <div className="relative -mt-[9%] mr-[14%] aspect-[1095/531] overflow-hidden rounded-[1.6rem] bg-vin shadow-[0_30px_60px_-28px_rgba(30,11,14,.8)] ring-4 ring-white">
-                <Photo src="/images/carte/box-nature.webp" alt="Lahmacuns servis avec citron et sauce blanche" className="absolute inset-0 !bg-vin" sizes="(max-width: 640px) 80vw, 440px" zoom={false} />
-              </div>
-            </div>
-            {INGREDIENTS.map((x) => (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img key={x.src} src={x.src} alt="" aria-hidden="true" loading="lazy" style={{ animationDelay: x.delai }}
-                className={`flotte pointer-events-none absolute aspect-square rounded-full drop-shadow-[0_14px_18px_rgba(30,11,14,.35)] ${x.classe}`} />
-            ))}
-          </div>
-
-          <div className="apparait-2 text-center lg:text-left">
-            <p className="font-display text-[clamp(1.7rem,3.2vw,2.5rem)] font-bold leading-[1.15] tracking-[-0.015em] text-encre">
-              <span aria-hidden="true" className="mr-1 font-extrabold text-rouge">“</span>Un lahmacun, ça se partage. C&apos;est un goût qui rassemble autour de la table.<span aria-hidden="true" className="ml-1 font-extrabold text-rouge">”</span>
-            </p>
-            <p className="mx-auto mt-7 max-w-[48ch] text-[1.08rem] leading-relaxed text-gris lg:mx-0">
-              BOWLY&apos;S est né de cette idée simple : donner au lahmacun la place qu&apos;il mérite. Une carte courte, pensée entièrement autour de lui. En box de petits formats pour partager, ou en dürüm grand format, roulé avec les crudités et la sauce que vous aimez.
-            </p>
-
-            <ul className="mt-10 grid gap-0 border-t border-rouge/15 text-left sm:grid-cols-3 sm:gap-6 sm:border-t-0">
-              {PILIERS.map((p) => (
-                <li key={p.n} className="flex items-baseline gap-4 border-b border-rouge/15 py-4 sm:block sm:border-b-0 sm:border-t-2 sm:border-rouge sm:py-0 sm:pt-4">
-                  <span className="font-display text-sm font-extrabold tracking-[0.18em] text-rouge">{p.n}</span>
-                  <span>
-                    <span className="block font-display text-lg font-extrabold text-encre sm:mt-1">{p.titre}</span>
-                    <span className="block text-[0.95rem] leading-snug text-gris">{p.texte}</span>
-                  </span>
-                </li>
-              ))}
-            </ul>
-
-            <p className="mt-9 font-display text-sm font-extrabold uppercase tracking-[0.22em] text-rouge">L&apos;équipe BOWLY&apos;S</p>
+        <div className={`${conteneur} relative w-full pt-16 text-center`}>
+          <h2 id="bienvenue-titre" className="sr-only">Bienvenue chez BOWLY&apos;S</h2>
+          <div aria-hidden="true"><Surtitre>Bienvenue</Surtitre></div>
+          <p ref={texte} className="manifeste mx-auto mt-8 max-w-[1020px] font-display text-[clamp(1.7rem,4.3vw,3.7rem)] font-extrabold leading-[1.16] tracking-[-0.025em] sm:mt-10">
+            {MANIFESTE.flatMap((s, k) =>
+              typeof s === "string"
+                ? s.split(" ").filter(Boolean).map((m, j) => (
+                    <span key={`${k}-${j}`} data-m="" className={`mot ${/^[.,]/.test(m) ? "" : "ml-[0.24em]"}`}>{m}</span>
+                  ))
+                : [
+                    <span key={k} data-m="" className="mot-img ml-[0.22em] inline-block size-[1.12em] overflow-hidden rounded-full align-[-0.2em] ring-[0.06em] ring-white shadow-[0_10px_24px_-10px_rgba(30,11,14,.6)]">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={s.img} alt={s.alt} className="size-full object-cover" />
+                    </span>,
+                  ],
+            )}
+          </p>
+          <div className={`mt-10 flex flex-col items-center gap-5 transition-all duration-700 ease-[var(--ease-pro)] sm:mt-12 ${fin ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-6 opacity-0"}`}>
+            <p className="font-display text-sm font-extrabold uppercase tracking-[0.24em] text-rouge">— L&apos;équipe BOWLY&apos;S</p>
+            <LienBouton href="/carte/" taille="lg" tabIndex={fin ? 0 : -1}>Découvrir la carte <ArrowRight className="size-5" /></LienBouton>
           </div>
         </div>
       </div>
@@ -144,14 +151,14 @@ export function Specialites() {
             return (
               <li key={a.cat} className={`w-[80%] shrink-0 snap-center md:w-auto ${i === 0 ? "apparait" : i === 1 ? "apparait-2" : "apparait-3"}`}>
                 <Link href={`/carte/${a.cat}/`} className="group flex h-full flex-col overflow-hidden rounded-[2rem] bg-vin shadow-[0_40px_80px_-40px_rgba(0,0,0,.7)] transition-transform duration-500 ease-[var(--ease-pro)] hover:-translate-y-1.5">
-                  <span className={`relative grid aspect-[4/3] overflow-hidden ${a.photos.length > 1 ? "grid-cols-2" : ""}`}>
+                  <span className={`revele relative grid aspect-[4/3] overflow-hidden ${a.photos.length > 1 ? "grid-cols-2" : ""}`}>
                     {a.photos.map((src) => (
                       <Photo key={src} src={src} alt="" className="h-full !bg-vin" sizes="(max-width: 768px) 80vw, 380px" />
                     ))}
                     {a.cat === "box" && <span className="absolute left-4 top-4 rounded-full bg-white px-3 py-1.5 text-[0.68rem] font-extrabold uppercase tracking-[0.14em] text-rouge shadow-lg">★ Best seller</span>}
                   </span>
                   <span className="flex flex-1 flex-col p-6 sm:p-7">
-                    <span className="flex items-baseline justify-between gap-3">
+                    <span className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
                       <span className="font-display text-[clamp(1.35rem,2.2vw,1.6rem)] font-extrabold leading-none whitespace-nowrap">{c.nom}</span>
                       <span className="shrink-0 text-sm font-semibold text-white/75">dès <strong className="font-display text-lg font-extrabold text-white">{prix(desPrix)}</strong></span>
                     </span>

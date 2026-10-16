@@ -78,6 +78,7 @@ export function PanierProvider({ children }: { children: ReactNode }) {
     });
     setMessage(`${p.nom} ajouté au panier`);
     setBump((b) => b + 1);
+    if (typeof navigator !== "undefined") navigator.vibrate?.(12); // petit retour tactile sur mobile
   }, []);
 
   const changerQte = useCallback((cle: string, delta: number) => {
