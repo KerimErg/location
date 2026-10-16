@@ -67,7 +67,7 @@ export function Hero() {
         <div className="grid max-w-[980px] justify-items-center gap-6">
           <Logo variante="complet" titre="BOWLY'S Lahmacun" className="anim-monter w-[clamp(150px,22vw,230px)] text-white drop-shadow-[0_8px_30px_rgba(0,0,0,.35)]" />
           <h1 id="hero-titre" className="anim-monter font-display text-[clamp(2.3rem,6.4vw,5.2rem)] font-extrabold leading-[1] tracking-[-0.02em] [animation-delay:80ms]">
-            Le lahmacun, <span className="relative whitespace-nowrap text-white after:absolute after:inset-x-0 after:bottom-[0.06em] after:-z-10 after:h-[0.34em] after:bg-rouge">autrement.</span>
+            Le lahmacun <span className="relative whitespace-nowrap text-white after:absolute after:inset-x-0 after:bottom-[0.06em] after:-z-10 after:h-[0.34em] after:bg-rouge">autrement.</span>
           </h1>
           <div className="anim-monter flex w-full flex-col items-center justify-center gap-3 pt-2 [animation-delay:160ms] sm:w-auto sm:flex-row">
             <LienBouton href="/carte/" style="rouge" taille="lg" className="w-full sm:w-auto">

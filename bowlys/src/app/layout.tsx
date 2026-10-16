@@ -6,6 +6,7 @@ import { PanierProvider } from "@/lib/panier";
 import { Panier } from "@/components/Panier";
 import { Notification } from "@/components/Notification";
 import { BarreCommande } from "@/components/BarreCommande";
+import { RetourHaut } from "@/components/RetourHaut";
 
 const titre = Montserrat({ subsets: ["latin", "latin-ext"], weight: ["500", "600", "700", "800"], variable: "--font-titre", display: "swap" });
 const texte = Nunito_Sans({ subsets: ["latin", "latin-ext"], weight: ["400", "600", "700"], variable: "--font-texte", display: "swap" });
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "fr_FR",
     siteName: site.nom,
-    title: `${site.nom} — Le lahmacun, autrement.`,
+    title: `${site.nom} — Le lahmacun autrement.`,
     description: site.description,
     images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "BOWLY'S Lahmacun" }],
   },
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#contenu" className="sr-only left-4 top-4 z-[100] rounded-full bg-rouge px-5 py-3 font-bold text-white focus:not-sr-only focus:fixed">
           Aller au contenu
         </a>
+        <RetourHaut />
         <PanierProvider>
           {children}
           <Panier />

@@ -50,8 +50,8 @@ export const site = {
   } as Record<Jour, Plage[]> | null,
 
   reseaux: {
-    instagram: "https://www.instagram.com/bowlys/" as string | null,
-    tiktok: null as string | null,
+    instagram: "https://www.instagram.com/bowlys.fr/" as string | null,
+    tiktok: "https://www.tiktok.com/@bowlys.fr" as string | null,
   },
 
   /** Lien d'avis Google (laisser null tant qu'il n'existe pas). */

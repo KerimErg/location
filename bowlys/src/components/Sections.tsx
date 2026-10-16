@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Check, Copy, Navigation, Pause, Phone, Play } from "lucide-react";
-import { CATEGORIES, produitsDe, type CategorieId } from "@/data/menu";
+import { ArrowRight, ArrowUpRight, Check, Copy, Layers, MapPin, Navigation, Pause, Phone, Play, Sparkles } from "lucide-react";
+import { produitsDe } from "@/data/menu";
+import { AjoutRapide } from "./carte/AjoutRapide";
 import { prix } from "@/lib/format";
-import { maintenantParis, duree } from "@/lib/horaires";
+import { maintenantParis } from "@/lib/horaires";
 import { PastilleStatut, useStatut } from "./StatutLive";
 import { site, adresseLigne, lienItineraire, lienPlanIntegre, JOURS } from "@/config/site";
 import { Photo } from "./Photo";
@@ -50,40 +51,76 @@ export function EnTete({ surtitre, titre, id, clair = false, sousTitre }: { surt
 }
 
 /* ─────────── Bienvenue chez BOWLY'S ─────────── */
+const ATOUTS = () => {
+  const box = produitsDe("box");
+  const durum = produitsDe("durum")[0];
+  return [
+    { titre: "Box Lahmacun", texte: `${box.length} recettes petit format, dès ${prix(Math.min(...box.map((p) => p.prix)))}`, href: "/carte/box/", Icone: Layers },
+    { titre: "Dürüm grand format", texte: `À composer en 3 étapes, ${prix(durum.prix)}`, href: `/carte/durum/${durum.id}/`, Icone: Sparkles },
+    { titre: "Sur place ou à emporter", texte: site.restaurant ? `${site.restaurant.rue}, ${site.restaurant.ville}` : "Schiltigheim", href: "/#contact", Icone: MapPin },
+  ];
+};
+
+/** Ingrédients détourés qui flottent autour des photos. */
+const INGREDIENTS = [
+  { src: "/images/choix/tomate.webp", classe: "-left-4 top-[6%] w-[19%] [--r:-8deg] sm:-left-8", delai: "0s" },
+  { src: "/images/choix/salade.webp", classe: "-right-3 top-[38%] w-[17%] [--r:10deg] sm:-right-7", delai: "-2s" },
+  { src: "/images/choix/sauce-piquante.webp", classe: "-left-2 bottom-[2%] w-[21%] [--r:6deg] sm:-left-6", delai: "-4s" },
+  { src: "/images/choix/oignon.webp", classe: "right-[18%] -top-6 w-[13%] [--r:-12deg]", delai: "-1s" },
+];
+
 export function Bienvenue() {
   return (
     <section id="concept" aria-labelledby="bienvenue-titre" className="sous-feuille relative overflow-hidden bg-white pt-24 sm:pt-36">
-      <div className={`${conteneur} grid items-center gap-16 lg:grid-cols-2 lg:gap-24`}>
-        {/* Arche photo + vignette + mention verticale */}
-        <div className="apparait relative mx-auto w-full max-w-[440px]">
-          <span aria-hidden="true" className="absolute -left-10 top-1/2 hidden -translate-y-1/2 -rotate-90 whitespace-nowrap text-[0.62rem] font-extrabold uppercase tracking-[0.42em] text-rouge/70 lg:block">
-            Bowly&apos;s · Schiltigheim
-          </span>
-          <div className="rounded-t-full border border-rouge/25 p-3 pb-3">
-            <div className="parallaxe relative aspect-[3/4] overflow-hidden rounded-t-full bg-encre">
-              <Photo src="/images/four-a-bois.webp" alt="Lahmacuns qui cuisent dans un four à bois" className="absolute inset-0" sizes="(max-width: 1024px) 90vw, 440px" zoom={false} />
-            </div>
+      <div className={`${conteneur} grid items-center gap-16 lg:grid-cols-[1.05fr_1fr] lg:gap-20`}>
+        {/* Composition photo : dürüm + box du menu, ingrédients autour */}
+        <div className="apparait relative mx-auto w-full max-w-[560px] lg:order-2">
+          <div aria-hidden="true" className="absolute inset-[6%_4%_8%_10%] -rotate-3 rounded-[2.5rem] bg-rouge" />
+          <Logo variante="icone" titre="" className="pointer-events-none absolute right-[2%] top-[4%] w-[34%] text-white/10" />
+          <div className="relative grid gap-4 p-[7%] pb-[10%]">
+            <Link href="/carte/durum/durum/" className="group relative ml-[12%] block aspect-[1020/582] overflow-hidden rounded-[1.6rem] bg-vin shadow-[0_30px_60px_-28px_rgba(30,11,14,.8)] ring-4 ring-white">
+              <Photo src="/images/carte/durum.webp" alt="Dürüm lahmacun garni" className="absolute inset-0 !bg-vin" sizes="(max-width: 640px) 80vw, 460px" />
+              <span className="absolute left-3 top-3 rounded-full bg-white px-3 py-1 font-display text-sm font-extrabold text-rouge shadow-md">Dürüm · {prix(produitsDe("durum")[0].prix)}</span>
+            </Link>
+            <Link href="/carte/box/box-nature/" className="group relative -mt-[9%] mr-[14%] block aspect-[1095/531] overflow-hidden rounded-[1.6rem] bg-vin shadow-[0_30px_60px_-28px_rgba(30,11,14,.8)] ring-4 ring-white">
+              <Photo src="/images/carte/box-nature.webp" alt="Box de lahmacuns nature" className="absolute inset-0 !bg-vin" sizes="(max-width: 640px) 80vw, 460px" />
+              <span className="absolute right-3 top-3 rounded-full bg-rouge px-3 py-1 font-display text-xs font-extrabold text-white shadow-md sm:text-sm">★ Best seller<span className="hidden sm:inline"> · Box Nature · {prix(produitsDe("box")[0].prix)}</span></span>
+            </Link>
           </div>
-          <div className="absolute -bottom-6 -right-4 w-[38%] bg-white p-1.5 shadow-[0_24px_50px_-24px_rgba(11,15,26,.55)] sm:-right-10">
-            <Photo src="/images/lahmacun-gros-plan.webp" alt="Gros plan sur un lahmacun" vignette className="aspect-[4/5]" sizes="180px" zoom={false} />
-          </div>
-          <p className="mt-16 text-left text-[0.62rem] font-extrabold uppercase tracking-[0.32em] text-gris">Photos d&apos;illustration</p>
+          {INGREDIENTS.map((x) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img key={x.src} src={x.src} alt="" aria-hidden="true" loading="lazy" style={{ animationDelay: x.delai }}
+              className={`flotte pointer-events-none absolute aspect-square rounded-full drop-shadow-[0_14px_18px_rgba(30,11,14,.35)] ${x.classe}`} />
+          ))}
         </div>
 
-        <div className="apparait-2 text-center">
-          <Surtitre>Lahmacun · Dürüm</Surtitre>
-          <h2 id="bienvenue-titre" className="mt-8 font-display font-extrabold tracking-[-0.02em]">
-            <span className="block text-[clamp(2.8rem,5.6vw,4.4rem)] leading-none">Bienvenue</span>
-            <span className="mt-4 flex items-center justify-center gap-4 text-lg font-bold text-gris">
-              <span aria-hidden="true" className="h-px w-12 bg-rouge/40" />chez<span aria-hidden="true" className="h-px w-12 bg-rouge/40" />
-            </span>
-            <Logo variante="nom" titre="BOWLY'S" className="mx-auto mt-5 w-[min(100%,340px)] text-rouge" />
+        <div className="apparait-2 text-center lg:text-left">
+          <div className="lg:[&_p]:justify-start"><Surtitre centre={false}>Bienvenue</Surtitre></div>
+          <h2 id="bienvenue-titre" className="mt-6 font-display font-extrabold tracking-[-0.02em]">
+            <span className="block text-[clamp(1.6rem,3vw,2.2rem)] leading-tight text-encre">Bienvenue chez</span>
+            <Logo variante="nom" titre="BOWLY'S" className="mx-auto mt-3 w-[min(100%,380px)] text-rouge lg:mx-0" />
+            <span className="mt-4 block text-[clamp(1.25rem,2.2vw,1.6rem)] leading-snug text-gris">la maison du lahmacun à Schiltigheim.</span>
           </h2>
-          <Ornement className="mt-9" />
-          <p className="mx-auto mt-8 max-w-[42ch] text-[1.08rem] leading-relaxed text-gris">
-            Chez BOWLY&apos;S, tout tourne autour du lahmacun : en box de petits formats pour partager, ou en dürüm grand format que vous composez vous-même. Une pâte fine, une garniture généreuse, et une carte courte à déguster sur place ou à emporter.
+          <p className="mx-auto mt-6 max-w-[46ch] text-[1.08rem] leading-relaxed text-gris lg:mx-0">
+            Une pâte fine, une garniture généreuse et une carte courte : le lahmacun en box petit format pour partager, ou en dürüm grand format que vous composez vous-même.
           </p>
-          <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
+
+          <ul className="mt-9 grid gap-3 text-left">
+            {ATOUTS().map(({ titre, texte, href, Icone }) => (
+              <li key={titre}>
+                <Link href={href} className="group flex items-center gap-4 rounded-2xl bg-doux p-4 ring-1 ring-trait transition-[background,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_18px_40px_-24px_rgba(30,11,14,.45)]">
+                  <span className="grid size-12 shrink-0 place-items-center rounded-full bg-rouge text-white"><Icone className="size-5" /></span>
+                  <span className="min-w-0 flex-1 leading-snug">
+                    <span className="block font-display text-[1.05rem] font-extrabold text-encre">{titre}</span>
+                    <span className="block text-[0.95rem] text-gris">{texte}</span>
+                  </span>
+                  <ArrowRight className="size-5 shrink-0 text-rouge transition-transform duration-300 group-hover:translate-x-1" />
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row lg:justify-start">
             <LienBouton href="/carte/" taille="lg">Découvrir la carte</LienBouton>
             <LienBouton href="/#contact" style="contour" taille="lg">Nous trouver</LienBouton>
           </div>
@@ -93,136 +130,140 @@ export function Bienvenue() {
   );
 }
 
-/* ─────────── Notre carte : vitrine interactive ─────────── */
-const VITRINE: { cat: CategorieId; photo: string | null; phrase: string }[] = [
-  { cat: "box", photo: "/images/carte/box-nature.webp", phrase: "Des lahmacuns petit format, en box : nature, végétarien, poulet ou émincé de bœuf." },
-  { cat: "durum", photo: "/images/carte/durum.webp", phrase: "Le lahmacun grand format roulé : tu choisis ton lahmacun, tes crudités et ta sauce." },
-  { cat: "desserts", photo: "/images/carte/tiramisu.webp", phrase: "Panna cotta ou tiramisu, pour finir en douceur." },
-];
+/* ─────────── Notre carte : vitrine en mosaïque ─────────── */
+const carteBase = "apparait relative flex min-w-0 flex-col overflow-hidden rounded-[2rem] shadow-[0_40px_80px_-40px_rgba(0,0,0,.65)]";
+
+function PrixPastille({ children, clair = false }: { children: React.ReactNode; clair?: boolean }) {
+  return <span className={`inline-flex h-9 items-center rounded-full px-4 font-display text-lg font-extrabold tabular-nums ${clair ? "bg-white text-rouge" : "bg-rouge text-white"}`}>{children}</span>;
+}
 
 export function Specialites() {
-  const [actif, setActif] = useState(0);
-  const v = VITRINE[actif];
-  const cat = CATEGORIES.find((c) => c.id === v.cat)!;
-  const produits = produitsDe(v.cat);
-  const desPrix = Math.min(...produits.map((p) => p.prix));
+  const box = produitsDe("box");
+  const durum = produitsDe("durum")[0];
+  const desserts = produitsDe("desserts");
+  const boissons = produitsDe("boissons");
+  const option = box[0].groupes?.[0]?.choix[0];
   return (
     <section id="specialites" aria-labelledby="spe-titre" className="sur-sombre feuille sous-feuille overflow-hidden bg-rouge pt-24 text-white sm:pt-32">
-      <Logo variante="icone" titre="" className="pointer-events-none absolute -left-24 bottom-10 w-[420px] text-white/[0.06]" />
-      <div className={`${conteneur} relative grid items-center gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-20`}>
-        <div className="apparait min-w-0">
-          <Surtitre clair centre={false}>Notre carte</Surtitre>
-          <h2 id="spe-titre" className="sr-only">Notre carte</h2>
+      <Logo variante="icone" titre="" className="pointer-events-none absolute -left-24 top-24 w-[420px] text-white/[0.06]" />
+      <div className={`${conteneur} relative`}>
+        <EnTete id="spe-titre" clair surtitre="Notre carte" titre="Fait pour donner faim." sousTitre="Box, dürüm, desserts et boissons : toute la carte en un coup d'œil." />
 
-          {/* Sélecteur : grands titres sur ordinateur, pastilles sur mobile */}
-          <div role="tablist" aria-label="Spécialités" className="mt-8 hidden gap-1 lg:grid">
-            {VITRINE.map((x, i) => {
-              const c = CATEGORIES.find((k) => k.id === x.cat)!;
-              const on = i === actif;
-              return (
-                <button key={x.cat} role="tab" aria-selected={on} aria-controls="vitrine" onMouseEnter={() => setActif(i)} onFocus={() => setActif(i)} onClick={() => setActif(i)}
-                  className={`group flex items-baseline gap-5 text-left font-display text-[clamp(2.2rem,3.4vw,3.4rem)] font-extrabold leading-[1.08] tracking-[-0.02em] transition-colors duration-300 ${on ? "text-white" : "text-white/35 hover:text-white/70"}`}>
-                  <span className="w-8 text-sm font-extrabold tracking-[0.2em] opacity-80">{String(i + 1).padStart(2, "0")}</span>
-                  {c.nom}
-                  <ArrowRight className={`size-8 self-center transition-all duration-300 ${on ? "translate-x-0 opacity-100" : "-translate-x-3 opacity-0"}`} strokeWidth={2.6} />
-                </button>
-              );
-            })}
-          </div>
-          <div role="tablist" aria-label="Spécialités" className="sans-barre -mx-1 mt-7 flex gap-2 overflow-x-auto px-1 lg:hidden">
-            {VITRINE.map((x, i) => {
-              const c = CATEGORIES.find((k) => k.id === x.cat)!;
-              return (
-                <button key={x.cat} role="tab" aria-selected={i === actif} aria-controls="vitrine" onClick={() => setActif(i)}
-                  className={`h-11 shrink-0 rounded-full px-5 font-display font-extrabold transition-colors ${i === actif ? "bg-white text-rouge" : "bg-white/15 text-white"}`}>
-                  {c.nom}
-                </button>
-              );
-            })}
-          </div>
-
-          <div key={v.cat} className="anim-monter mt-8 hidden lg:block">
-            <p className="max-w-[40ch] text-lg font-semibold text-white/90">{v.phrase}</p>
-            <ListeVitrine produits={produits} />
-            <div className="mt-8 flex flex-wrap gap-3">
-              <LienBouton href={`/carte/${cat.id}/`} style="blanc" taille="lg">Voir les {cat.nom.toLowerCase()} <ArrowRight className="size-5" /></LienBouton>
-              <LienBouton href="/carte/" style="contour-blanc" taille="lg">Toute la carte</LienBouton>
+        <div className="mt-14 grid gap-5 lg:grid-cols-12">
+          {/* Box Lahmacun */}
+          <article className={`${carteBase} bg-white text-encre lg:col-span-7`}>
+            <Link href="/carte/box/" className="group relative block aspect-[1095/531] overflow-hidden bg-vin">
+              <Photo src={box[0].photo} alt="Box de lahmacuns" className="absolute inset-0 !bg-vin" sizes="(max-width: 1024px) 100vw, 680px" />
+              <span className="absolute left-4 top-4 rounded-full bg-rouge px-3 py-1.5 text-[0.7rem] font-extrabold uppercase tracking-[0.14em] text-white shadow-lg">★ Best seller · Nature</span>
+            </Link>
+            <div className="flex flex-1 flex-col p-6 sm:p-8">
+              <div className="flex flex-wrap items-end justify-between gap-3">
+                <div>
+                  <p className="text-[0.72rem] font-extrabold uppercase tracking-[0.22em] text-rouge">Lahmacun petit format</p>
+                  <h3 className="mt-1 font-display text-[clamp(1.9rem,3.4vw,2.6rem)] font-extrabold leading-none"><Link href="/carte/box/" className="hover:text-rouge">Box Lahmacun</Link></h3>
+                </div>
+                {option?.prix != null && <span className="rounded-full bg-creme px-3 py-1.5 text-sm font-extrabold text-rouge">{option.nom} : +{prix(option.prix)}</span>}
+              </div>
+              <ul className="mt-5 grid gap-x-8 sm:grid-cols-2">
+                {box.map((p) => (
+                  <li key={p.id}>
+                    <Link href={`/carte/box/${p.id}/`} className="group flex items-baseline gap-3 border-b border-trait py-3">
+                      <span className="min-w-0 font-display font-extrabold transition-colors group-hover:text-rouge">{p.nom.replace("Box ", "")}</span>
+                      <span aria-hidden="true" className="flex-1 border-b-2 border-dotted border-trait" />
+                      <span className="font-display font-extrabold tabular-nums text-rouge">{prix(p.prix)}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <LienBouton href="/carte/box/" taille="md" className="mt-6 self-start">Choisir ma box <ArrowRight className="size-5" /></LienBouton>
             </div>
-          </div>
+          </article>
+
+          {/* Dürüm à composer */}
+          <article className={`${carteBase} bg-vin lg:col-span-5`}>
+            <Link href={`/carte/durum/${durum.id}/`} className="group relative block aspect-[1020/582] overflow-hidden bg-vin">
+              <Photo src={durum.photo} alt="Dürüm lahmacun" className="absolute inset-0 !bg-vin" sizes="(max-width: 1024px) 100vw, 480px" />
+            </Link>
+            <div className="flex flex-1 flex-col p-6 sm:p-8">
+              <div className="flex items-end justify-between gap-3">
+                <div>
+                  <p className="text-[0.72rem] font-extrabold uppercase tracking-[0.22em] text-white/70">Lahmacun grand format</p>
+                  <h3 className="mt-1 font-display text-[clamp(1.9rem,3.4vw,2.6rem)] font-extrabold leading-none">Dürüm</h3>
+                </div>
+                <PrixPastille clair>{prix(durum.prix)}</PrixPastille>
+              </div>
+              <ol className="mt-6 grid gap-4">
+                {(durum.groupes ?? []).map((g, i) => (
+                  <li key={g.id} className="flex items-center gap-3">
+                    <span className="grid size-7 shrink-0 place-items-center rounded-full bg-white font-display text-sm font-extrabold text-rouge">{i + 1}</span>
+                    <span className="w-[5.5rem] shrink-0 text-[0.8rem] sm:w-[6.5rem] sm:text-sm font-bold leading-tight text-white/90">{g.titre}</span>
+                    <span className="flex min-w-0 -space-x-2">
+                      {g.choix.filter((c) => c.photo).map((c) => (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img key={c.id} src={c.photo} alt={c.nom} title={c.nom} loading="lazy" className="size-9 rounded-full bg-vin ring-2 ring-vin sm:size-11" />
+                      ))}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+              <LienBouton href={`/carte/durum/${durum.id}/`} style="blanc" taille="md" className="mt-7 self-start">Composer mon dürüm <ArrowRight className="size-5" /></LienBouton>
+            </div>
+          </article>
+
+          {/* Desserts */}
+          <article className={`${carteBase} bg-vin lg:col-span-5`}>
+            <div className="flex items-end justify-between gap-3 p-6 pb-0 sm:p-8 sm:pb-0">
+              <div>
+                <p className="text-[0.72rem] font-extrabold uppercase tracking-[0.22em] text-white/70">Pour finir en douceur</p>
+                <h3 className="mt-1 font-display text-[clamp(1.9rem,3.4vw,2.6rem)] font-extrabold leading-none"><Link href="/carte/desserts/" className="hover:underline">Desserts</Link></h3>
+              </div>
+            </div>
+            <ul className="grid flex-1 grid-cols-2 gap-3 p-4 sm:p-6">
+              {desserts.map((p) => (
+                <li key={p.id}>
+                  <Link href={`/carte/desserts/${p.id}/`} className="group relative block aspect-[4/5] overflow-hidden rounded-[1.4rem] bg-vin">
+                    <Photo src={p.photo} alt={p.nom} className="absolute inset-0 !bg-vin" sizes="(max-width: 1024px) 50vw, 240px" />
+                    <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-vin to-transparent p-4 pr-16 pt-10">
+                      <span className="block font-display text-lg font-extrabold leading-tight">{p.nom}</span>
+                      <span className="font-display font-extrabold tabular-nums text-white/85">{prix(p.prix)}</span>
+                    </span>
+                    <AjoutRapide p={p} />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </article>
+
+          {/* Boissons */}
+          <article className={`${carteBase} bg-white text-encre lg:col-span-7`}>
+            <div className="flex flex-wrap items-end justify-between gap-3 p-6 pb-0 sm:p-8 sm:pb-0">
+              <div>
+                <p className="text-[0.72rem] font-extrabold uppercase tracking-[0.22em] text-rouge">Bien fraîches</p>
+                <h3 className="mt-1 font-display text-[clamp(1.9rem,3.4vw,2.6rem)] font-extrabold leading-none"><Link href="/carte/boissons/" className="hover:text-rouge">Boissons</Link></h3>
+              </div>
+              <PrixPastille>{prix(Math.min(...boissons.map((p) => p.prix)))}</PrixPastille>
+            </div>
+            <ul className="grid flex-1 grid-cols-3 gap-2 p-4 sm:grid-cols-5 sm:gap-3 sm:p-6">
+              {boissons.map((p) => (
+                <li key={p.id}>
+                  <Link href={`/carte/boissons/${p.id}/`} className="group relative block overflow-hidden rounded-[1.2rem] bg-vin">
+                    <Photo src={p.photo} alt={p.nom} className="aspect-square !bg-vin" sizes="140px" />
+                    <span className="block bg-vin px-2 pb-3 text-center font-display text-sm font-extrabold text-white">{p.nom}</span>
+                  </Link>
+                </li>
+              ))}
+              <li className="sm:hidden">
+                <Link href="/carte/boissons/" className="grid h-full place-items-center rounded-[1.2rem] bg-creme p-2 text-center font-display text-sm font-extrabold text-rouge">Voir tout <ArrowRight className="size-5" /></Link>
+              </li>
+            </ul>
+          </article>
         </div>
 
-        <div id="vitrine" role="tabpanel" className="apparait-2 min-w-0">
-          <Link href={`/carte/${cat.id}/`} className="group relative block aspect-[4/5] overflow-hidden rounded-[2rem] bg-encre shadow-[0_50px_90px_-40px_rgba(0,0,0,.6)] sm:aspect-square lg:aspect-[4/5]">
-            {VITRINE.map((x, i) => (
-              <span key={x.cat} aria-hidden={i !== actif} className={`absolute inset-0 transition-opacity duration-700 ${i === actif ? "opacity-100" : "opacity-0"}`}>
-                {x.photo ? (
-                  <Photo src={x.photo} alt="" className={`absolute inset-0 ${i === actif ? "[&_img]:scale-100" : "[&_img]:scale-110"} [&_img]:transition-transform [&_img]:duration-[1.4s]`} sizes="(max-width: 1024px) 100vw, 560px" zoom={false} />
-                ) : (
-                  <span className="absolute inset-0 grid place-items-center bg-white text-rouge">
-                    <span className="grid justify-items-center gap-5">
-                      <IconeAccomp />
-                      <span className="flex flex-wrap justify-center gap-2 px-6">
-                        {produitsDe("boissons").map((p) => <span key={p.id} className="rounded-full bg-creme px-3 py-1.5 text-sm font-extrabold">{p.nom}</span>)}
-                      </span>
-                    </span>
-                  </span>
-                )}
-              </span>
-            ))}
-            {v.photo && <span className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-encre/80 to-transparent" />}
-            <span className={`absolute right-5 top-5 grid size-24 -rotate-6 place-items-center rounded-full text-center shadow-xl transition-transform duration-500 group-hover:rotate-0 sm:size-28 ${v.photo ? "bg-white text-rouge" : "bg-rouge text-white"}`}>
-              <span className="leading-none">
-                <span className="block text-[0.65rem] font-extrabold uppercase tracking-[0.16em]">dès</span>
-                <span className="mt-1 block font-display text-2xl font-extrabold sm:text-[1.7rem]">{prix(desPrix).replace(",00", "")}</span>
-              </span>
-            </span>
-            <span className={`absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-6 sm:p-8 ${v.photo ? "" : "text-encre"}`}>
-              <span>
-                <span className={`block text-[0.72rem] font-extrabold uppercase tracking-[0.22em] ${v.photo ? "text-white/80" : "text-rouge"}`}>{produits.length} {produits.length > 1 ? "choix" : "recette"}</span>
-                <span className={`mt-1 block font-display font-extrabold leading-none ${cat.nom.length > 10 ? "text-[clamp(1.6rem,3.2vw,2.2rem)]" : "text-[clamp(2rem,4vw,2.8rem)]"}`}>{cat.nom}</span>
-              </span>
-              <span className="grid size-14 shrink-0 place-items-center rounded-full bg-rouge text-white transition-transform duration-500 group-hover:-rotate-45"><ArrowRight className="size-6" strokeWidth={2.6} /></span>
-            </span>
-          </Link>
-
-          {/* Mobile : texte et liste sous la photo */}
-          <div key={`m-${v.cat}`} className="anim-monter mt-7 lg:hidden">
-            <p className="text-[1.05rem] font-semibold text-white/90">{v.phrase}</p>
-            <ListeVitrine produits={produits} />
-            <div className="mt-7 grid gap-3">
-              <LienBouton href={`/carte/${cat.id}/`} style="blanc" taille="lg" className="w-full">Voir les {cat.nom.toLowerCase()}</LienBouton>
-              <LienBouton href="/carte/" style="contour-blanc" taille="lg" className="w-full">Toute la carte</LienBouton>
-            </div>
-          </div>
+        <div className="apparait mt-10 flex justify-center">
+          <LienBouton href="/carte/" style="blanc" taille="lg">Voir toute la carte <ArrowRight className="size-5" /></LienBouton>
         </div>
       </div>
     </section>
-  );
-}
-
-function ListeVitrine({ produits }: { produits: ReturnType<typeof produitsDe> }) {
-  return (
-    <ul className="mt-6 grid gap-0.5">
-      {produits.map((p) => (
-        <li key={p.id}>
-          <Link href={`/carte/${p.categorie}/${p.id}/`} className="group flex items-baseline gap-3 border-b border-white/15 py-3 font-display text-lg font-extrabold">
-            <span className="transition-transform duration-300 group-hover:translate-x-1">{p.nom}{p.badge && <span className="ml-2 rounded-full bg-white px-2 py-0.5 align-middle text-[0.6rem] font-extrabold uppercase tracking-[0.12em] text-rouge">★ {p.badge}</span>}</span>
-            <span aria-hidden="true" className="flex-1 border-b-2 border-dotted border-white/25" />
-            <span className="tabular-nums">{prix(p.prix)}</span>
-          </Link>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-function IconeAccomp() {
-  return (
-    <svg viewBox="0 0 48 48" aria-hidden="true" className="w-24">
-      <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M20 6h8v6l3 4v26H17V16l3-4z" /><path d="M17 25h14M17 33h14" />
-      </g>
-    </svg>
   );
 }
 
@@ -266,7 +307,7 @@ export function Galerie() {
             </div>
             <div className="absolute left-4 top-7 flex items-center gap-2.5 text-white">
               <span className="grid size-9 place-items-center rounded-full bg-white"><Logo variante="icone" titre="" className="w-5 text-rouge" /></span>
-              <span className="text-sm font-bold">bowlys</span>
+              <span className="text-sm font-bold">bowlys.fr</span>
             </div>
             <button type="button" onClick={() => setI((x) => (x + 1) % STORIES.length)} aria-label="Photo suivante" className="absolute inset-y-0 right-0 w-1/2" />
             <button type="button" onClick={() => setI((x) => (x - 1 + STORIES.length) % STORIES.length)} aria-label="Photo précédente" className="absolute inset-y-0 left-0 w-1/2" />
@@ -279,12 +320,19 @@ export function Galerie() {
         <div className="apparait text-center md:text-left">
           <div className="md:[&_p]:justify-start"><Surtitre centre={false} clair>Galerie</Surtitre></div>
           <h2 id="galerie-titre" className="mt-5 font-display text-[clamp(2.4rem,5vw,4rem)] font-extrabold leading-[0.98] tracking-[-0.025em]">
-            Ça se passe aussi sur Instagram.
+            Suivez-nous sur les réseaux.
           </h2>
           <p className="mx-auto mt-6 max-w-[40ch] text-lg text-white/85 md:mx-0">Les nouveautés, les coulisses et les plats du moment : suivez-nous.</p>
-          <LienBouton href={site.reseaux.instagram} externe style="blanc" taille="lg" className="mt-9">
-            @bowlys <ArrowUpRight className="size-5" />
-          </LienBouton>
+          <div className="mt-9 flex flex-wrap justify-center gap-3 md:justify-start">
+            <LienBouton href={site.reseaux.instagram} externe style="blanc" taille="lg">
+              Instagram · @bowlys.fr <ArrowUpRight className="size-5" />
+            </LienBouton>
+            {site.reseaux.tiktok && (
+              <LienBouton href={site.reseaux.tiktok} externe style="contour-blanc" taille="lg">
+                TikTok · @bowlys.fr <ArrowUpRight className="size-5" />
+              </LienBouton>
+            )}
+          </div>
         </div>
       </div>
     </section>
@@ -376,12 +424,6 @@ export function NousTrouver() {
               <p className="mt-6 font-display text-[clamp(2.2rem,5vw,3.4rem)] font-extrabold leading-[1.02] tracking-[-0.02em]">
                 {s ? (s.ouvert ? <>On est ouverts,<br />venez vite !</> : <>Bientôt l&apos;heure<br />du lahmacun.</>) : <>Le lahmacun<br />vous attend.</>}
               </p>
-              {s?.dans != null && (
-                <p className="mt-3 text-lg font-semibold text-white/90">
-                  {s.ouvert ? <>Encore <strong className="text-white">{duree(s.dans)}</strong> avant la fermeture.</> : <>Ouverture dans <strong className="text-white">{duree(s.dans)}</strong>.</>}
-                </p>
-              )}
-
               <address className="mt-8 not-italic">
                 <span className="text-[0.72rem] font-extrabold uppercase tracking-[0.22em] text-white/70">Adresse</span>
                 <span id="adresse-texte" className="mt-1 block font-display text-2xl font-extrabold">{site.restaurant.rue}, {site.restaurant.codePostal} {site.restaurant.ville}</span>

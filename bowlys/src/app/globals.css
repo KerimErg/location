@@ -12,6 +12,7 @@
   --color-doux: #faf6f3;         /* blanc cassé chaud */
   --color-trait: #eee2de;
   --color-gris: #4e3c3f;         /* texte secondaire */
+  --color-vin: #2d0406;          /* fond des photos du menu */
   --font-display: var(--font-titre), "Helvetica Neue", Arial, sans-serif;
   --font-sans: var(--font-texte), system-ui, -apple-system, "Segoe UI", sans-serif;
   --ease-pro: cubic-bezier(0.2, 0.7, 0.2, 1);
@@ -95,3 +96,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; }
 @keyframes lent-zoom { from { transform: scale(1); } to { transform: scale(1.08); } }
 .entree { animation: entree .8s var(--ease-pro) both; }
 .lent-zoom { animation: lent-zoom 24s ease-in-out infinite alternate; }
+
+/* Ingrédients qui flottent doucement (section Bienvenue) */
+@keyframes flotter { 0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); } 50% { transform: translateY(-10px) rotate(var(--r, 0deg)); } }
+.flotte { animation: flotter 6s ease-in-out infinite; }
