@@ -19,10 +19,10 @@ const conteneur = "mx-auto max-w-[1180px] px-[max(20px,env(safe-area-inset-left)
 /** Surtitre encadré de deux traits : « —— NOTRE CARTE —— ». */
 export function Surtitre({ children, clair = false, centre = true }: { children: React.ReactNode; clair?: boolean; centre?: boolean }) {
   return (
-    <p className={`flex items-center gap-4 font-display text-[0.78rem] font-extrabold uppercase tracking-[0.26em] ${centre ? "justify-center" : ""} ${clair ? "text-white" : "text-bleu"}`}>
-      <span aria-hidden="true" className={`h-px w-10 ${clair ? "bg-white/60" : "bg-bleu/50"}`} />
+    <p className={`flex items-center gap-4 font-display text-[0.78rem] font-extrabold uppercase tracking-[0.26em] ${centre ? "justify-center" : ""} ${clair ? "text-white" : "text-rouge"}`}>
+      <span aria-hidden="true" className={`h-px w-10 ${clair ? "bg-white/60" : "bg-rouge/50"}`} />
       {children}
-      <span aria-hidden="true" className={`h-px w-10 ${clair ? "bg-white/60" : "bg-bleu/50"}`} />
+      <span aria-hidden="true" className={`h-px w-10 ${clair ? "bg-white/60" : "bg-rouge/50"}`} />
     </p>
   );
 }
@@ -31,9 +31,9 @@ export function Surtitre({ children, clair = false, centre = true }: { children:
 export function Ornement({ clair = false, className = "" }: { clair?: boolean; className?: string }) {
   return (
     <div aria-hidden="true" className={`flex items-center justify-center gap-3 ${className}`}>
-      <span className={`h-px w-14 ${clair ? "bg-white/50" : "bg-bleu/40"}`} />
-      <Logo variante="icone" titre="" className={`w-7 ${clair ? "text-white" : "text-bleu"}`} />
-      <span className={`h-px w-14 ${clair ? "bg-white/50" : "bg-bleu/40"}`} />
+      <span className={`h-px w-14 ${clair ? "bg-white/50" : "bg-rouge/40"}`} />
+      <Logo variante="icone" titre="" className={`w-7 ${clair ? "text-white" : "text-rouge"}`} />
+      <span className={`h-px w-14 ${clair ? "bg-white/50" : "bg-rouge/40"}`} />
     </div>
   );
 }
@@ -42,7 +42,7 @@ export function EnTete({ surtitre, titre, id, clair = false, sousTitre }: { surt
   return (
     <div className="apparait mx-auto max-w-[760px] text-center">
       <Surtitre clair={clair}>{surtitre}</Surtitre>
-      <h2 id={id} className="mt-5 font-display text-[clamp(2.4rem,5.4vw,4.2rem)] font-black leading-[0.98] tracking-[-0.025em]">{titre}</h2>
+      <h2 id={id} className="mt-5 font-display text-[clamp(2.4rem,5.4vw,4.2rem)] font-extrabold leading-[0.98] tracking-[-0.025em]">{titre}</h2>
       <Ornement clair={clair} className="mt-6" />
       {sousTitre && <p className={`mx-auto mt-6 max-w-[48ch] text-lg font-semibold ${clair ? "text-white/90" : "text-gris"}`}>{sousTitre}</p>}
     </div>
@@ -56,32 +56,32 @@ export function Bienvenue() {
       <div className={`${conteneur} grid items-center gap-16 lg:grid-cols-2 lg:gap-24`}>
         {/* Arche photo + vignette + mention verticale */}
         <div className="apparait relative mx-auto w-full max-w-[440px]">
-          <span aria-hidden="true" className="absolute -left-10 top-1/2 hidden -translate-y-1/2 -rotate-90 whitespace-nowrap text-[0.62rem] font-extrabold uppercase tracking-[0.42em] text-bleu/70 lg:block">
+          <span aria-hidden="true" className="absolute -left-10 top-1/2 hidden -translate-y-1/2 -rotate-90 whitespace-nowrap text-[0.62rem] font-extrabold uppercase tracking-[0.42em] text-rouge/70 lg:block">
             Bowly&apos;s · Schiltigheim
           </span>
-          <div className="rounded-t-full border border-bleu/25 p-3 pb-3">
+          <div className="rounded-t-full border border-rouge/25 p-3 pb-3">
             <div className="parallaxe relative aspect-[3/4] overflow-hidden rounded-t-full bg-encre">
-              <Photo src="/images/illustration-manti-yaourt.webp" alt="Sauce yaourt versée sur des mantis" className="absolute inset-0" sizes="(max-width: 1024px) 90vw, 440px" zoom={false} />
+              <Photo src="/images/four-a-bois.webp" alt="Lahmacuns qui cuisent dans un four à bois" className="absolute inset-0" sizes="(max-width: 1024px) 90vw, 440px" zoom={false} />
             </div>
           </div>
           <div className="absolute -bottom-6 -right-4 w-[38%] bg-white p-1.5 shadow-[0_24px_50px_-24px_rgba(11,15,26,.55)] sm:-right-10">
-            <Photo src="/images/illustration-manti-beurre.webp" alt="Beurre pimenté versé sur des mantis" vignette className="aspect-[4/5]" sizes="180px" zoom={false} />
+            <Photo src="/images/lahmacun-gros-plan.webp" alt="Gros plan sur un lahmacun" vignette className="aspect-[4/5]" sizes="180px" zoom={false} />
           </div>
-          <p className="mt-16 text-center text-[0.62rem] font-extrabold uppercase tracking-[0.32em] text-gris sm:text-left">Photos d&apos;illustration</p>
+          <p className="mt-16 text-left text-[0.62rem] font-extrabold uppercase tracking-[0.32em] text-gris">Photos d&apos;illustration</p>
         </div>
 
         <div className="apparait-2 text-center">
-          <Surtitre>Manti · Lahmacun</Surtitre>
-          <h2 id="bienvenue-titre" className="mt-8 font-display font-black tracking-[-0.02em]">
+          <Surtitre>Lahmacun · Dürüm</Surtitre>
+          <h2 id="bienvenue-titre" className="mt-8 font-display font-extrabold tracking-[-0.02em]">
             <span className="block text-[clamp(2.8rem,5.6vw,4.4rem)] leading-none">Bienvenue</span>
             <span className="mt-4 flex items-center justify-center gap-4 text-lg font-bold text-gris">
-              <span aria-hidden="true" className="h-px w-12 bg-bleu/40" />chez<span aria-hidden="true" className="h-px w-12 bg-bleu/40" />
+              <span aria-hidden="true" className="h-px w-12 bg-rouge/40" />chez<span aria-hidden="true" className="h-px w-12 bg-rouge/40" />
             </span>
-            <Logo variante="nom" titre="BOWLY'S" className="mx-auto mt-5 w-[min(100%,340px)] text-bleu" />
+            <Logo variante="nom" titre="BOWLY'S" className="mx-auto mt-5 w-[min(100%,340px)] text-rouge" />
           </h2>
           <Ornement className="mt-9" />
           <p className="mx-auto mt-8 max-w-[42ch] text-[1.08rem] leading-relaxed text-gris">
-            La street food turque, autrement : des mantis nappés de yaourt et de beurre pimenté, des lahmacuns fins et croustillants. Une carte courte, des recettes généreuses, à déguster sur place ou à emporter.
+            Chez BOWLY&apos;S, tout tourne autour du lahmacun : en box de petits formats pour partager, ou en dürüm grand format que vous composez vous-même. Une pâte fine, une garniture généreuse, et une carte courte à déguster sur place ou à emporter.
           </p>
           <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
             <LienBouton href="/carte/" taille="lg">Découvrir la carte</LienBouton>
@@ -95,9 +95,9 @@ export function Bienvenue() {
 
 /* ─────────── Notre carte : vitrine interactive ─────────── */
 const VITRINE: { cat: CategorieId; photo: string | null; phrase: string }[] = [
-  { cat: "mantis", photo: "/images/illustration-manti-beurre.webp", phrase: "Petits raviolis turcs, yaourt frais et beurre pimenté versé à la cuillère." },
-  { cat: "lahmacuns", photo: "/images/illustration-lahmacun-garniture.webp", phrase: "Une pâte fine, une garniture généreuse, cuite au four jusqu'à être croustillante." },
-  { cat: "accompagnements", photo: null, phrase: "Sauce piquante, fromage, pain ou boisson : de quoi compléter votre repas." },
+  { cat: "box", photo: "/images/carte/box-nature.webp", phrase: "Des lahmacuns petit format, en box : nature, végétarien, poulet ou émincé de bœuf." },
+  { cat: "durum", photo: "/images/carte/durum.webp", phrase: "Le lahmacun grand format roulé : tu choisis ton lahmacun, tes crudités et ta sauce." },
+  { cat: "desserts", photo: "/images/carte/tiramisu.webp", phrase: "Panna cotta ou tiramisu, pour finir en douceur." },
 ];
 
 export function Specialites() {
@@ -107,7 +107,7 @@ export function Specialites() {
   const produits = produitsDe(v.cat);
   const desPrix = Math.min(...produits.map((p) => p.prix));
   return (
-    <section id="specialites" aria-labelledby="spe-titre" className="sur-sombre feuille sous-feuille overflow-hidden bg-bleu pt-24 text-white sm:pt-32">
+    <section id="specialites" aria-labelledby="spe-titre" className="sur-sombre feuille sous-feuille overflow-hidden bg-rouge pt-24 text-white sm:pt-32">
       <Logo variante="icone" titre="" className="pointer-events-none absolute -left-24 bottom-10 w-[420px] text-white/[0.06]" />
       <div className={`${conteneur} relative grid items-center gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-20`}>
         <div className="apparait min-w-0">
@@ -121,8 +121,8 @@ export function Specialites() {
               const on = i === actif;
               return (
                 <button key={x.cat} role="tab" aria-selected={on} aria-controls="vitrine" onMouseEnter={() => setActif(i)} onFocus={() => setActif(i)} onClick={() => setActif(i)}
-                  className={`group flex items-baseline gap-5 text-left font-display text-[clamp(2.2rem,3.4vw,3.4rem)] font-black leading-[1.08] tracking-[-0.02em] transition-colors duration-300 ${on ? "text-white" : "text-white/35 hover:text-white/70"}`}>
-                  <span className="w-8 text-sm font-black tracking-[0.2em] opacity-80">{String(i + 1).padStart(2, "0")}</span>
+                  className={`group flex items-baseline gap-5 text-left font-display text-[clamp(2.2rem,3.4vw,3.4rem)] font-extrabold leading-[1.08] tracking-[-0.02em] transition-colors duration-300 ${on ? "text-white" : "text-white/35 hover:text-white/70"}`}>
+                  <span className="w-8 text-sm font-extrabold tracking-[0.2em] opacity-80">{String(i + 1).padStart(2, "0")}</span>
                   {c.nom}
                   <ArrowRight className={`size-8 self-center transition-all duration-300 ${on ? "translate-x-0 opacity-100" : "-translate-x-3 opacity-0"}`} strokeWidth={2.6} />
                 </button>
@@ -134,7 +134,7 @@ export function Specialites() {
               const c = CATEGORIES.find((k) => k.id === x.cat)!;
               return (
                 <button key={x.cat} role="tab" aria-selected={i === actif} aria-controls="vitrine" onClick={() => setActif(i)}
-                  className={`h-11 shrink-0 rounded-full px-5 font-display font-extrabold transition-colors ${i === actif ? "bg-white text-bleu" : "bg-white/15 text-white"}`}>
+                  className={`h-11 shrink-0 rounded-full px-5 font-display font-extrabold transition-colors ${i === actif ? "bg-white text-rouge" : "bg-white/15 text-white"}`}>
                   {c.nom}
                 </button>
               );
@@ -158,11 +158,11 @@ export function Specialites() {
                 {x.photo ? (
                   <Photo src={x.photo} alt="" className={`absolute inset-0 ${i === actif ? "[&_img]:scale-100" : "[&_img]:scale-110"} [&_img]:transition-transform [&_img]:duration-[1.4s]`} sizes="(max-width: 1024px) 100vw, 560px" zoom={false} />
                 ) : (
-                  <span className="absolute inset-0 grid place-items-center bg-white text-bleu">
+                  <span className="absolute inset-0 grid place-items-center bg-white text-rouge">
                     <span className="grid justify-items-center gap-5">
                       <IconeAccomp />
                       <span className="flex flex-wrap justify-center gap-2 px-6">
-                        {produitsDe("accompagnements").map((p) => <span key={p.id} className="rounded-full bg-bleu-ciel px-3 py-1.5 text-sm font-extrabold">{p.nom}</span>)}
+                        {produitsDe("boissons").map((p) => <span key={p.id} className="rounded-full bg-creme px-3 py-1.5 text-sm font-extrabold">{p.nom}</span>)}
                       </span>
                     </span>
                   </span>
@@ -170,20 +170,19 @@ export function Specialites() {
               </span>
             ))}
             {v.photo && <span className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-encre/80 to-transparent" />}
-            <span className={`absolute right-5 top-5 grid size-24 -rotate-6 place-items-center rounded-full text-center shadow-xl transition-transform duration-500 group-hover:rotate-0 sm:size-28 ${v.photo ? "bg-white text-bleu" : "bg-bleu text-white"}`}>
+            <span className={`absolute right-5 top-5 grid size-24 -rotate-6 place-items-center rounded-full text-center shadow-xl transition-transform duration-500 group-hover:rotate-0 sm:size-28 ${v.photo ? "bg-white text-rouge" : "bg-rouge text-white"}`}>
               <span className="leading-none">
                 <span className="block text-[0.65rem] font-extrabold uppercase tracking-[0.16em]">dès</span>
-                <span className="mt-1 block font-display text-2xl font-black sm:text-[1.7rem]">{prix(desPrix).replace(",00", "")}</span>
+                <span className="mt-1 block font-display text-2xl font-extrabold sm:text-[1.7rem]">{prix(desPrix).replace(",00", "")}</span>
               </span>
             </span>
             <span className={`absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-6 sm:p-8 ${v.photo ? "" : "text-encre"}`}>
               <span>
-                <span className={`block text-[0.72rem] font-extrabold uppercase tracking-[0.22em] ${v.photo ? "text-white/80" : "text-bleu"}`}>{produits.length} {v.cat === "accompagnements" ? "choix" : "recettes"}</span>
-                <span className={`mt-1 block font-display font-black leading-none ${cat.nom.length > 10 ? "text-[clamp(1.6rem,3.2vw,2.2rem)]" : "text-[clamp(2rem,4vw,2.8rem)]"}`}>{cat.nom}</span>
+                <span className={`block text-[0.72rem] font-extrabold uppercase tracking-[0.22em] ${v.photo ? "text-white/80" : "text-rouge"}`}>{produits.length} {produits.length > 1 ? "choix" : "recette"}</span>
+                <span className={`mt-1 block font-display font-extrabold leading-none ${cat.nom.length > 10 ? "text-[clamp(1.6rem,3.2vw,2.2rem)]" : "text-[clamp(2rem,4vw,2.8rem)]"}`}>{cat.nom}</span>
               </span>
-              <span className="grid size-14 shrink-0 place-items-center rounded-full bg-bleu text-white transition-transform duration-500 group-hover:-rotate-45"><ArrowRight className="size-6" strokeWidth={2.6} /></span>
+              <span className="grid size-14 shrink-0 place-items-center rounded-full bg-rouge text-white transition-transform duration-500 group-hover:-rotate-45"><ArrowRight className="size-6" strokeWidth={2.6} /></span>
             </span>
-            {v.photo && <span className="absolute left-5 top-5 rounded-full bg-black/40 px-2.5 py-1 text-[0.6rem] font-bold uppercase tracking-[0.12em] backdrop-blur-sm">Photo d&apos;illustration</span>}
           </Link>
 
           {/* Mobile : texte et liste sous la photo */}
@@ -207,7 +206,7 @@ function ListeVitrine({ produits }: { produits: ReturnType<typeof produitsDe> })
       {produits.map((p) => (
         <li key={p.id}>
           <Link href={`/carte/${p.categorie}/${p.id}/`} className="group flex items-baseline gap-3 border-b border-white/15 py-3 font-display text-lg font-extrabold">
-            <span className="transition-transform duration-300 group-hover:translate-x-1">{p.nom}</span>
+            <span className="transition-transform duration-300 group-hover:translate-x-1">{p.nom}{p.badge && <span className="ml-2 rounded-full bg-white px-2 py-0.5 align-middle text-[0.6rem] font-extrabold uppercase tracking-[0.12em] text-rouge">★ {p.badge}</span>}</span>
             <span aria-hidden="true" className="flex-1 border-b-2 border-dotted border-white/25" />
             <span className="tabular-nums">{prix(p.prix)}</span>
           </Link>
@@ -229,10 +228,10 @@ function IconeAccomp() {
 
 /* ─────────── Galerie façon story Instagram ─────────── */
 const STORIES = [
-  { src: "/images/illustration-manti-beurre.webp", alt: "Beurre pimenté sur des mantis" },
-  { src: "/images/illustration-lahmacun-garniture.webp", alt: "Garniture d'un lahmacun" },
-  { src: "/images/illustration-manti-yaourt.webp", alt: "Sauce yaourt sur des mantis" },
-  { src: "/images/illustration-manti-assiette.webp", alt: "Assiette de mantis" },
+  { src: "/images/four-a-bois.webp", alt: "Le four à bois" },
+  { src: "/images/lahmacun-pelle.webp", alt: "Lahmacuns qui sortent du four" },
+  { src: "/images/legumes.webp", alt: "Légumes frais découpés" },
+  { src: "/images/lahmacun-gros-plan.webp", alt: "Gros plan sur un lahmacun" },
 ];
 
 export function Galerie() {
@@ -249,7 +248,7 @@ export function Galerie() {
     <section aria-labelledby="galerie-titre" className="sur-sombre feuille sous-feuille overflow-hidden bg-encre pt-24 text-white sm:pt-32">
       <div className={`${conteneur} grid items-center gap-16 md:grid-cols-2 md:gap-24`}>
         <div className="apparait relative mx-auto w-[min(78vw,340px)] md:order-2">
-          <div aria-hidden="true" className="absolute -inset-12 -z-10 rounded-full bg-bleu/45 blur-3xl" />
+          <div aria-hidden="true" className="absolute -inset-12 -z-10 rounded-full bg-rouge/45 blur-3xl" />
           <div className="relative aspect-[9/16] overflow-hidden rounded-[34px] bg-encre shadow-[0_50px_90px_-40px_rgba(11,15,26,.7)] ring-8 ring-white/10">
             {STORIES.map((s, k) => (
               <div key={s.src} className={`absolute inset-0 transition-opacity duration-700 ${k === i ? "opacity-100" : "opacity-0"}`} aria-hidden={k !== i}>
@@ -266,7 +265,7 @@ export function Galerie() {
               ))}
             </div>
             <div className="absolute left-4 top-7 flex items-center gap-2.5 text-white">
-              <span className="grid size-9 place-items-center rounded-full bg-white"><Logo variante="icone" titre="" className="w-5 text-bleu" /></span>
+              <span className="grid size-9 place-items-center rounded-full bg-white"><Logo variante="icone" titre="" className="w-5 text-rouge" /></span>
               <span className="text-sm font-bold">bowlys</span>
             </div>
             <button type="button" onClick={() => setI((x) => (x + 1) % STORIES.length)} aria-label="Photo suivante" className="absolute inset-y-0 right-0 w-1/2" />
@@ -279,7 +278,7 @@ export function Galerie() {
         </div>
         <div className="apparait text-center md:text-left">
           <div className="md:[&_p]:justify-start"><Surtitre centre={false} clair>Galerie</Surtitre></div>
-          <h2 id="galerie-titre" className="mt-5 font-display text-[clamp(2.4rem,5vw,4rem)] font-black leading-[0.98] tracking-[-0.025em]">
+          <h2 id="galerie-titre" className="mt-5 font-display text-[clamp(2.4rem,5vw,4rem)] font-extrabold leading-[0.98] tracking-[-0.025em]">
             Ça se passe aussi sur Instagram.
           </h2>
           <p className="mx-auto mt-6 max-w-[40ch] text-lg text-white/85 md:mx-0">Les nouveautés, les coulisses et les plats du moment : suivez-nous.</p>
@@ -310,15 +309,15 @@ function Plan() {
             <g fill="none" stroke="#fff" strokeWidth="10" strokeLinecap="round"><path d="M-20 210 C 80 190 140 120 420 140" /><path d="M120 -20 L 170 320" /><path d="M300 -20 C 280 80 300 200 260 320" /></g>
             <g fill="none" stroke="#fff" strokeWidth="3"><path d="M-20 60 L 420 90" /><path d="M-20 270 L 420 250" /><path d="M40 -20 L 70 320" /><path d="M360 -20 L 380 320" /></g>
           </svg>
-          <div aria-hidden="true" className="absolute left-1/2 top-[44%] size-[340px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-bleu/30 blur-3xl" />
+          <div aria-hidden="true" className="absolute left-1/2 top-[44%] size-[340px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-rouge/30 blur-3xl" />
           <div className="relative grid justify-items-center gap-5">
             <span className="relative grid size-20 place-items-center">
-              <span className="absolute inset-0 animate-ping rounded-full bg-bleu/50" />
-              <span className="relative grid size-20 place-items-center rounded-full bg-bleu shadow-[0_0_0_10px_rgba(0,87,231,.25)]">
+              <span className="absolute inset-0 animate-ping rounded-full bg-rouge/50" />
+              <span className="relative grid size-20 place-items-center rounded-full bg-rouge shadow-[0_0_0_10px_rgba(140,2,10,.25)]">
                 <Logo variante="icone" titre="" className="w-10 text-white" />
               </span>
             </span>
-            <p className="font-display text-2xl font-black leading-tight">{site.restaurant!.rue}<br />{site.restaurant!.codePostal} {site.restaurant!.ville}</p>
+            <p className="font-display text-2xl font-extrabold leading-tight">{site.restaurant!.rue}<br />{site.restaurant!.codePostal} {site.restaurant!.ville}</p>
             {encadre ? (
               <LienBouton href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(adresseLigne()!)}`} externe style="blanc" taille="lg">Ouvrir le plan <ArrowUpRight className="size-5" /></LienBouton>
             ) : (
@@ -370,12 +369,12 @@ export function NousTrouver() {
 
         <div className="mt-14 grid gap-5 lg:grid-cols-[1.1fr_1fr]">
           {/* Carte vivante : statut, compte à rebours, actions */}
-          <div className="sur-sombre apparait relative overflow-hidden rounded-[2rem] bg-bleu p-7 text-white sm:p-10">
+          <div className="sur-sombre apparait relative overflow-hidden rounded-[2rem] bg-rouge p-7 text-white sm:p-10">
             <Logo variante="icone" titre="" className="pointer-events-none absolute -bottom-10 -right-10 w-72 text-white/10" />
             <div className="relative">
               <PastilleStatut ton="clair" />
-              <p className="mt-6 font-display text-[clamp(2.2rem,5vw,3.4rem)] font-black leading-[1.02] tracking-[-0.02em]">
-                {s ? (s.ouvert ? <>On est ouverts,<br />venez vite !</> : <>Bientôt l&apos;heure<br />du manti.</>) : <>Le manti<br />vous attend.</>}
+              <p className="mt-6 font-display text-[clamp(2.2rem,5vw,3.4rem)] font-extrabold leading-[1.02] tracking-[-0.02em]">
+                {s ? (s.ouvert ? <>On est ouverts,<br />venez vite !</> : <>Bientôt l&apos;heure<br />du lahmacun.</>) : <>Le lahmacun<br />vous attend.</>}
               </p>
               {s?.dans != null && (
                 <p className="mt-3 text-lg font-semibold text-white/90">
@@ -385,20 +384,20 @@ export function NousTrouver() {
 
               <address className="mt-8 not-italic">
                 <span className="text-[0.72rem] font-extrabold uppercase tracking-[0.22em] text-white/70">Adresse</span>
-                <span id="adresse-texte" className="mt-1 block font-display text-2xl font-black">{site.restaurant.rue}, {site.restaurant.codePostal} {site.restaurant.ville}</span>
+                <span id="adresse-texte" className="mt-1 block font-display text-2xl font-extrabold">{site.restaurant.rue}, {site.restaurant.codePostal} {site.restaurant.ville}</span>
               </address>
               <div className="mt-4"><BoutonCopier /></div>
 
               <div className="mt-8 grid gap-3 sm:grid-cols-2">
                 {tel && (
-                  <a href={`tel:${tel.replace(/\s/g, "")}`} className="group flex h-16 items-center gap-4 rounded-2xl bg-white px-5 text-bleu transition-transform hover:-translate-y-0.5">
-                    <span className="grid size-10 place-items-center rounded-full bg-bleu text-white"><Phone className="size-5" /></span>
-                    <span className="leading-tight"><span className="block text-xs font-extrabold uppercase tracking-[0.16em] text-bleu/70">Appeler</span><span className="font-display text-lg font-black tabular-nums">{tel}</span></span>
+                  <a href={`tel:${tel.replace(/\s/g, "")}`} className="group flex h-16 items-center gap-4 rounded-2xl bg-white px-5 text-rouge transition-transform hover:-translate-y-0.5">
+                    <span className="grid size-10 place-items-center rounded-full bg-rouge text-white"><Phone className="size-5" /></span>
+                    <span className="leading-tight"><span className="block text-xs font-extrabold uppercase tracking-[0.16em] text-rouge/70">Appeler</span><span className="font-display text-lg font-extrabold tabular-nums">{tel}</span></span>
                   </a>
                 )}
                 <a href={itineraires[0].href} target="_blank" rel="noopener noreferrer" className="group flex h-16 items-center gap-4 rounded-2xl bg-encre px-5 text-white transition-transform hover:-translate-y-0.5">
                   <span className="grid size-10 place-items-center rounded-full bg-white/15"><Navigation className="size-5" /></span>
-                  <span className="leading-tight"><span className="block text-xs font-extrabold uppercase tracking-[0.16em] text-white/70">Y aller</span><span className="font-display text-lg font-black">Itinéraire</span></span>
+                  <span className="leading-tight"><span className="block text-xs font-extrabold uppercase tracking-[0.16em] text-white/70">Y aller</span><span className="font-display text-lg font-extrabold">Itinéraire</span></span>
                 </a>
               </div>
               <p className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-semibold text-white/80">
@@ -415,17 +414,17 @@ export function NousTrouver() {
         {h && (
           <div className="apparait mt-5 rounded-[2rem] bg-white p-6 ring-1 ring-trait sm:p-8">
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <p className="font-display text-xl font-black">Horaires de la semaine</p>
+              <p className="font-display text-xl font-extrabold">Horaires de la semaine</p>
               <PastilleStatut />
             </div>
             <ol className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-7">
               {JOURS.map((j) => {
                 const on = j === aujourdhui;
                 return (
-                  <li key={j} className={`rounded-2xl p-4 transition-colors ${on ? "bg-bleu text-white shadow-[0_14px_30px_-14px_rgba(0,87,231,.8)]" : "bg-doux"}`}>
+                  <li key={j} className={`rounded-2xl p-4 transition-colors ${on ? "bg-rouge text-white shadow-[0_14px_30px_-14px_rgba(140,2,10,.8)]" : "bg-doux"}`}>
                     <span className={`block text-[0.7rem] font-extrabold uppercase tracking-[0.18em] ${on ? "text-white/80" : "text-gris"}`}>{on ? "Aujourd'hui" : j}</span>
-                    <span className="mt-1 block font-display font-black capitalize">{on ? j : ""}</span>
-                    <span className={`block font-display font-black tabular-nums ${on ? "" : "text-encre"}`}>{h[j].length ? h[j].map((p) => `${p.ouverture} – ${p.fermeture}`).join(" · ") : "Fermé"}</span>
+                    <span className="mt-1 block font-display font-extrabold capitalize">{on ? j : ""}</span>
+                    <span className={`block font-display font-extrabold tabular-nums ${on ? "" : "text-encre"}`}>{h[j].length ? h[j].map((p) => `${p.ouverture} – ${p.fermeture}`).join(" · ") : "Fermé"}</span>
                   </li>
                 );
               })}

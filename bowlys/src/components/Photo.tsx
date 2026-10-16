@@ -3,7 +3,7 @@ import { Logo } from "./Logo";
 
 /**
  * Photo produit carrée ou rectangulaire.
- * - `src` null → emplacement propre « Photo à venir » (bleu ciel + logo).
+ * - `src` null → emplacement propre « Photo à venir » (rouge ciel + logo).
  * - `illustration` → mention « Photo d'illustration » (photo qui n'est pas celle de vos produits).
  */
 export function Photo({
@@ -12,7 +12,7 @@ export function Photo({
   src: string | null; alt: string; illustration?: boolean; className?: string; sizes?: string; priorite?: boolean; sombre?: boolean; zoom?: boolean; vignette?: boolean;
 }) {
   return (
-    <div className={`${/\babsolute\b/.test(className) ? "" : "relative"} overflow-hidden ${sombre ? "bg-encre-2" : "bg-bleu-ciel"} ${className}`}>
+    <div className={`${/\babsolute\b/.test(className) ? "" : "relative"} overflow-hidden ${sombre ? "bg-encre-2" : "bg-creme"} ${className}`}>
       {src ? (
         <>
           <Image
@@ -28,8 +28,8 @@ export function Photo({
       ) : (
         <div role="img" aria-label={`Photo à venir : ${alt}`} className="absolute inset-0 grid place-items-center">
           <div className="grid justify-items-center gap-3">
-            <Logo variante="icone" titre="" className={`w-[min(34%,120px)] min-w-10 ${sombre ? "text-white/25" : "text-bleu/25"}`} />
-            {!vignette && <span className={`text-[0.62rem] font-bold uppercase tracking-[0.18em] ${sombre ? "text-white/45" : "text-bleu/60"}`}>Photo à venir</span>}
+            <Logo variante="icone" titre="" className={`w-[min(34%,120px)] min-w-10 ${sombre ? "text-white/25" : "text-rouge/25"}`} />
+            {!vignette && <span className={`text-[0.62rem] font-bold uppercase tracking-[0.18em] ${sombre ? "text-white/45" : "text-rouge/60"}`}>Photo à venir</span>}
           </div>
         </div>
       )}

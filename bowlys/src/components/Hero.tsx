@@ -3,12 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import { Pause, Play, ArrowDown } from "lucide-react";
 import { LienBouton, classesBouton } from "./Bouton";
+import { Logo } from "./Logo";
 import { usePanier } from "@/lib/panier";
 import { PastilleStatut } from "./StatutLive";
 
 /**
- * Ordinateur : trois vidéos verticales côte à côte (manti · lahmacun · manti), nettes car non étirées.
- * Mobile : une seule vidéo plein écran qui enchaîne manti puis lahmacun.
+ * Ordinateur : trois vidéos verticales côte à côte (façonnage · four · lahmacuns cuits), nettes car non étirées.
+ * Mobile : une seule vidéo plein écran qui enchaîne les trois.
  */
 const PANNEAUX = [
   { video: "/videos/hero-1.mp4", affiche: "/videos/hero-1.webp", mobile: false },
@@ -64,15 +65,12 @@ export function Hero() {
 
       <div className="relative z-10 flex h-full items-center justify-center px-5 pt-16 text-center">
         <div className="grid max-w-[980px] justify-items-center gap-6">
-          <span className="anim-monter rounded-full border border-white/30 bg-white/10 px-4 py-1.5 text-[0.72rem] font-bold uppercase tracking-[0.22em] backdrop-blur-sm">
-            Manti &amp; Lahmacun
-          </span>
-          <h1 id="hero-titre" className="anim-monter font-display text-[clamp(2.7rem,8.4vw,6.6rem)] font-black leading-[0.95] tracking-[-0.02em] [animation-delay:80ms]">
-            La street food turque,{" "}
-            <span className="inline-block -rotate-2 rounded-2xl bg-bleu px-[0.22em] pb-[0.06em]">autrement.</span>
+          <Logo variante="complet" titre="BOWLY'S Lahmacun" className="anim-monter w-[clamp(150px,22vw,230px)] text-white drop-shadow-[0_8px_30px_rgba(0,0,0,.35)]" />
+          <h1 id="hero-titre" className="anim-monter font-display text-[clamp(2.3rem,6.4vw,5.2rem)] font-extrabold leading-[1] tracking-[-0.02em] [animation-delay:80ms]">
+            Le lahmacun, <span className="relative whitespace-nowrap text-white after:absolute after:inset-x-0 after:bottom-[0.06em] after:-z-10 after:h-[0.34em] after:bg-rouge">autrement.</span>
           </h1>
           <div className="anim-monter flex w-full flex-col items-center justify-center gap-3 pt-2 [animation-delay:160ms] sm:w-auto sm:flex-row">
-            <LienBouton href="/carte/" style="bleu" taille="lg" className="w-full sm:w-auto">
+            <LienBouton href="/carte/" style="rouge" taille="lg" className="w-full sm:w-auto">
               Découvrir la carte
             </LienBouton>
             <button

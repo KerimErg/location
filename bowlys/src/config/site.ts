@@ -17,9 +17,9 @@ export type Plage = { ouverture: string; fermeture: string };
 export const site = {
   nom: "BOWLY'S",
   nomCourt: "Bowly's",
-  slogan: "Manti & Lahmacun",
+  slogan: "Lahmacun",
   description:
-    "BOWLY'S, la street food turque autrement : manti généreux, lahmacuns croustillants et recettes pleines de saveurs.",
+    "BOWLY'S, le lahmacun autrement : box de lahmacuns petit format, dürüm grand format à composer, desserts et boissons. Sur place ou à emporter à Schiltigheim.",
 
   /** Adresse du domaine une fois en ligne (ex. "https://bowlys.fr"). Sert au SEO et au partage. */
   url: "https://bowlys.fr" as string | null, // domaine prévu ; à corriger si différent

@@ -17,12 +17,12 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-[1.3fr_1fr_1fr_1fr]">
           <div>
             <Logo variante="complet" className="w-44 text-white" />
-            <p className="mt-6 max-w-[30ch] text-white/70">La street food turque, autrement.</p>
+            <p className="mt-6 max-w-[30ch] text-white/70">Le lahmacun, autrement.</p>
           </div>
           <nav aria-label="Pied de page">
             <h2 className="font-display text-sm font-extrabold uppercase tracking-[0.18em] text-white/50">Navigation</h2>
             <ul className="mt-4 grid gap-2.5">
-              {NAV.map((n) => <li key={n.href}><Link href={n.href} className="font-semibold hover:text-bleu-ciel hover:underline">{n.label}</Link></li>)}
+              {NAV.map((n) => <li key={n.href}><Link href={n.href} className="font-semibold hover:text-creme hover:underline">{n.label}</Link></li>)}
             </ul>
           </nav>
           <div>

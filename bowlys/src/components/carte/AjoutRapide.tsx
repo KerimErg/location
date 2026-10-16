@@ -16,7 +16,7 @@ export function AjoutRapide({ p }: { p: Produit }) {
       type="button"
       onClick={(e) => { e.preventDefault(); e.stopPropagation(); ajouter(p.id); setOk(true); setTimeout(() => setOk(false), 1200); }}
       aria-label={`Ajouter ${p.nom} au panier`}
-      className={`absolute bottom-4 right-4 z-10 grid size-11 place-items-center rounded-full shadow-lg transition-[transform,background,color] duration-300 active:scale-90 ${ok ? "bg-white text-bleu" : "bg-bleu text-white hover:scale-110"}`}
+      className={`absolute bottom-4 right-4 z-10 grid size-11 place-items-center rounded-full shadow-lg transition-[transform,background,color] duration-300 active:scale-90 ${ok ? "bg-white text-rouge" : "bg-rouge text-white hover:scale-110"}`}
     >
       {ok ? <Check className="size-5" strokeWidth={3} /> : <Plus className="size-5" strokeWidth={3} />}
     </button>

@@ -1,26 +1,26 @@
 @import "tailwindcss";
 
 /* ── Charte BOWLY'S ─────────────────────────────────────────
-   Bleu #0057E7 + blanc, noir bleuté pour les fonds forts.
-   Titres : Nunito (épais, arrondi). Texte : Nunito Sans. */
+   Rouge du logo + blanc, bordeaux très foncé pour les fonds forts, crème pour les touches douces.
+   Titres : Montserrat (géométrique, comme le logo). Texte : Nunito Sans. */
 @theme {
-  --color-bleu: #0057e7;
-  --color-bleu-fonce: #0046bd;
-  --color-bleu-ciel: #e8f0ff;
-  --color-encre: #0b0f1a;
-  --color-encre-2: #151c2c;
-  --color-doux: #f2f5fb;
-  --color-trait: #e2e8f3;
-  --color-gris: #3d4558;   /* texte secondaire, contraste renforcé */
-  --font-display: var(--font-nunito), ui-rounded, system-ui, sans-serif;
-  --font-sans: var(--font-nunito-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --color-rouge: #8c020a;        /* rouge du logo */
+  --color-rouge-fonce: #6b0108;
+  --color-creme: #fbefeb;        /* rose crème, touches douces */
+  --color-encre: #1e0b0e;        /* bordeaux presque noir (fonds sombres, texte) */
+  --color-encre-2: #2e1014;
+  --color-doux: #faf6f3;         /* blanc cassé chaud */
+  --color-trait: #eee2de;
+  --color-gris: #4e3c3f;         /* texte secondaire */
+  --font-display: var(--font-titre), "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-texte), system-ui, -apple-system, "Segoe UI", sans-serif;
   --ease-pro: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 html { scroll-behavior: smooth; scroll-padding-top: 88px; -webkit-text-size-adjust: 100%; }
 body { background: #fff; color: var(--color-encre); font-family: var(--font-sans); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
 h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; }
-:focus-visible { outline: 3px solid var(--color-bleu); outline-offset: 3px; }
+:focus-visible { outline: 3px solid var(--color-rouge); outline-offset: 3px; }
 .sur-sombre :focus-visible { outline-color: #fff; }
 
 /* Logo recolorable : le PNG sert de masque, la couleur vient de `color`. */
@@ -61,7 +61,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; }
 }
 
 /* Sections empilées : chaque partie vient recouvrir la précédente avec un bord arrondi. */
-.feuille { position: relative; z-index: 10; margin-top: -56px; border-top-left-radius: 56px; border-top-right-radius: 56px; box-shadow: 0 -24px 50px -30px rgba(11,15,26,.35); }
+.feuille { position: relative; z-index: 10; margin-top: -56px; border-top-left-radius: 56px; border-top-right-radius: 56px; box-shadow: 0 -24px 50px -30px rgba(30,11,14,.4); }
 @media (max-width: 640px) { .feuille { margin-top: -36px; border-top-left-radius: 32px; border-top-right-radius: 32px; } }
 .sous-feuille { padding-bottom: calc(6rem + 56px); }
 

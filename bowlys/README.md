@@ -1,6 +1,6 @@
 # BOWLY'S — site internet
 
-Site vitrine et carte digitale de **BOWLY'S, Manti & Lahmacun**.
+Site vitrine et carte digitale de **BOWLY'S Lahmacun**.
 Next.js 15 · TypeScript · Tailwind CSS 4 · export statique (aucun serveur à gérer).
 
 ---
@@ -28,22 +28,23 @@ Chaque produit ressemble à ceci :
 
 ```ts
 {
-  id: "manti-original", categorie: "mantis", nom: "Manti Original", prix: 8.9,
-  description: "Nos raviolis turcs à la viande, ...",
-  photo: "/images/manti-original.webp",
+  id: "box-nature", categorie: "box", nom: "Box Nature", prix: 6.9, badge: "Best seller",
+  description: "Viande hachée, tomates, oignons, persil et épices.",
+  photo: "/images/carte/box-nature.webp",
   allergenes: null,              // ← à remplir avant publication
-  options: ["sauce-piquante", "pain"],
+  groupes: [FORMAT_BOX],         // choix proposés à l'ajout
 },
 ```
 
-- **Prix** : un nombre avec un point (`8.9` = 8,90 €). Le panier recalcule tout seul.
-- **Allergènes** : remplacez `null` par la liste, par ex. `["gluten", "lait", "œufs"]`, ou `[]` si aucun.
+- **Prix** : un nombre avec un point (`6.9` = 6,90 €). Le panier recalcule tout seul.
+- **Badge** : `badge: "Best seller"` affiche une étiquette rouge (à retirer en supprimant la ligne).
+- **Allergènes** : remplacez `null` par la liste, par ex. `["gluten", "lait"]`, ou `[]` si aucun.
   ⚠️ À valider avant la mise en ligne (règlement INCO, 14 allergènes).
-- **Suppléments** : la liste `OPTIONS` (en haut du fichier) et le champ `options` de chaque produit.
-- **Menus** : remplissez `composition`, par ex. `["Manti Original", "Boisson 33 cl"]`.
-  Tant que la liste est vide, le site affiche « Composition détaillée bientôt en ligne ».
+- **Choix à l'ajout** (`groupes`) : en haut du fichier, `FORMAT_BOX` (passer à 5 lahmacuns, + 2,90 €),
+  `CHOIX_LAHMACUN`, `CRUDITES` et `SAUCE` pour le dürüm. Un choix peut avoir un `prix` (supplément)
+  et une `photo` ronde (dossier `public/images/choix/`).
 - **Ajouter un produit** : copiez un bloc, changez l'`id` (unique, sans espace) et les textes.
-- **Descriptions** : ce sont des textes de départ à relire. Ils ne décrivent pas de recette vérifiée.
+- **Catégories** : liste `CATEGORIES` (Box Lahmacun, Dürüm, Desserts, Boissons).
 
 ## 3. Modifier l'adresse, les horaires, les réseaux → `src/config/site.ts`
 
@@ -66,17 +67,18 @@ horaires: {
 
 | Emplacement | Fichier | Format conseillé |
 |---|---|---|
-| Fiches produits | `public/images/<nom>.webp` puis `photo:` dans `menu.ts` | carré 1:1, 1200 × 1200 px |
-| Tuiles de catégories de la carte | `photo:` dans `CATEGORIES` (`menu.ts`) | carré 1:1, 1200 × 1200 px |
-| Bloc « Les Mantis » / « Les Lahmacuns » | `src/components/Sections.tsx` (bloc `Specialites`) | 1200 × 1500 px |
+| Fiches produits | `public/images/carte/<nom>.webp` puis `photo:` dans `menu.ts` | 1200 px de large minimum |
+| Photos de catégories | `photo:` dans `CATEGORIES` (`menu.ts`) | 1200 px de large minimum |
+| Ronds de choix (lahmacun, crudités, sauces) | `public/images/choix/` | carré, 300 × 300 px |
+| Bienvenue, galerie | `public/images/*.webp` (`src/components/Sections.tsx`) | verticale 1080 × 1920 px |
 | Bannière vidéo (ordinateur) | `public/videos/hero-1.mp4`, `hero-2.mp4`, `hero-3.mp4` | verticale 9:16, 720 × 1280, MP4, sans son, < 5 Mo |
 | Bannière vidéo (mobile) | `public/videos/hero-mobile.mp4` | verticale 9:16 |
 | Image de partage | `public/og.jpg` | 1200 × 630 px |
 | Logo | `public/logo/bowlys-logo.png`, `bowlys-icone.png`, `bowlys-nom.png` | PNG transparent |
 
-**Important :** les photos actuelles sont tirées de vidéos TikTok fournies et portent la mention
-« Photo d'illustration ». Vérifiez vos droits d'utilisation. Dès que vous avez vos propres photos,
-remplacez-les et supprimez `illustration: true` dans `menu.ts`.
+**Important :** les photos des produits sont découpées dans votre visuel de menu. Les images de la
+bannière, de « Bienvenue » et de la galerie viennent d'une vidéo TikTok fournie : vérifiez vos droits
+d'utilisation, ou remplacez-les par vos propres vidéos et photos.
 
 Pour convertir une photo en WebP : https://squoosh.app (gratuit, dans le navigateur).
 

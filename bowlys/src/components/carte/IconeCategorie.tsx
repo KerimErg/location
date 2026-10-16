@@ -1,28 +1,26 @@
 import type { CategorieId } from "@/data/menu";
-import { Logo } from "../Logo";
 
-/** Pictogrammes au trait des catégories (le manti reprend l'emblème du logo). */
+/** Pictogrammes au trait des catégories. */
 export function IconeCategorie({ id, className = "" }: { id: CategorieId; className?: string }) {
-  if (id === "mantis") return <Logo variante="icone" titre="" className={className} />;
-  const traits: Record<Exclude<CategorieId, "mantis">, React.ReactNode> = {
-    lahmacuns: (
+  const traits: Record<CategorieId, React.ReactNode> = {
+    box: (
       <>
-        <ellipse cx="24" cy="26" rx="17" ry="14" />
-        <path d="M14 22c3 1.5 5-1 8 .5M23 30c3 1.5 5-1 8 .5M27 20.5c2 1 4 0 6 1M15 30.5c2 .8 3.5 0 5 .8" />
-        <path d="M33 7l5 5-6 3z" />
+        <ellipse cx="24" cy="25" rx="17" ry="14" />
+        <path d="M14 21c3 1.5 5-1 8 .5M23 29c3 1.5 5-1 8 .5M27 19.5c2 1 4 0 6 1M15 29.5c2 .8 3.5 0 5 .8" />
       </>
     ),
-    menus: (
+    durum: (
       <>
-        <path d="M11 19h26l-2.5 21h-21z" />
-        <path d="M18 19v-3a6 6 0 0 1 12 0v3" />
-        <path d="M17 28h14" />
+        <path d="M10 33 33 10a6 6 0 0 1 8.5 8.5L18.5 41.5A6 6 0 0 1 10 33z" />
+        <path d="M33 10c-2 4-1 7 2 8s6 0 6.5.5" />
+        <path d="M17 26l5 5M22 21l5 5" />
       </>
     ),
-    accompagnements: (
+    desserts: (
       <>
-        <path d="M20 6h8v6l3 4v26H17V16l3-4z" />
-        <path d="M17 25h14M17 33h14" />
+        <path d="M13 18h22l-3 22H16z" />
+        <path d="M14 26h20" />
+        <path d="M24 18c0-4 2-7 5-8M24 11c-1-2-3-3-5-3" />
       </>
     ),
     boissons: (

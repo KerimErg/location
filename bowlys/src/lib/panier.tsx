@@ -8,7 +8,7 @@
  */
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { OPTIONS, PRODUITS, type Produit } from "@/data/menu";
+import { PRODUITS, choixDe, type Produit } from "@/data/menu";
 
 export type Ligne = { cle: string; produitId: string; options: string[]; qte: number };
 
@@ -35,7 +35,7 @@ export const produitParId = (id: string) => PRODUITS.find((p) => p.id === id);
 export const prixLigne = (l: Ligne) => {
   const p = produitParId(l.produitId);
   if (!p) return 0;
-  const opts = l.options.reduce((s, id) => s + (OPTIONS.find((o) => o.id === id)?.prix ?? 0), 0);
+  const opts = l.options.reduce((s, cle) => s + (choixDe(p, cle)?.choix.prix ?? 0), 0);
   return (p.prix + opts) * l.qte;
 };
 

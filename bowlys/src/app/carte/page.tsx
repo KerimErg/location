@@ -7,7 +7,7 @@ import { BandeauCarte, Medaillon, RondCategorie } from "@/components/carte/Eleme
 
 export const metadata: Metadata = {
   title: "La carte",
-  description: "La carte BOWLY'S : mantis, lahmacuns, menus, accompagnements et boissons, avec les prix.",
+  description: "La carte BOWLY'S : box lahmacun, dürüm, desserts et boissons, avec les prix.",
 };
 
 export default function PageCarte() {
@@ -15,14 +15,14 @@ export default function PageCarte() {
     <>
       <Header transparent />
       <main id="contenu" className="min-h-dvh bg-white pb-28">
-        <BandeauCarte photo="/images/illustration-manti-beurre.webp" ariane={[]} />
+        <BandeauCarte photo="/images/four-a-bois.webp" ariane={[]} />
         <Medaillon>
           <div className="text-center">
-            <Logo variante="complet" className="mx-auto w-32 text-bleu sm:w-36" />
+            <Logo variante="complet" className="mx-auto w-32 text-rouge sm:w-36" />
           </div>
         </Medaillon>
         <h1 className="sr-only">La carte</h1>
-        <p className="entree mt-10 text-center text-[0.72rem] font-extrabold uppercase tracking-[0.28em] text-bleu [animation-delay:.1s]">
+        <p className="entree mt-10 text-center text-[0.72rem] font-extrabold uppercase tracking-[0.28em] text-rouge [animation-delay:.1s]">
           Choisissez une catégorie
         </p>
         <ul className="mx-auto mt-10 flex max-w-4xl flex-wrap justify-center gap-x-6 gap-y-10 px-5 sm:gap-x-12">

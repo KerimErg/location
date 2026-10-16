@@ -2,19 +2,24 @@ import type { CSSProperties } from "react";
 
 /**
  * Logo officiel BOWLY'S (fichiers dans /public/logo).
- * Les PNG servent de masque : la couleur suit `color` (bleu, blanc...).
+ * Les PNG servent de masque : la couleur suit `color` (rouge, blanc...).
  * Pour un nouveau logo : remplacez les fichiers en gardant les mêmes noms.
  */
 const VARIANTES = {
-  complet: { src: "/logo/bowlys-logo.png", ratio: "1036 / 630" },
-  icone: { src: "/logo/bowlys-icone.png", ratio: "436 / 326" },
-  nom: { src: "/logo/bowlys-nom.png", ratio: "1036 / 184" },
+  /** logo rond complet (arcs + BOWLY'S + LAHMACUN) */
+  complet: { src: "/logo/bowlys-logo.png", ratio: "812 / 702" },
+  /** emblème : le même logo rond, pour les petits usages */
+  icone: { src: "/logo/bowlys-logo.png", ratio: "812 / 702" },
+  /** BOWLY'S + LAHMACUN sur deux lignes, sans les arcs (en-tête) */
+  texte: { src: "/logo/bowlys-texte.png", ratio: "806 / 234" },
+  /** BOWLY'S seul */
+  nom: { src: "/logo/bowlys-nom.png", ratio: "806 / 138" },
 } as const;
 
 export function Logo({
   variante = "complet",
   className = "",
-  titre = "BOWLY'S, Manti & Lahmacun",
+  titre = "BOWLY'S Lahmacun",
 }: {
   variante?: keyof typeof VARIANTES;
   className?: string;

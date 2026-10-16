@@ -2,13 +2,14 @@
  * ─────────────────────────────────────────────────────────────
  *  LA CARTE BOWLY'S — source unique des produits et des prix.
  *
- *  • prix en euros TTC (nombre, ex. 8.9 pour 8,90 €)
- *  • photo : chemin dans /public/images, ou null (emplacement « Photo à venir »)
- *  • illustration : true si la photo n'est PAS une photo de vos produits
- *    (le site affiche alors la mention « Photo d'illustration »)
+ *  • prix en euros TTC (nombre, ex. 6.9 pour 6,90 €)
+ *  • photo : chemin dans /public/images (null = emplacement « Photo à venir »)
+ *  • badge : petite mention mise en avant (ex. « Best seller »)
+ *  • groupes : choix proposés à l'ajout (format, lahmacun, crudités, sauce...)
+ *      - type "unique"   : un seul choix (le premier est sélectionné par défaut)
+ *      - type "multiple" : plusieurs choix possibles (`parDefaut` = cochés au départ)
  *  • allergenes : null tant que la liste n'est pas validée
  *    → à compléter AVANT publication (règlement INCO, 14 allergènes)
- *  • description : textes de départ à relire et valider
  * ─────────────────────────────────────────────────────────────
  */
 
@@ -16,9 +17,10 @@ export type Allergene =
   | "gluten" | "crustacés" | "œufs" | "poissons" | "arachides" | "soja" | "lait"
   | "fruits à coque" | "céleri" | "moutarde" | "sésame" | "sulfites" | "lupin" | "mollusques";
 
-export type CategorieId = "mantis" | "lahmacuns" | "menus" | "accompagnements" | "boissons";
+export type CategorieId = "box" | "durum" | "desserts" | "boissons";
 
-export type Option = { id: string; nom: string; prix: number };
+export type Choix = { id: string; nom: string; prix?: number; photo?: string };
+export type Groupe = { id: string; titre: string; type: "unique" | "multiple"; choix: Choix[]; parDefaut?: string[] };
 
 export type Produit = {
   id: string;
@@ -27,99 +29,110 @@ export type Produit = {
   description: string;
   prix: number;
   photo: string | null;
-  illustration?: boolean;
+  badge?: string;
   allergenes: Allergene[] | null;
-  /** Options payantes proposées à l'ajout (ids de la liste OPTIONS). */
-  options?: string[];
-  /** Pour les menus : composition à renseigner (laisser vide tant qu'elle n'est pas définie). */
-  composition?: string[];
-  vedette?: boolean;
+  groupes?: Groupe[];
 };
 
-/** Catégories de la carte. `photo` : image de la tuile (null = tuile aux couleurs BOWLY'S). */
+/** Catégories de la carte. `photo` : image de la catégorie (bandeau et vitrine). */
 export const CATEGORIES: { id: CategorieId; nom: string; accroche: string; photo: string | null }[] = [
-  { id: "mantis", nom: "Mantis", accroche: "Raviolis turcs, sauce yaourt", photo: "/images/illustration-manti-beurre.webp" },
-  { id: "lahmacuns", nom: "Lahmacuns", accroche: "Pâte fine, cuite au four", photo: "/images/illustration-lahmacun-garniture.webp" },
-  { id: "menus", nom: "Menus", accroche: "Le repas complet", photo: "/images/illustration-manti-assiette.webp" },
-  { id: "accompagnements", nom: "Accompagnements", accroche: "Pour compléter votre repas", photo: null },
+  { id: "box", nom: "Box Lahmacun", accroche: "Lahmacun petit format", photo: "/images/carte/box-nature.webp" },
+  { id: "durum", nom: "Dürüm", accroche: "Lahmacun grand format", photo: "/images/carte/durum.webp" },
+  { id: "desserts", nom: "Desserts", accroche: "Pour finir en douceur", photo: "/images/carte/tiramisu.webp" },
   { id: "boissons", nom: "Boissons", accroche: "Bien fraîches", photo: null },
 ];
 
-/** Options proposées dans la fiche produit (reprennent les prix des accompagnements). */
-export const OPTIONS: Option[] = [
-  { id: "sauce-piquante", nom: "Sauce piquante", prix: 0.5 },
-  { id: "fromage", nom: "Fromage", prix: 1.0 },
-  { id: "pain", nom: "Pain supplémentaire", prix: 1.0 },
-];
+/* ── Groupes de choix réutilisés ─────────────────────── */
+const FORMAT_BOX: Groupe = {
+  id: "format", titre: "Format", type: "multiple",
+  choix: [{ id: "5", nom: "5 lahmacuns (petit format)", prix: 2.9 }],
+};
+
+const CHOIX_LAHMACUN: Groupe = {
+  id: "lahmacun", titre: "1. Choisis ton lahmacun", type: "unique",
+  choix: [
+    { id: "nature", nom: "Nature", photo: "/images/choix/lahmacun-nature.webp" },
+    { id: "poulet", nom: "Poulet", photo: "/images/choix/lahmacun-poulet.webp" },
+    { id: "boeuf", nom: "Bœuf", photo: "/images/choix/lahmacun-boeuf.webp" },
+    { id: "vegetarien", nom: "Végétarien", photo: "/images/choix/lahmacun-vegetarien.webp" },
+  ],
+};
+
+const CRUDITES: Groupe = {
+  id: "crudites", titre: "2. Ajoute tes crudités", type: "multiple",
+  choix: [
+    { id: "salade", nom: "Salade", photo: "/images/choix/salade.webp" },
+    { id: "tomate", nom: "Tomate", photo: "/images/choix/tomate.webp" },
+    { id: "oignon", nom: "Oignon", photo: "/images/choix/oignon.webp" },
+    { id: "carotte", nom: "Carotte", photo: "/images/choix/carotte.webp" },
+    { id: "concombre", nom: "Concombre", photo: "/images/choix/concombre.webp" },
+  ],
+  parDefaut: ["salade", "tomate", "oignon", "carotte", "concombre"],
+};
+
+const SAUCE: Groupe = {
+  id: "sauce", titre: "3. Choisis ta sauce", type: "unique",
+  choix: [
+    { id: "blanche", nom: "Sauce blanche", photo: "/images/choix/sauce-blanche.webp" },
+    { id: "piquante", nom: "Sauce piquante", photo: "/images/choix/sauce-piquante.webp" },
+  ],
+};
 
 export const PRODUITS: Produit[] = [
-  // ── MANTIS ──────────────────────────────────────────
+  // ── BOX LAHMACUN (petit format) ─────────────────────
   {
-    id: "manti-original", categorie: "mantis", nom: "Manti Original", prix: 8.9,
-    description: "Nos raviolis turcs à la viande, nappés de sauce yaourt et de beurre pimenté.",
-    photo: "/images/illustration-manti-beurre.webp", illustration: true,
-    allergenes: null, options: ["sauce-piquante", "pain"], vedette: true,
+    id: "box-nature", categorie: "box", nom: "Box Nature", prix: 6.9, badge: "Best seller",
+    description: "Viande hachée, tomates, oignons, persil et épices.",
+    photo: "/images/carte/box-nature.webp", allergenes: null, groupes: [FORMAT_BOX],
   },
   {
-    id: "manti-nature", categorie: "mantis", nom: "Manti Nature", prix: 7.5,
-    description: "La version tout en douceur, servie avec la sauce yaourt.",
-    photo: "/images/illustration-manti-yaourt.webp", illustration: true,
-    allergenes: null, options: ["sauce-piquante", "pain"], vedette: true,
+    id: "box-vegetarien", categorie: "box", nom: "Box Végétarien", prix: 5.9,
+    description: "Légumes grillés, tomates, oignons, persil et épices.",
+    photo: "/images/carte/box-vegetarien.webp", allergenes: null, groupes: [FORMAT_BOX],
   },
   {
-    id: "manti-patates", categorie: "mantis", nom: "Manti Patates", prix: 8.5,
-    description: "Des raviolis farcis à la pomme de terre, servis avec la sauce yaourt.",
-    photo: null, allergenes: null, options: ["sauce-piquante", "pain"],
-  },
-
-  // ── LAHMACUNS ───────────────────────────────────────
-  {
-    id: "lahmacun-original", categorie: "lahmacuns", nom: "Lahmacun Original", prix: 6.5,
-    description: "La galette fine et croustillante, garnie et cuite au four.",
-    photo: null, allergenes: null, options: ["fromage", "sauce-piquante"], vedette: true,
+    id: "box-poulet", categorie: "box", nom: "Box Poulet", prix: 7.5,
+    description: "Poulet, tomates, oignons, persil et épices.",
+    photo: "/images/carte/box-poulet.webp", allergenes: null, groupes: [FORMAT_BOX],
   },
   {
-    id: "lahmacun-cheese", categorie: "lahmacuns", nom: "Lahmacun Cheese", prix: 7.5,
-    description: "Le lahmacun avec du fromage fondu.",
-    photo: null, allergenes: null, options: ["sauce-piquante"],
-  },
-  {
-    id: "lahmacun-spicy", categorie: "lahmacuns", nom: "Lahmacun Spicy", prix: 8.0,
-    description: "Le lahmacun en version relevée, pour les amateurs de piquant.",
-    photo: null, allergenes: null, options: ["fromage"],
+    id: "box-boeuf", categorie: "box", nom: "Box Émincé de bœuf", prix: 7.9,
+    description: "Bœuf émincé, tomates, oignons, persil et épices.",
+    photo: "/images/carte/box-boeuf.webp", allergenes: null, groupes: [FORMAT_BOX],
   },
 
-  // ── MENUS (composition à définir) ───────────────────
+  // ── DÜRÜM (lahmacun grand format) ───────────────────
   {
-    id: "menu-manti", categorie: "menus", nom: "Menu Manti", prix: 10.9,
-    description: "Le menu autour de notre manti.",
-    photo: "/images/illustration-manti-assiette.webp", illustration: true,
-    allergenes: null, composition: [],
-  },
-  {
-    id: "menu-lahmacun", categorie: "menus", nom: "Menu Lahmacun", prix: 8.5,
-    description: "Le menu autour de notre lahmacun.",
-    photo: null, allergenes: null, composition: [],
-  },
-  {
-    id: "menu-mix", categorie: "menus", nom: "Menu Mix", prix: 13.9,
-    description: "Manti et lahmacun réunis dans un seul menu.",
-    photo: null, allergenes: null, composition: [],
+    id: "durum", categorie: "durum", nom: "Dürüm Lahmacun", prix: 6.9,
+    description: "Le lahmacun grand format roulé : choisis ton lahmacun, tes crudités et ta sauce.",
+    photo: "/images/carte/durum.webp", allergenes: null, groupes: [CHOIX_LAHMACUN, CRUDITES, SAUCE],
   },
 
-  // ── ACCOMPAGNEMENTS ─────────────────────────────────
-  { id: "extra-sauce-piquante", categorie: "accompagnements", nom: "Sauce piquante", prix: 0.5, description: "Pour relever votre plat.", photo: null, allergenes: null },
-  { id: "extra-fromage", categorie: "accompagnements", nom: "Fromage", prix: 1.0, description: "Une portion de fromage.", photo: null, allergenes: null },
-  { id: "extra-pain", categorie: "accompagnements", nom: "Pain supplémentaire", prix: 1.0, description: "Pour saucer jusqu'au bout.", photo: null, allergenes: null },
-  { id: "extra-boisson", categorie: "accompagnements", nom: "Boisson 33 cl", prix: 1.5, description: "Une canette au choix.", photo: null, allergenes: null },
+  // ── DESSERTS ────────────────────────────────────────
+  { id: "panna-cotta", categorie: "desserts", nom: "Panna cotta", prix: 3, description: "Panna cotta et son coulis.", photo: "/images/carte/panna-cotta.webp", allergenes: null },
+  { id: "tiramisu", categorie: "desserts", nom: "Tiramisu", prix: 3, description: "Le classique au cacao.", photo: "/images/carte/tiramisu.webp", allergenes: null },
 
   // ── BOISSONS ────────────────────────────────────────
-  { id: "coca-cola", categorie: "boissons", nom: "Coca-Cola", prix: 1.5, description: "33 cl.", photo: null, allergenes: null },
-  { id: "coca-cola-zero", categorie: "boissons", nom: "Coca-Cola Zéro", prix: 1.5, description: "33 cl.", photo: null, allergenes: null },
-  { id: "sprite", categorie: "boissons", nom: "Sprite", prix: 1.5, description: "33 cl.", photo: null, allergenes: null },
-  { id: "fanta", categorie: "boissons", nom: "Fanta", prix: 1.5, description: "33 cl.", photo: null, allergenes: null },
-  { id: "eau", categorie: "boissons", nom: "Eau", prix: 1.0, description: "Plate.", photo: null, allergenes: null },
+  { id: "coca-cola", categorie: "boissons", nom: "Coca-Cola", prix: 1.6, description: "Canette.", photo: "/images/carte/boisson-coca-cola.webp", allergenes: null },
+  { id: "fanta", categorie: "boissons", nom: "Fanta", prix: 1.6, description: "Canette.", photo: "/images/carte/boisson-fanta.webp", allergenes: null },
+  { id: "sprite", categorie: "boissons", nom: "Sprite", prix: 1.6, description: "Canette.", photo: "/images/carte/boisson-sprite.webp", allergenes: null },
+  { id: "ayran", categorie: "boissons", nom: "Ayran", prix: 1.6, description: "La boisson turque au yaourt.", photo: "/images/carte/boisson-ayran.webp", allergenes: null },
+  { id: "eau", categorie: "boissons", nom: "Eau", prix: 1.6, description: "Bouteille.", photo: "/images/carte/boisson-eau.webp", allergenes: null },
 ];
 
 export const produitsDe = (c: CategorieId) => PRODUITS.filter((p) => p.categorie === c);
-export const optionsDe = (p: Produit) => (p.options ?? []).map((id) => OPTIONS.find((o) => o.id === id)!).filter(Boolean);
+
+/** Une option du panier s'écrit "groupe:choix" (ex. "sauce:blanche"). */
+export function choixDe(p: Produit, cle: string): { groupe: Groupe; choix: Choix } | null {
+  const [g, c] = cle.split(":");
+  const groupe = p.groupes?.find((x) => x.id === g);
+  const choix = groupe?.choix.find((x) => x.id === c);
+  return groupe && choix ? { groupe, choix } : null;
+}
+
+/** Sélection de départ d'un produit (premier choix des groupes uniques + `parDefaut`). */
+export function selectionInitiale(p: Produit): string[] {
+  return (p.groupes ?? []).flatMap((g) =>
+    g.type === "unique" ? [`${g.id}:${g.choix[0].id}`] : (g.parDefaut ?? []).map((c) => `${g.id}:${c}`),
+  );
+}

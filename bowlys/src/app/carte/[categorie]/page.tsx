@@ -23,7 +23,7 @@ export default async function PageCategorie({ params }: Params) {
   const c = CATEGORIES.find((x) => x.id === categorie);
   if (!c) notFound();
   const liste = PRODUITS.filter((p) => p.categorie === (c.id as CategorieId));
-  const petit = c.id === "accompagnements" || c.id === "boissons";
+  const petit = c.id === "desserts" || c.id === "boissons";
 
   return (
     <>
@@ -32,10 +32,10 @@ export default async function PageCategorie({ params }: Params) {
         <BandeauCarte photo={c.photo} ariane={[{ href: "/carte/", label: "La carte" }, { label: c.nom }]} />
         <Medaillon>
           <div className="flex flex-col items-center">
-            <span className="grid size-20 place-items-center rounded-full bg-bleu text-white ring-4 ring-white ring-offset-2 ring-offset-bleu/20">
+            <span className="grid size-20 place-items-center rounded-full bg-rouge text-white ring-4 ring-white ring-offset-2 ring-offset-rouge/20">
               <IconeCategorie id={c.id} className="w-10" />
             </span>
-            <p className="mt-3 font-display text-[0.6rem] font-black uppercase tracking-[0.4em] text-bleu">Bowly&apos;s</p>
+            <p className="mt-3 font-display text-[0.6rem] font-extrabold uppercase tracking-[0.4em] text-rouge">Bowly&apos;s</p>
           </div>
         </Medaillon>
         <TitreCarte titre={c.nom} accroche={c.accroche} />

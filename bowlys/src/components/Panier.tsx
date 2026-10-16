@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Minus, Plus, X, ShoppingBag, ArrowLeft, Store, Bike, Info, Trash2 } from "lucide-react";
-import { OPTIONS, PRODUITS } from "@/data/menu";
+import { PRODUITS } from "@/data/menu";
 import { prix } from "@/lib/format";
 import { usePanier, produitParId, prixLigne } from "@/lib/panier";
 import { useFenetre } from "@/lib/useVerrouDefilement";
@@ -47,7 +47,7 @@ export function Panier() {
 
   const titres: Record<Etape, string> = { panier: "Votre panier", mode: "Retrait ou livraison", infos: "Vos coordonnées", envoi: "Récapitulatif" };
   const precedent: Partial<Record<Etape, Etape>> = { mode: "panier", infos: "mode", envoi: "infos" };
-  const champ = "mt-1.5 h-13 w-full rounded-2xl bg-doux px-4 py-3.5 font-semibold ring-2 ring-transparent outline-none transition focus:bg-white focus:ring-bleu";
+  const champ = "mt-1.5 h-13 w-full rounded-2xl bg-doux px-4 py-3.5 font-semibold ring-2 ring-transparent outline-none transition focus:bg-white focus:ring-rouge";
 
   return (
     <div className="fixed inset-0 z-[70]" role="dialog" aria-modal="true" aria-labelledby="panier-titre">
@@ -56,15 +56,15 @@ export function Panier() {
         <div className="flex items-center gap-3 border-b border-trait px-5 py-4">
           {precedent[etape] ? (
             <button type="button" onClick={() => setEtape(precedent[etape]!)} aria-label="Étape précédente" className="grid size-11 place-items-center rounded-full hover:bg-doux"><ArrowLeft className="size-5" strokeWidth={2.6} /></button>
-          ) : <ShoppingBag className="ml-2 size-6 text-bleu" strokeWidth={2.4} />}
-          <h2 id="panier-titre" className="flex-1 font-display text-xl font-black">{titres[etape]}</h2>
+          ) : <ShoppingBag className="ml-2 size-6 text-rouge" strokeWidth={2.4} />}
+          <h2 id="panier-titre" className="flex-1 font-display text-xl font-extrabold">{titres[etape]}</h2>
           <button type="button" onClick={fermer} aria-label="Fermer" className="grid size-11 place-items-center rounded-full hover:bg-doux"><X className="size-5" strokeWidth={2.6} /></button>
         </div>
 
         {etape !== "panier" && (
           <ol aria-label="Étapes" className="flex gap-1.5 px-5 pt-4">
             {(["mode", "infos", "envoi"] as Etape[]).map((s, i) => (
-              <li key={s} className={`h-1.5 flex-1 rounded-full ${["mode", "infos", "envoi"].indexOf(etape) >= i ? "bg-bleu" : "bg-trait"}`}><span className="sr-only">Étape {i + 1}</span></li>
+              <li key={s} className={`h-1.5 flex-1 rounded-full ${["mode", "infos", "envoi"].indexOf(etape) >= i ? "bg-rouge" : "bg-trait"}`}><span className="sr-only">Étape {i + 1}</span></li>
             ))}
           </ol>
         )}
@@ -73,10 +73,10 @@ export function Panier() {
           {etape === "panier" && (lignes.length === 0 ? (
             <div className="grid h-full place-items-center text-center">
               <div className="grid justify-items-center gap-4">
-                <span className="grid size-20 place-items-center rounded-full bg-bleu-ciel"><ShoppingBag className="size-9 text-bleu" /></span>
-                <p className="font-display text-xl font-black">Votre panier est vide</p>
-                <p className="max-w-[28ch] text-gris">Ajoutez un manti, un lahmacun ou un menu depuis la carte.</p>
-                <a href="/carte/" onClick={fermer} className="mt-2 inline-flex h-12 items-center rounded-full bg-bleu px-6 font-display font-extrabold text-white hover:bg-bleu-fonce">Voir la carte</a>
+                <span className="grid size-20 place-items-center rounded-full bg-creme"><ShoppingBag className="size-9 text-rouge" /></span>
+                <p className="font-display text-xl font-extrabold">Votre panier est vide</p>
+                <p className="max-w-[28ch] text-gris">Ajoutez une box lahmacun, un dürüm ou un dessert depuis la carte.</p>
+                <a href="/carte/" onClick={fermer} className="mt-2 inline-flex h-12 items-center rounded-full bg-rouge px-6 font-display font-extrabold text-white hover:bg-rouge-fonce">Voir la carte</a>
               </div>
             </div>
           ) : (
@@ -88,17 +88,17 @@ export function Panier() {
                     <Photo src={p.photo} alt={p.nom} className="size-20 shrink-0 rounded-2xl" sizes="80px" zoom={false} vignette />
                     <div className="flex min-w-0 flex-1 flex-col">
                       <div className="flex justify-between gap-2">
-                        <p className="font-display font-black leading-tight">{p.nom}</p>
+                        <p className="font-display font-extrabold leading-tight">{p.nom}</p>
                         <button type="button" onClick={() => retirer(l.cle)} aria-label={`Retirer ${p.nom}`} className="-mr-1 -mt-1 grid size-8 shrink-0 place-items-center rounded-full text-gris hover:bg-doux hover:text-encre"><Trash2 className="size-4" /></button>
                       </div>
-                      {l.options.length > 0 && <p className="text-sm text-gris">+ {l.options.map((o) => OPTIONS.find((x) => x.id === o)?.nom).join(", ")}</p>}
+                      {l.options.length > 0 && <p className="text-sm leading-snug text-gris">{(p.groupes ?? []).flatMap((g) => g.choix.filter((c) => l.options.includes(`${g.id}:${c.id}`)).map((c) => c.nom)).join(" · ")}</p>}
                       <div className="mt-auto flex items-center justify-between pt-2">
                         <div className="flex items-center rounded-full ring-1 ring-trait">
                           <button type="button" onClick={() => changerQte(l.cle, -1)} aria-label={`Retirer un ${p.nom}`} className="grid size-9 place-items-center rounded-full hover:bg-doux"><Minus className="size-3.5" strokeWidth={3} /></button>
                           <span className="w-7 text-center font-bold tabular-nums">{l.qte}</span>
                           <button type="button" onClick={() => changerQte(l.cle, 1)} aria-label={`Ajouter un ${p.nom}`} className="grid size-9 place-items-center rounded-full hover:bg-doux"><Plus className="size-3.5" strokeWidth={3} /></button>
                         </div>
-                        <span className="font-display font-black tabular-nums">{prix(prixLigne(l))}</span>
+                        <span className="font-display font-extrabold tabular-nums">{prix(prixLigne(l))}</span>
                       </div>
                     </div>
                   </li>
@@ -107,10 +107,10 @@ export function Panier() {
               <li><button type="button" onClick={vider} className="text-sm font-semibold text-gris underline underline-offset-4 hover:text-encre">Vider le panier</button></li>
               {!lignes.some((l) => produitParId(l.produitId)?.categorie === "boissons") && (
                 <li className="mt-2 rounded-2xl bg-doux p-4">
-                  <p className="font-display font-black">Une boisson avec ça ?</p>
+                  <p className="font-display font-extrabold">Une boisson avec ça ?</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {PRODUITS.filter((p) => p.categorie === "boissons").map((p) => (
-                      <button key={p.id} type="button" onClick={() => ajouter(p.id)} className="inline-flex h-10 items-center gap-1.5 rounded-full bg-white px-4 text-sm font-extrabold ring-1 ring-trait transition-colors hover:bg-bleu hover:text-white hover:ring-bleu">
+                      <button key={p.id} type="button" onClick={() => ajouter(p.id)} className="inline-flex h-10 items-center gap-1.5 rounded-full bg-white px-4 text-sm font-extrabold ring-1 ring-trait transition-colors hover:bg-rouge hover:text-white hover:ring-rouge">
                         <Plus className="size-3.5" strokeWidth={3} />{p.nom} · {prix(p.prix)}
                       </button>
                     ))}
@@ -124,10 +124,10 @@ export function Panier() {
             <fieldset className="grid gap-3">
               <legend className="sr-only">Mode de commande</legend>
               {modes.map((m) => (
-                <label key={m.id} className={`flex cursor-pointer items-center gap-4 rounded-2xl p-5 ring-2 transition-colors ${mode === m.id ? "bg-bleu-ciel ring-bleu" : "ring-trait hover:ring-bleu/50"}`}>
+                <label key={m.id} className={`flex cursor-pointer items-center gap-4 rounded-2xl p-5 ring-2 transition-colors ${mode === m.id ? "bg-creme ring-rouge" : "ring-trait hover:ring-rouge/50"}`}>
                   <input type="radio" name="mode" className="sr-only" checked={mode === m.id} onChange={() => setMode(m.id)} />
-                  <m.Icone className="size-7 text-bleu" />
-                  <span><span className="block font-display font-black">{m.nom}</span><span className="text-sm text-gris">{m.detail}</span></span>
+                  <m.Icone className="size-7 text-rouge" />
+                  <span><span className="block font-display font-extrabold">{m.nom}</span><span className="text-sm text-gris">{m.detail}</span></span>
                 </label>
               ))}
               {!site.commande.livraison && <p className="text-sm text-gris">La livraison n&apos;est pas encore proposée.</p>}
@@ -156,20 +156,20 @@ export function Panier() {
           {etape === "envoi" && (
             <div className="grid gap-5">
               <div className="rounded-2xl bg-doux p-5 text-sm">
-                <p className="font-display text-base font-black">{infos.prenom} · {infos.telephone}</p>
+                <p className="font-display text-base font-extrabold">{infos.prenom} · {infos.telephone}</p>
                 <p className="text-gris">{mode === "retrait" ? `Retrait : ${adresseLigne()}` : "Livraison"}</p>
                 <ul className="mt-3 grid gap-1 border-t border-trait pt-3">
                   {lignes.map((l) => <li key={l.cle} className="flex justify-between"><span>{l.qte} × {produitParId(l.produitId)?.nom}</span><span className="tabular-nums">{prix(prixLigne(l))}</span></li>)}
                 </ul>
               </div>
               {site.commande.envoi === null && (
-                <div role="status" className="rounded-2xl border-2 border-bleu bg-bleu-ciel p-5">
-                  <p className="flex items-center gap-2 font-display font-black text-bleu"><Info className="size-5" />Commande en ligne bientôt disponible</p>
+                <div role="status" className="rounded-2xl border-2 border-rouge bg-creme p-5">
+                  <p className="flex items-center gap-2 font-display font-extrabold text-rouge"><Info className="size-5" />Commande en ligne bientôt disponible</p>
                   <p className="mt-2 text-sm">
                     Le paiement et l&apos;envoi au restaurant ne sont pas encore activés : <strong>cette commande n&apos;a pas été transmise et rien n&apos;a été payé.</strong> Gardez ce récapitulatif et passez commande directement au comptoir.
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2">
-                    {lienItineraire() && <LienBouton href={lienItineraire()!} externe style="bleu">Itinéraire</LienBouton>}
+                    {lienItineraire() && <LienBouton href={lienItineraire()!} externe style="rouge">Itinéraire</LienBouton>}
                     {site.telephone && <LienBouton href={`tel:${site.telephone.replace(/\s/g, "")}`} style="contour">Appeler</LienBouton>}
                     {site.commande.uberEats && <LienBouton href={site.commande.uberEats} externe style="contour">Uber Eats</LienBouton>}
                     {site.commande.deliveroo && <LienBouton href={site.commande.deliveroo} externe style="contour">Deliveroo</LienBouton>}
@@ -184,12 +184,12 @@ export function Panier() {
           <div className="border-t border-trait px-5 pb-[max(20px,env(safe-area-inset-bottom))] pt-4">
             <div className="mb-3 flex items-baseline justify-between">
               <span className="font-semibold text-gris">Total TTC</span>
-              <span className="font-display text-2xl font-black tabular-nums">{prix(total)}</span>
+              <span className="font-display text-2xl font-extrabold tabular-nums">{prix(total)}</span>
             </div>
             {etape === "infos" ? (
-              <button type="submit" form="form-infos" className="h-14 w-full rounded-full bg-bleu font-display text-lg font-black text-white hover:bg-bleu-fonce">Voir le récapitulatif</button>
+              <button type="submit" form="form-infos" className="h-14 w-full rounded-full bg-rouge font-display text-lg font-extrabold text-white hover:bg-rouge-fonce">Voir le récapitulatif</button>
             ) : (
-              <button type="button" onClick={() => setEtape(etape === "panier" ? "mode" : "infos")} className="h-14 w-full rounded-full bg-bleu font-display text-lg font-black text-white hover:bg-bleu-fonce">
+              <button type="button" onClick={() => setEtape(etape === "panier" ? "mode" : "infos")} className="h-14 w-full rounded-full bg-rouge font-display text-lg font-extrabold text-white hover:bg-rouge-fonce">
                 {etape === "panier" ? "Commander" : "Continuer"}
               </button>
             )}
