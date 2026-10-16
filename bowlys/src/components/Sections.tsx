@@ -59,17 +59,10 @@ export function EnTete({ surtitre, titre, id, clair = false, sousTitre }: { surt
 }
 
 /* ─────────── Bienvenue chez BOWLY'S ─────────── */
-/** Petits lahmacuns qui flottent autour du panneau. */
-const INGREDIENTS = [
-  { src: "/images/choix/lahmacun-nature.webp", classe: "left-[46%] -top-8 w-[4.5rem] sm:w-24 [--r:-10deg]", delai: "0s" },
-  { src: "/images/choix/lahmacun-poulet.webp", classe: "-right-3 top-[14%] w-16 sm:-right-7 sm:w-20 lg:top-[38%] [--r:14deg]", delai: "-2s" },
-  { src: "/images/choix/lahmacun-boeuf.webp", classe: "-bottom-9 right-[22%] w-[4.5rem] sm:w-[5.5rem] [--r:6deg]", delai: "-4s" },
-];
-
 export function Bienvenue() {
   const durum = produitsDe("durum")[0];
   return (
-    <section id="concept" aria-labelledby="bienvenue-titre" className="sous-feuille relative bg-white pt-20 [overflow-x:clip] sm:pt-28">
+    <section id="concept" aria-labelledby="bienvenue-titre" className="sortie feuille sous-feuille relative bg-white pt-20 [overflow-x:clip] sm:pt-28">
       <div className={conteneur}>
         <div className="apparait relative">
           <div className="sur-sombre relative grid overflow-hidden rounded-[2.2rem] bg-vin text-white shadow-[0_60px_120px_-60px_rgba(45,4,6,.9)] lg:grid-cols-[1.1fr_1fr] lg:rounded-[3rem]">
@@ -104,11 +97,6 @@ export function Bienvenue() {
               </div>
             </div>
           </div>
-          {INGREDIENTS.map((x) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img key={x.src} src={x.src} alt="" aria-hidden="true" loading="lazy" style={{ animationDelay: x.delai }}
-              className={`flotte pointer-events-none absolute z-10 aspect-square rounded-full drop-shadow-[0_16px_20px_rgba(30,11,14,.4)] ${x.classe}`} />
-          ))}
         </div>
       </div>
     </section>
@@ -137,7 +125,7 @@ function redresser(e: React.PointerEvent<HTMLElement>) {
 
 export function Specialites() {
   return (
-    <section id="specialites" aria-labelledby="spe-titre" className="feuille sous-feuille overflow-hidden bg-doux pt-24 text-encre sm:pt-32">
+    <section id="specialites" aria-labelledby="spe-titre" className="sortie feuille sous-feuille overflow-hidden bg-doux pt-24 text-encre sm:pt-32">
       <Logo variante="icone" titre="" className="pointer-events-none absolute -left-24 top-24 w-[420px] text-rouge/[0.05]" />
       <div className={`${conteneur} relative`}>
         <EnTete id="spe-titre" surtitre="Notre carte" titre="Fait pour donner faim." sousTitre="Un avant-goût de ce qui vous attend." />
@@ -200,7 +188,7 @@ export function Galerie() {
   }, [i, lecture]);
   if (!site.reseaux.instagram) return null;
   return (
-    <section aria-labelledby="galerie-titre" className="sur-sombre feuille sous-feuille overflow-hidden bg-encre pt-24 text-white sm:pt-32">
+    <section aria-labelledby="galerie-titre" className="sortie sur-sombre feuille sous-feuille overflow-hidden bg-encre pt-24 text-white sm:pt-32">
       <div className={`${conteneur} grid items-center gap-16 md:grid-cols-2 md:gap-24`}>
         <div className="apparait relative mx-auto w-[min(78vw,340px)] md:order-2">
           <div aria-hidden="true" className="absolute -inset-16 -z-10 rounded-full bg-[radial-gradient(closest-side,rgba(140,2,10,.55),transparent)]" />
@@ -325,7 +313,7 @@ export function NousTrouver() {
   const tel = site.telephone;
 
   return (
-    <section id="contact" aria-labelledby="contact-titre" className="feuille sous-feuille bg-doux pt-24 sm:pt-32">
+    <section id="contact" aria-labelledby="contact-titre" className="sortie feuille sous-feuille bg-doux pt-24 sm:pt-32">
       <div className={conteneur}>
         <EnTete id="contact-titre" surtitre="Contact" titre="On vous attend." />
 

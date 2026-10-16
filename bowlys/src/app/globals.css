@@ -151,3 +151,13 @@ h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; }
   -webkit-mask-image: var(--h), var(--v); -webkit-mask-composite: source-in;
   mask-image: var(--h), var(--v); mask-composite: intersect;
 }
+
+/* ── Passage d'une partie à l'autre ──
+   Quand la partie suivante arrive par-dessus, la précédente recule légèrement et s'assombrit,
+   comme une pile de cartes. Uniquement transform/opacity : fluide, même sur téléphone. */
+@keyframes recule { to { transform: scale(.94); } }
+@keyframes voile { to { opacity: .45; } }
+@supports (animation-timeline: view()) {
+  .sortie { transform-origin: 50% 100%; animation: recule linear both; animation-timeline: view(); animation-range: exit 0% exit 100%; }
+  .sortie::after, .hero-sortie::after { content: ""; position: absolute; inset: 0; z-index: 30; background: #120507; opacity: 0; pointer-events: none; animation: voile linear both; animation-timeline: view(); animation-range: exit 0% exit 100%; }
+}

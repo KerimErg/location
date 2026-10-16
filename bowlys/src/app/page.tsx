@@ -46,7 +46,7 @@ export default function Accueil() {
   return (
     <>
       <Header transparent />
-      <main id="contenu">
+      <main id="contenu" className="bg-[#120507]">
         <Hero />
         <Bienvenue />
         <Specialites />
