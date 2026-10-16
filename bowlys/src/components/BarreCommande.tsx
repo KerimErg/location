@@ -18,7 +18,7 @@ export function BarreCommande() {
 
   if (nbArticles > 0) {
     return (
-      <div className="anim-toast fixed inset-x-0 bottom-0 z-30 px-4 pb-[max(14px,env(safe-area-inset-bottom))] md:hidden">
+      <div className="anim-barre fixed inset-x-0 bottom-0 z-30 px-4 pb-[max(14px,env(safe-area-inset-bottom))] md:hidden">
         <button type="button" onClick={() => ouvrirPanier()} className="flex h-16 w-full items-center justify-between rounded-full bg-rouge pl-3 pr-6 font-display font-extrabold text-white shadow-[0_18px_40px_-14px_rgba(140,2,10,.8)]">
           <span className="flex items-center gap-3">
             <span className="relative grid size-11 place-items-center rounded-full bg-white/15">

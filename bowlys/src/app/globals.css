@@ -44,6 +44,8 @@ h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; }
 @media (max-width: 767px) { .anim-feuille { animation: glisser-haut .45s var(--ease-pro) both; } }
 .anim-pop { animation: pop .45s var(--ease-pro); }
 .anim-toast { animation: toast .35s var(--ease-pro) both; }
+@keyframes barre-monte { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+.anim-barre { animation: barre-monte .35s var(--ease-pro) both; }
 .defilement { animation: defiler 30s linear infinite; }
 
 /* Apparition au défilement : progressive, le contenu reste visible sans support. */

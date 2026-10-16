@@ -2,11 +2,11 @@
 
 import { Fragment, useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Check, Copy, Navigation, Pause, Phone, Play } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Navigation, Pause, Phone, Play } from "lucide-react";
 import { CATEGORIES, produitsDe, type CategorieId } from "@/data/menu";
 import { prix } from "@/lib/format";
 import { maintenantParis } from "@/lib/horaires";
-import { PastilleStatut, useStatut } from "./StatutLive";
+import { PastilleStatut } from "./StatutLive";
 import { site, adresseLigne, lienItineraire, lienPlanIntegre, JOURS } from "@/config/site";
 import { Photo } from "./Photo";
 import { LienBouton, classesBouton } from "./Bouton";
@@ -81,20 +81,12 @@ export function Bienvenue() {
             <div className="relative order-2 px-5 pb-7 pt-0 text-center sm:px-12 sm:pb-14 sm:pt-2 lg:order-1 lg:py-24 lg:pl-16 lg:pr-0 lg:text-left">
               <div className="lg:[&_p]:justify-start"><Surtitre clair centre={false}>Bienvenue chez</Surtitre></div>
               <h2 id="bienvenue-titre" className="mt-3 sm:mt-5">
-                <Logo variante="nom" titre="BOWLY'S" className="mx-auto w-[min(62%,400px)] text-white sm:w-[min(88%,400px)] lg:mx-0" />
+                <Logo variante="nom" titre="BOWLY'S" className="mx-auto w-[min(48%,320px)] text-white sm:w-[min(70%,320px)] lg:mx-0" />
               </h2>
-              <div className="mx-auto mt-4 grid max-w-[44ch] gap-3 text-[0.95rem] leading-relaxed text-white/80 sm:mt-7 sm:gap-4 sm:text-[1.05rem] lg:mx-0">
-                <p>
-                  Chez BOWLY&apos;S, tout tourne autour du lahmacun. Une pâte fine, une garniture parfumée, des crudités fraîches et la sauce que vous aimez.
-                </p>
-                <p>
-                  BOWLY&apos;S est né d&apos;une idée simple : donner au lahmacun la place qu&apos;il mérite, avec une carte courte pensée entièrement autour de lui. En box de petits formats pour partager, ou en dürüm grand format composé à votre goût. Sur place ou à emporter.
-                </p>
-              </div>
-              <div className="mt-6 grid grid-cols-2 gap-2 sm:mt-8 sm:flex sm:flex-wrap sm:justify-center sm:gap-3 lg:justify-start">
-                <LienBouton href="/carte/" style="blanc" taille="lg" className="!h-12 !px-3 text-[0.9rem] sm:!h-14 sm:!px-8 sm:text-base">La carte <ArrowRight className="hidden size-5 sm:block" /></LienBouton>
-                <LienBouton href={`/carte/durum/${durum.id}/`} style="contour-blanc" taille="lg" className="!h-12 !px-3 text-[0.9rem] sm:!h-14 sm:!px-8 sm:text-base">Mon dürüm</LienBouton>
-              </div>
+              <p className="mx-auto mt-4 max-w-[34ch] text-[0.95rem] leading-relaxed text-white/80 sm:mt-6 sm:text-[1.05rem] lg:mx-0">
+                Ici, tout tourne autour du lahmacun : en box pour partager, ou en dürüm composé à votre goût.
+              </p>
+              <LienBouton href="/carte/" style="blanc" taille="lg" className="mt-6 !h-12 !px-6 text-[0.95rem] sm:mt-8 sm:!h-14 sm:!px-8 sm:text-base">Découvrir la carte <ArrowRight className="size-5" /></LienBouton>
             </div>
           </div>
         </div>
@@ -130,7 +122,7 @@ export function Specialites() {
       <div className={`${conteneur} relative`}>
         <EnTete id="spe-titre" surtitre="Notre carte" titre="Fait pour donner faim." sousTitre="Un avant-goût de ce qui vous attend." />
 
-        <ul className="sans-barre -mx-[max(20px,env(safe-area-inset-left))] mt-7 flex snap-x snap-mandatory gap-3 overflow-x-auto sm:mt-14 sm:gap-4 px-[max(20px,env(safe-area-inset-left))] pb-4 md:mx-0 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-0 md:pb-0">
+        <ul className="sans-barre -mx-[max(20px,env(safe-area-inset-left))] mt-7 flex snap-x snap-mandatory gap-3 overflow-x-auto sm:mt-14 sm:gap-4 px-[16vw] pb-4 md:mx-0 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-0 md:pb-0">
           {APERCU.map((a, i) => {
             const c = CATEGORIES.find((k) => k.id === a.cat)!;
             const desPrix = Math.min(...produitsDe(a.cat).map((p) => p.prix));
@@ -280,105 +272,60 @@ function Plan() {
   );
 }
 
-function BoutonCopier() {
-  const [ok, setOk] = useState(false);
-  const copier = async () => {
-    const a = adresseLigne()!;
-    try { await navigator.clipboard.writeText(a); setOk(true); }
-    catch {
-      const t = document.getElementById("adresse-texte");
-      if (t) { const r = document.createRange(); r.selectNodeContents(t); const sel = getSelection(); sel?.removeAllRanges(); sel?.addRange(r); }
-    }
-    setTimeout(() => setOk(false), 1800);
-  };
-  return (
-    <button type="button" onClick={copier} className="inline-flex h-10 items-center gap-2 rounded-full bg-white/15 px-4 text-sm font-extrabold text-white transition-colors hover:bg-white/25">
-      {ok ? <Check className="size-4" strokeWidth={3} /> : <Copy className="size-4" />}{ok ? "Adresse copiée" : "Copier l'adresse"}
-    </button>
-  );
-}
-
 export function NousTrouver() {
   const h = site.horaires;
-  const s = useStatut();
-  const [aujourdhui, setAujourdhui] = useState<string | null>(null);
+  const [aujourdhui, setAujourdhui] = useState<(typeof JOURS)[number] | null>(null);
   useEffect(() => { setAujourdhui(maintenantParis().jour); }, []);
   if (!site.restaurant) return null;
-  const a = encodeURIComponent(adresseLigne()!);
-  const itineraires = [
-    { nom: "Google Maps", href: lienItineraire()! },
-    { nom: "Waze", href: `https://waze.com/ul?q=${a}&navigate=yes` },
-    { nom: "Plans", href: `https://maps.apple.com/?daddr=${a}` },
-  ];
   const tel = site.telephone;
+  const plage = (j: (typeof JOURS)[number]) => (h && h[j].length ? h[j].map((p) => `${p.ouverture} – ${p.fermeture}`).join(" · ") : "Fermé");
 
   return (
     <section id="contact" aria-labelledby="contact-titre" className="sortie feuille sous-feuille bg-doux pt-12 sm:pt-32">
       <div className={conteneur}>
         <EnTete id="contact-titre" surtitre="Contact" titre="On vous attend." />
 
-        <div className="mt-7 grid gap-3 sm:mt-14 sm:gap-5 lg:grid-cols-[1.1fr_1fr]">
-          {/* Carte vivante : statut, compte à rebours, actions */}
-          <div className="sur-sombre apparait relative overflow-hidden rounded-[1.6rem] bg-rouge p-5 text-white sm:rounded-[2rem] sm:p-10">
-            <Logo variante="icone" titre="" className="pointer-events-none absolute -bottom-10 -right-10 w-72 text-white/10" />
-            <div className="relative">
-              <PastilleStatut ton="clair" />
-              <p className="mt-4 font-display text-[clamp(1.6rem,5vw,3.4rem)] sm:mt-6 font-extrabold leading-[1.02] tracking-[-0.02em]">
-                {s ? (s.ouvert ? <>On est ouverts,<br />venez vite !</> : <>Bientôt l&apos;heure<br />du lahmacun.</>) : <>Le lahmacun<br />vous attend.</>}
-              </p>
-              <address className="mt-5 not-italic sm:mt-8">
-                <span className="text-[0.72rem] font-extrabold uppercase tracking-[0.22em] text-white/70">Adresse</span>
-                <span id="adresse-texte" className="mt-1 block font-display text-lg font-extrabold sm:text-2xl">{site.restaurant.rue}, {site.restaurant.codePostal} {site.restaurant.ville}</span>
-              </address>
-              <div className="mt-3 sm:mt-4"><BoutonCopier /></div>
+        <div className="apparait mx-auto mt-7 grid max-w-[1000px] overflow-hidden rounded-[1.8rem] bg-white shadow-[0_40px_80px_-50px_rgba(30,11,14,.5)] ring-1 ring-trait sm:mt-12 md:grid-cols-2">
+          <div className="p-6 text-center sm:p-10 md:text-left">
+            <PastilleStatut />
+            <address className="mt-4 not-italic">
+              <span className="block font-display text-[1.35rem] font-extrabold leading-tight sm:text-2xl">{site.restaurant.rue}</span>
+              <span className="block text-gris">{site.restaurant.codePostal} {site.restaurant.ville}</span>
+            </address>
 
-              <div className="mt-5 grid grid-cols-2 gap-2 sm:mt-8 sm:gap-3">
-                {tel && (
-                  <a href={`tel:${tel.replace(/\s/g, "")}`} className="group flex h-14 items-center gap-2.5 rounded-2xl bg-white px-3 text-rouge sm:h-16 sm:gap-4 sm:px-5 transition-transform hover:-translate-y-0.5">
-                    <span className="grid size-9 shrink-0 place-items-center rounded-full bg-rouge text-white sm:size-10"><Phone className="size-5" /></span>
-                    <span className="leading-tight"><span className="hidden text-xs font-extrabold uppercase tracking-[0.16em] text-rouge/70 sm:block">Appeler</span><span className="font-display font-extrabold sm:hidden">Appeler</span><span className="hidden font-display text-lg font-extrabold tabular-nums sm:inline">{tel}</span></span>
-                  </a>
-                )}
-                <a href={itineraires[0].href} target="_blank" rel="noopener noreferrer" className="group flex h-14 items-center gap-2.5 rounded-2xl bg-encre px-3 text-white sm:h-16 sm:gap-4 sm:px-5 transition-transform hover:-translate-y-0.5">
-                  <span className="grid size-9 shrink-0 place-items-center rounded-full bg-white/15 sm:size-10"><Navigation className="size-5" /></span>
-                  <span className="leading-tight"><span className="hidden text-xs font-extrabold uppercase tracking-[0.16em] text-white/70 sm:block">Y aller</span><span className="font-display font-extrabold sm:text-lg">Itinéraire</span></span>
+            <div className="mt-6 grid grid-cols-2 gap-2 sm:gap-3">
+              {tel && (
+                <a href={`tel:${tel.replace(/\s/g, "")}`} className={classesBouton("rouge", "md", "w-full !px-3")}>
+                  <Phone className="size-[18px]" /> Appeler
                 </a>
-              </div>
-              <p className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-semibold text-white/80 sm:mt-4">
-                Ouvrir avec :
-                {itineraires.map((x) => <a key={x.nom} href={x.href} target="_blank" rel="noopener noreferrer" className="underline decoration-white/40 underline-offset-4 hover:decoration-white">{x.nom}</a>)}
-              </p>
+              )}
+              <a href={lienItineraire()!} target="_blank" rel="noopener noreferrer" className={classesBouton("contour", "md", `w-full !px-3 ${tel ? "" : "col-span-2"}`)}>
+                <Navigation className="size-[18px]" /> Itinéraire
+              </a>
             </div>
-          </div>
 
-          <div className="apparait-2 min-h-[200px] sm:min-h-[360px]"><Plan /></div>
+            {h && (
+              <details className="group mt-6 border-t border-trait pt-4 text-left">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 font-display font-extrabold [&::-webkit-details-marker]:hidden">
+                  Horaires
+                  <span className="flex items-center gap-2 text-sm font-semibold text-gris">
+                    {aujourdhui && <span className="tabular-nums">Aujourd&apos;hui {plage(aujourdhui)}</span>}
+                    <ArrowRight className="size-4 rotate-90 transition-transform duration-300 group-open:-rotate-90" />
+                  </span>
+                </summary>
+                <ol className="mt-3 grid gap-0.5">
+                  {JOURS.map((j) => (
+                    <li key={j} className={`flex justify-between rounded-lg px-2 py-1.5 text-[0.95rem] ${j === aujourdhui ? "bg-creme font-bold text-rouge" : ""}`}>
+                      <span className="capitalize">{j}</span>
+                      <span className="tabular-nums">{plage(j)}</span>
+                    </li>
+                  ))}
+                </ol>
+              </details>
+            )}
+          </div>
+          <div className="hidden min-h-[340px] md:block [&>div]:!rounded-none"><Plan /></div>
         </div>
-
-        {/* La semaine en un coup d'œil */}
-        {h && (
-          <div className="apparait mt-3 rounded-[1.6rem] bg-white p-5 ring-1 ring-trait sm:mt-5 sm:rounded-[2rem] sm:p-8">
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <p className="font-display text-lg font-extrabold sm:text-xl">Horaires</p>
-              <PastilleStatut />
-            </div>
-            <ol className="mt-3 grid gap-0.5 sm:mt-5 sm:grid-cols-4 sm:gap-2 lg:grid-cols-7">
-              {JOURS.map((j) => {
-                const on = j === aujourdhui;
-                const heures = h[j].length ? h[j].map((p) => `${p.ouverture} – ${p.fermeture}`).join(" · ") : "Fermé";
-                return (
-                  <li key={j} className={`flex items-center justify-between rounded-xl px-3 py-2 transition-colors sm:block sm:rounded-2xl sm:p-4 ${on ? "bg-rouge text-white shadow-[0_14px_30px_-14px_rgba(140,2,10,.8)]" : "sm:bg-doux"}`}>
-                    {/* Téléphone : une ligne par jour */}
-                    <span className="text-[0.95rem] font-bold capitalize sm:hidden">{j}{on && <span className="ml-2 text-xs font-extrabold uppercase tracking-[0.12em] text-white/80">aujourd&apos;hui</span>}</span>
-                    {/* Ordinateur : tuiles */}
-                    <span className={`hidden text-[0.7rem] font-extrabold uppercase tracking-[0.18em] sm:block ${on ? "text-white/80" : "text-gris"}`}>{on ? "Aujourd'hui" : j}</span>
-                    <span className="mt-1 hidden font-display font-extrabold capitalize sm:block">{on ? j : ""}</span>
-                    <span className={`font-display text-[0.95rem] font-extrabold tabular-nums sm:block sm:text-base ${on ? "" : "text-encre"}`}>{heures}</span>
-                  </li>
-                );
-              })}
-            </ol>
-          </div>
-        )}
       </div>
     </section>
   );
