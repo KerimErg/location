@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Check, Copy, Navigation, Pause, Phone, Play } from "lucide-react";
 import { CATEGORIES, produitsDe, type CategorieId } from "@/data/menu";
@@ -42,88 +42,72 @@ export function EnTete({ surtitre, titre, id, clair = false, sousTitre }: { surt
   return (
     <div className="apparait mx-auto max-w-[760px] text-center">
       <Surtitre clair={clair}>{surtitre}</Surtitre>
-      <h2 id={id} className="mt-5 font-display text-[clamp(2.4rem,5.4vw,4.2rem)] font-extrabold leading-[0.98] tracking-[-0.025em]">{titre}</h2>
+      <h2 id={id} className="mt-5 font-display text-[clamp(2.4rem,5.4vw,4.2rem)] font-extrabold leading-[0.98] tracking-[-0.025em]">
+        {typeof titre === "string"
+          ? titre.split(" ").map((m, i) => (
+              <Fragment key={i}>
+                {i > 0 && " "}
+                <span className="masque-vue"><span style={{ animationRange: `entry ${20 + i * 6}% cover ${34 + i * 6}%` }}>{m}</span></span>
+              </Fragment>
+            ))
+          : titre}
+      </h2>
       <Ornement clair={clair} className="mt-6" />
       {sousTitre && <p className={`mx-auto mt-6 max-w-[48ch] text-lg font-semibold ${clair ? "text-white/90" : "text-gris"}`}>{sousTitre}</p>}
     </div>
   );
 }
 
-/* ─────────── Bienvenue chez BOWLY'S : le manifeste ─────────── */
-/**
- * Le texte s'éclaire mot à mot pendant le défilement (la section reste épinglée à l'écran),
- * et de petites photos rondes viennent se glisser dans la phrase.
- * Texte d'ambiance : à remplacer par votre propre histoire si vous le souhaitez.
- */
-type Segment = string | { img: string; alt: string };
-const MANIFESTE: Segment[] = [
-  "Chez BOWLY'S, tout tourne autour du lahmacun", { img: "/images/choix/lahmacun-nature.webp", alt: "Lahmacun" },
-  ". Une pâte fine, une garniture généreuse", { img: "/images/choix/tomate.webp", alt: "Tomates" },
-  ", des crudités", { img: "/images/choix/salade.webp", alt: "Salade" },
-  "et la sauce que vous aimez", { img: "/images/choix/sauce-blanche.webp", alt: "Sauce blanche" },
-  ". En box pour partager, ou en dürüm rien que pour vous.",
+/* ─────────── Bienvenue chez BOWLY'S ─────────── */
+/** Ingrédients détourés qui flottent autour du panneau. */
+const INGREDIENTS = [
+  { src: "/images/choix/tomate.webp", classe: "left-[46%] -top-7 w-16 sm:w-20 [--r:-10deg]", delai: "0s" },
+  { src: "/images/choix/salade.webp", classe: "-right-3 top-[38%] w-14 sm:-right-6 sm:w-[4.5rem] [--r:12deg]", delai: "-2s" },
+  { src: "/images/choix/sauce-blanche.webp", classe: "-bottom-8 right-[22%] w-[4.5rem] sm:w-24 [--r:6deg]", delai: "-4s" },
 ];
 
 export function Bienvenue() {
-  const zone = useRef<HTMLElement>(null);
-  const texte = useRef<HTMLParagraphElement>(null);
-  const embleme = useRef<HTMLDivElement>(null);
-  const [fin, setFin] = useState(false);
-
-  useEffect(() => {
-    const z = zone.current, t = texte.current;
-    if (!z || !t) return;
-    const elements = Array.from(t.querySelectorAll<HTMLElement>("[data-m]"));
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      elements.forEach((e) => e.classList.add("allume"));
-      setFin(true);
-      return;
-    }
-    let raf = 0;
-    const maj = () => {
-      raf = 0;
-      const r = z.getBoundingClientRect();
-      const course = Math.max(1, r.height - window.innerHeight);
-      const p = Math.min(1, Math.max(0, -r.top / course));
-      const n = Math.round(Math.min(1, p / 0.8) * elements.length);
-      elements.forEach((e, i) => e.classList.toggle("allume", i < n));
-      setFin(p > 0.82);
-      if (embleme.current) embleme.current.style.transform = `translate(-50%, -50%) rotate(${p * 120}deg)`;
-    };
-    const demande = () => { if (!raf) raf = requestAnimationFrame(maj); };
-    maj();
-    window.addEventListener("scroll", demande, { passive: true });
-    window.addEventListener("resize", demande);
-    return () => { window.removeEventListener("scroll", demande); window.removeEventListener("resize", demande); cancelAnimationFrame(raf); };
-  }, []);
-
+  const box = produitsDe("box");
+  const durum = produitsDe("durum")[0];
   return (
-    <section ref={zone} id="concept" aria-labelledby="bienvenue-titre" className="relative h-[230vh] bg-doux [overflow-x:clip]">
-      <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden">
-        <div ref={embleme} aria-hidden="true" className="pointer-events-none absolute left-1/2 top-1/2 w-[min(120vw,1100px)] -translate-x-1/2 -translate-y-1/2 will-change-transform">
-          <Logo variante="icone" titre="" className="w-full text-rouge/[0.045]" />
-        </div>
-        <div className={`${conteneur} relative w-full pt-16 text-center`}>
-          <h2 id="bienvenue-titre" className="sr-only">Bienvenue chez BOWLY&apos;S</h2>
-          <div aria-hidden="true"><Surtitre>Bienvenue</Surtitre></div>
-          <p ref={texte} className="manifeste mx-auto mt-8 max-w-[1020px] font-display text-[clamp(1.7rem,4.3vw,3.7rem)] font-extrabold leading-[1.16] tracking-[-0.025em] sm:mt-10">
-            {MANIFESTE.flatMap((s, k) =>
-              typeof s === "string"
-                ? s.split(" ").filter(Boolean).map((m, j) => (
-                    <span key={`${k}-${j}`} data-m="" className={`mot ${/^[.,]/.test(m) ? "" : "ml-[0.24em]"}`}>{m}</span>
-                  ))
-                : [
-                    <span key={k} data-m="" className="mot-img ml-[0.22em] inline-block size-[1.12em] overflow-hidden rounded-full align-[-0.2em] ring-[0.06em] ring-white shadow-[0_10px_24px_-10px_rgba(30,11,14,.6)]">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={s.img} alt={s.alt} className="size-full object-cover" />
-                    </span>,
-                  ],
-            )}
-          </p>
-          <div className={`mt-10 flex flex-col items-center gap-5 transition-all duration-700 ease-[var(--ease-pro)] sm:mt-12 ${fin ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-6 opacity-0"}`}>
-            <p className="font-display text-sm font-extrabold uppercase tracking-[0.24em] text-rouge">— L&apos;équipe BOWLY&apos;S</p>
-            <LienBouton href="/carte/" taille="lg" tabIndex={fin ? 0 : -1}>Découvrir la carte <ArrowRight className="size-5" /></LienBouton>
+    <section id="concept" aria-labelledby="bienvenue-titre" className="sous-feuille relative bg-white pt-20 [overflow-x:clip] sm:pt-28">
+      <div className={conteneur}>
+        <div className="apparait relative">
+          <div className="sur-sombre relative grid overflow-hidden rounded-[2.2rem] bg-vin text-white shadow-[0_60px_120px_-60px_rgba(45,4,6,.9)] lg:grid-cols-[1.1fr_1fr] lg:rounded-[3rem]">
+            {/* Halo chaud derrière le plat */}
+            <div aria-hidden="true" className="absolute right-[-10%] top-1/2 size-[70%] -translate-y-1/2 rounded-full bg-rouge/30 blur-[100px]" />
+
+            {/* Photo : le fond bordeaux du menu se fond dans le panneau (bords estompés) */}
+            <div className="relative order-1 lg:order-2">
+              <div className="lg:absolute lg:inset-y-0 lg:-left-[8%] lg:right-0 lg:flex lg:items-center">
+                <div className="fondu-bords relative aspect-[1020/582] w-full">
+                  <Photo src={durum.photo} alt="Dürüm lahmacun garni de crudités" priorite className="anim-plat absolute inset-0 !bg-transparent" sizes="(max-width: 1024px) 100vw, 680px" zoom={false} />
+                </div>
+              </div>
+            </div>
+
+            <div className="relative order-2 px-7 pb-10 pt-2 text-center sm:px-12 sm:pb-14 lg:order-1 lg:py-24 lg:pl-16 lg:pr-0 lg:text-left">
+              <div className="lg:[&_p]:justify-start"><Surtitre clair centre={false}>Bienvenue chez</Surtitre></div>
+              <h2 id="bienvenue-titre" className="mt-5">
+                <Logo variante="nom" titre="BOWLY'S" className="mx-auto w-[min(88%,400px)] text-white lg:mx-0" />
+              </h2>
+              <p className="mt-6 font-display text-[clamp(1.35rem,2.4vw,1.9rem)] font-bold leading-tight">Le lahmacun, fin et généreux.</p>
+              <p className="mx-auto mt-3 max-w-[38ch] text-[1.05rem] text-white/75 lg:mx-0">En box à partager ou en dürüm à composer, sur place ou à emporter.</p>
+              <ul className="mt-7 flex flex-wrap justify-center gap-2 lg:justify-start">
+                <li className="rounded-full bg-white/10 px-4 py-2 text-sm font-bold ring-1 ring-white/20">Box dès {prix(Math.min(...box.map((p) => p.prix)))}</li>
+                <li className="rounded-full bg-white/10 px-4 py-2 text-sm font-bold ring-1 ring-white/20">Dürüm {prix(durum.prix)}</li>
+              </ul>
+              <div className="mt-8 flex flex-col flex-wrap justify-center gap-3 sm:flex-row lg:justify-start">
+                <LienBouton href="/carte/" style="blanc" taille="lg">Découvrir la carte <ArrowRight className="size-5" /></LienBouton>
+                <LienBouton href={`/carte/durum/${durum.id}/`} style="contour-blanc" taille="lg">Composer mon dürüm</LienBouton>
+              </div>
+            </div>
           </div>
+          {INGREDIENTS.map((x) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img key={x.src} src={x.src} alt="" aria-hidden="true" loading="lazy" style={{ animationDelay: x.delai }}
+              className={`flotte pointer-events-none absolute z-10 aspect-square rounded-full drop-shadow-[0_16px_20px_rgba(30,11,14,.4)] ${x.classe}`} />
+          ))}
         </div>
       </div>
     </section>
@@ -137,12 +121,25 @@ const APERCU: { cat: CategorieId; photos: string[]; accroche: string }[] = [
   { cat: "desserts", photos: ["/images/carte/panna-cotta.webp", "/images/carte/tiramisu.webp"], accroche: "Panna cotta ou tiramisu, la douceur de la fin." },
 ];
 
+/** Légère inclinaison 3D de la carte qui suit la souris (ordinateur uniquement). */
+function incliner(e: React.PointerEvent<HTMLElement>) {
+  if (e.pointerType !== "mouse") return;
+  const el = e.currentTarget, r = el.getBoundingClientRect();
+  const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+  el.style.setProperty("--ry", `${x * 8}deg`);
+  el.style.setProperty("--rx", `${-y * 8}deg`);
+  el.style.setProperty("--ty", "-6px");
+}
+function redresser(e: React.PointerEvent<HTMLElement>) {
+  ["--rx", "--ry", "--ty"].forEach((v) => e.currentTarget.style.removeProperty(v));
+}
+
 export function Specialites() {
   return (
-    <section id="specialites" aria-labelledby="spe-titre" className="sur-sombre feuille sous-feuille overflow-hidden bg-rouge pt-24 text-white sm:pt-32">
-      <Logo variante="icone" titre="" className="pointer-events-none absolute -left-24 top-24 w-[420px] text-white/[0.06]" />
+    <section id="specialites" aria-labelledby="spe-titre" className="feuille sous-feuille overflow-hidden bg-doux pt-24 text-encre sm:pt-32">
+      <Logo variante="icone" titre="" className="pointer-events-none absolute -left-24 top-24 w-[420px] text-rouge/[0.05]" />
       <div className={`${conteneur} relative`}>
-        <EnTete id="spe-titre" clair surtitre="Notre carte" titre="Fait pour donner faim." sousTitre="Un avant-goût de ce qui vous attend." />
+        <EnTete id="spe-titre" surtitre="Notre carte" titre="Fait pour donner faim." sousTitre="Un avant-goût de ce qui vous attend." />
 
         <ul className="sans-barre -mx-[max(20px,env(safe-area-inset-left))] mt-14 flex snap-x snap-mandatory gap-4 overflow-x-auto px-[max(20px,env(safe-area-inset-left))] pb-4 md:mx-0 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-0 md:pb-0">
           {APERCU.map((a, i) => {
@@ -150,7 +147,7 @@ export function Specialites() {
             const desPrix = Math.min(...produitsDe(a.cat).map((p) => p.prix));
             return (
               <li key={a.cat} className={`w-[80%] shrink-0 snap-center md:w-auto ${i === 0 ? "apparait" : i === 1 ? "apparait-2" : "apparait-3"}`}>
-                <Link href={`/carte/${a.cat}/`} className="group flex h-full flex-col overflow-hidden rounded-[2rem] bg-vin shadow-[0_40px_80px_-40px_rgba(0,0,0,.7)] transition-transform duration-500 ease-[var(--ease-pro)] hover:-translate-y-1.5">
+                <Link href={`/carte/${a.cat}/`} onPointerMove={incliner} onPointerLeave={redresser} className="sur-sombre group flex h-full flex-col overflow-hidden rounded-[2rem] bg-vin text-white shadow-[0_40px_80px_-40px_rgba(45,4,6,.8)] transition-transform duration-300 ease-out [transform:perspective(900px)_rotateX(var(--rx,0deg))_rotateY(var(--ry,0deg))_translateY(var(--ty,0px))]">
                   <span className={`revele relative grid aspect-[4/3] overflow-hidden ${a.photos.length > 1 ? "grid-cols-2" : ""}`}>
                     {a.photos.map((src) => (
                       <Photo key={src} src={src} alt="" className="h-full !bg-vin" sizes="(max-width: 768px) 80vw, 380px" />
@@ -175,8 +172,8 @@ export function Specialites() {
         </ul>
 
         <div className="apparait mt-12 flex flex-col items-center gap-4 text-center">
-          <LienBouton href="/carte/" style="blanc" taille="lg">Voir toute la carte <ArrowRight className="size-5" /></LienBouton>
-          <p className="text-sm font-semibold text-white/75">Boissons, options et dürüm à composer : tout est sur la carte.</p>
+          <LienBouton href="/carte/" taille="lg">Voir toute la carte <ArrowRight className="size-5" /></LienBouton>
+          <p className="text-sm font-semibold text-gris">Boissons, options et dürüm à composer : tout est sur la carte.</p>
         </div>
       </div>
     </section>

@@ -101,11 +101,11 @@ h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; }
 @keyframes flotter { 0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); } 50% { transform: translateY(-10px) rotate(var(--r, 0deg)); } }
 .flotte { animation: flotter 6s ease-in-out infinite; }
 
-/* ── Manifeste (Bienvenue) : les mots s'allument au défilement ── */
-.manifeste .mot { display: inline-block; color: color-mix(in srgb, var(--color-encre) 14%, transparent); transition: color .45s var(--ease-pro); }
-.manifeste .mot.allume { color: var(--color-encre); }
-.manifeste .mot-img { scale: .2; rotate: -30deg; opacity: 0; transition: scale .6s cubic-bezier(.3,1.6,.5,1), rotate .6s var(--ease-pro), opacity .3s; }
-.manifeste .mot-img.allume { scale: 1; rotate: 0deg; opacity: 1; }
+/* ── Bienvenue : le plat glisse dans le panneau en arrivant ── */
+@keyframes plat { from { transform: translateX(14%) rotate(6deg) scale(.9); } to { transform: none; } }
+@supports (animation-timeline: view()) {
+  .anim-plat img { animation: plat linear both; animation-timeline: view(); animation-range: entry 0% cover 40%; }
+}
 
 /* ── Photos qui se dévoilent en entrant à l'écran ── */
 @keyframes revele-cadre { from { clip-path: inset(10% 6% 0 6% round 1.4rem); } to { clip-path: inset(0 0 0 0 round 0); } }
@@ -140,3 +140,18 @@ h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; }
 .lien-nav::after { content: ""; position: absolute; left: 1rem; right: 1rem; bottom: .3rem; height: 2px; border-radius: 2px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .45s var(--ease-pro); }
 .lien-nav:hover::after { transform: scaleX(1); transform-origin: left; }
 @keyframes souligner { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* Titres de section : chaque mot monte derrière un cache en arrivant à l'écran */
+.masque-vue { display: inline-block; overflow: hidden; padding-bottom: .1em; margin-bottom: -.1em; vertical-align: top; }
+.masque-vue > span { display: inline-block; }
+@supports (animation-timeline: view()) {
+  .masque-vue > span { animation: masque-monter linear both; animation-timeline: view(); }
+}
+
+/* Bords d'une photo estompés pour qu'elle se fonde dans son fond */
+.fondu-bords {
+  --h: linear-gradient(to right, transparent, #000 16%, #000 86%, transparent);
+  --v: linear-gradient(to bottom, transparent, #000 14%, #000 82%, transparent);
+  -webkit-mask-image: var(--h), var(--v); -webkit-mask-composite: source-in;
+  mask-image: var(--h), var(--v); mask-composite: intersect;
+}
