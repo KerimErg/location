@@ -176,3 +176,5 @@ h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; }
 }
 @keyframes tourne { to { rotate: 360deg; } }
 .tourne-lent { animation: tourne 60s linear infinite; }
+@keyframes pop-entree { 0% { opacity: 0; scale: .4; rotate: -40deg; } 70% { scale: 1.08; } 100% { opacity: 1; scale: 1; rotate: 0deg; } }
+.anim-pop-entree { animation: pop-entree .9s cubic-bezier(.3,1.4,.5,1) .9s both; }

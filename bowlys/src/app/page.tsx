@@ -1,5 +1,5 @@
 import { Header } from "@/components/Header";
-import { Banniere, Menu, APropos, Contact } from "@/components/Accueil";
+import { Banniere, Menu, Livraison, APropos, Contact } from "@/components/Accueil";
 import { Footer } from "@/components/Footer";
 import { site } from "@/config/site";
 import { CATEGORIES, PRODUITS } from "@/data/menu";
@@ -48,6 +48,7 @@ export default function Accueil() {
       <main id="contenu">
         <Banniere />
         <Menu />
+        <Livraison />
         <APropos />
         <Contact />
       </main>

@@ -17,13 +17,14 @@ export function BandeauCarte({ photo, ariane }: { photo: string | null; ariane: 
   return (
     <div className="sur-sombre relative h-[30vh] min-h-[220px] overflow-hidden sm:h-[46vh] sm:min-h-[320px] bg-encre text-white [clip-path:polygon(0_0,100%_0,100%_78%,0_100%)]">
       {photo ? (
-        <Image src={photo} alt="" fill priority sizes="100vw" className="lent-zoom object-cover opacity-80" />
+        <Image src={photo} alt="" fill priority sizes="100vw" className="lent-zoom object-cover" />
       ) : (
         <div aria-hidden="true" className="absolute inset-0 bg-rouge">
           <Logo variante="icone" titre="" className="absolute -right-16 top-6 w-[520px] max-w-none text-white/10" />
         </div>
       )}
-      <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(11,15,26,.72),rgba(11,15,26,.2)_45%,rgba(11,15,26,.55))]" />
+      <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(140,2,10,.9),rgba(140,2,10,.6)_55%,rgba(140,2,10,.85))]" />
+      <div aria-hidden="true" className="vagues absolute inset-0" />
       {ariane.length > 0 && (
         <nav aria-label="Fil d'Ariane" className="relative mx-auto max-w-[1180px] px-[max(20px,env(safe-area-inset-left))] pt-24 sm:pt-28">
           <ol className="flex flex-wrap items-center gap-2 text-[0.68rem] font-extrabold uppercase tracking-[0.24em] text-white/80">
@@ -85,7 +86,7 @@ export function NavCategories({ actif }: { actif: CategorieId }) {
 export function TitreCarte({ titre, accroche }: { titre: string; accroche: string }) {
   return (
     <header className="entree mt-5 px-5 text-center [animation-delay:.1s] sm:mt-8">
-      <h1 className="font-display text-[clamp(2.2rem,8vw,4.6rem)] font-extrabold leading-none tracking-[-0.02em]">{titre}</h1>
+      <h1 className="titre-large text-[clamp(2rem,7vw,4.4rem)]">{titre}</h1>
       <p className="mt-5 flex items-center justify-center gap-4 text-[0.7rem] font-extrabold uppercase tracking-[0.26em] text-rouge">
         <span aria-hidden="true" className="h-px w-10 bg-rouge/40 sm:w-16" />{accroche}<span aria-hidden="true" className="h-px w-10 bg-rouge/40 sm:w-16" />
       </p>

@@ -21,8 +21,8 @@ export default function PageCarte() {
             <Logo variante="complet" className="mx-auto w-32 text-rouge sm:w-36" />
           </div>
         </Medaillon>
-        <h1 className="sr-only">La carte</h1>
-        <p className="entree mt-6 text-center sm:mt-10 text-[0.72rem] font-extrabold uppercase tracking-[0.28em] text-rouge [animation-delay:.1s]">
+        <h1 className="entree titre-large mt-6 text-center text-[clamp(2rem,7vw,4.4rem)] [animation-delay:.05s] sm:mt-8">Notre menu</h1>
+        <p className="entree mt-2 text-center text-[clamp(1.05rem,2vw,1.5rem)] text-gris [animation-delay:.1s]">
           Choisissez une catégorie
         </p>
         <ul className="mx-auto mt-7 flex max-w-4xl flex-wrap justify-center gap-x-6 gap-y-7 px-5 sm:mt-10 sm:gap-x-12 sm:gap-y-10">
