@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Montserrat, Nunito_Sans } from "next/font/google";
+import { Archivo, Roboto_Condensed } from "next/font/google";
 import "./globals.css";
 import { site } from "@/config/site";
 import { PanierProvider } from "@/lib/panier";
@@ -8,8 +8,9 @@ import { Notification } from "@/components/Notification";
 import { BarreCommande } from "@/components/BarreCommande";
 import { RetourHaut } from "@/components/RetourHaut";
 
-const titre = Montserrat({ subsets: ["latin", "latin-ext"], weight: ["500", "600", "700", "800"], variable: "--font-titre", display: "swap" });
-const texte = Nunito_Sans({ subsets: ["latin", "latin-ext"], weight: ["400", "600", "700"], variable: "--font-texte", display: "swap" });
+// Titres : Archivo élargi et très gras (style affiche). Texte : Roboto Condensed.
+const titre = Archivo({ subsets: ["latin", "latin-ext"], axes: ["wdth"], variable: "--font-titre", display: "swap" });
+const texte = Roboto_Condensed({ subsets: ["latin", "latin-ext"], variable: "--font-texte", display: "swap" });
 
 const villeTitre = site.restaurant ? ` à ${site.restaurant.ville}` : "";
 

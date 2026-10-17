@@ -13,6 +13,7 @@
   --color-trait: #eee2de;
   --color-gris: #4e3c3f;         /* texte secondaire */
   --color-vin: #2d0406;          /* fond des photos du menu */
+  --color-jaune: #ffd60a;        /* accent : boutons, surtitres */
   --font-display: var(--font-titre), "Helvetica Neue", Arial, sans-serif;
   --font-sans: var(--font-texte), system-ui, -apple-system, "Segoe UI", sans-serif;
   --ease-pro: cubic-bezier(0.2, 0.7, 0.2, 1);
@@ -164,3 +165,14 @@ h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; }
   .sortie { transform-origin: 50% 100%; animation: recule linear both; animation-timeline: view(); animation-range: exit 0% exit 100%; }
   .sortie::after, .hero-sortie::after { content: ""; position: absolute; inset: 0; z-index: 30; background: #120507; opacity: 0; pointer-events: none; animation: voile linear both; animation-timeline: view(); animation-range: exit 0% exit 100%; }
 }
+
+/* ── Style affiche ── */
+/* Grand titre : Archivo élargi, très gras, en capitales. */
+.titre-large { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-variation-settings: "wdth" 125; text-transform: uppercase; letter-spacing: -0.01em; line-height: .95; }
+/* Fond à vagues (lignes jaunes très discrètes), comme une affiche. */
+.vagues {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='180'%3E%3Cpath d='M0 90 C 45 30, 135 30, 180 90 S 315 150, 360 90' fill='none' stroke='%23ffd60a' stroke-opacity='.16' stroke-width='1.6'/%3E%3C/svg%3E");
+  background-size: 360px 180px;
+}
+@keyframes tourne { to { rotate: 360deg; } }
+.tourne-lent { animation: tourne 60s linear infinite; }

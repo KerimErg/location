@@ -1,6 +1,5 @@
 import { Header } from "@/components/Header";
-import { Hero } from "@/components/Hero";
-import { Bienvenue, Specialites, Galerie, NousTrouver } from "@/components/Sections";
+import { Banniere, Menu, APropos, Contact } from "@/components/Accueil";
 import { Footer } from "@/components/Footer";
 import { site } from "@/config/site";
 import { CATEGORIES, PRODUITS } from "@/data/menu";
@@ -46,12 +45,11 @@ export default function Accueil() {
   return (
     <>
       <Header transparent />
-      <main id="contenu" className="bg-[#120507]">
-        <Hero />
-        <Bienvenue />
-        <Specialites />
-        <Galerie />
-        <NousTrouver />
+      <main id="contenu">
+        <Banniere />
+        <Menu />
+        <APropos />
+        <Contact />
       </main>
       <Footer />
       <DonneesStructurees />

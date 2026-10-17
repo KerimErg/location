@@ -1,55 +1,26 @@
 import Link from "next/link";
-import { site, adresseLigne } from "@/config/site";
+import { site } from "@/config/site";
 import { Logo } from "./Logo";
-import { NAV } from "@/config/navigation";
 
+/** Pied de page sobre : logo, copyright, pages légales. */
 export function Footer() {
-  const adresse = adresseLigne();
   const legal = [
     { href: "/mentions-legales/", label: "Mentions légales" },
     { href: "/confidentialite/", label: "Confidentialité" },
     { href: "/cookies/", label: "Cookies" },
-    ...(site.commande.panierActif ? [{ href: "/cgv/", label: "Conditions générales de vente" }] : []),
+    ...(site.commande.panierActif ? [{ href: "/cgv/", label: "CGV" }] : []),
   ];
   return (
-    <footer className="sur-sombre feuille overflow-hidden bg-encre text-white">
-      <div className="relative z-10 mx-auto max-w-[1240px] px-[max(20px,env(safe-area-inset-left))] pb-28 pt-12 md:pb-10 md:pt-20">
-        <div className="grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-[1.3fr_1fr_1fr_1fr] md:gap-12">
-          <div className="col-span-2 flex items-center gap-4 md:col-span-1 md:block">
-            <Logo variante="complet" className="w-20 text-white md:w-44" />
-            <p className="max-w-[30ch] text-white/70 md:mt-6">Le lahmacun autrement.</p>
-          </div>
-          <nav aria-label="Pied de page" className="hidden md:block">
-            <h2 className="font-display text-sm font-extrabold uppercase tracking-[0.18em] text-white/50">Navigation</h2>
-            <ul className="mt-4 grid gap-2.5">
-              {NAV.map((n) => <li key={n.href}><Link href={n.href} className="font-semibold hover:text-creme hover:underline">{n.label}</Link></li>)}
-            </ul>
-          </nav>
-          <div>
-            <h2 className="font-display text-sm font-extrabold uppercase tracking-[0.18em] text-white/50">Coordonnées</h2>
-            <ul className="mt-4 grid gap-2.5 text-white/85">
-              {adresse && <li>{site.restaurant!.rue}<br />{site.restaurant!.codePostal} {site.restaurant!.ville}</li>}
-              {site.telephone && <li><a href={`tel:${site.telephone.replace(/\s/g, "")}`} className="hover:underline">{site.telephone}</a></li>}
-              {site.email && <li><a href={`mailto:${site.email}`} className="hover:underline">{site.email}</a></li>}
-            </ul>
-          </div>
-          <div>
-            <h2 className="font-display text-sm font-extrabold uppercase tracking-[0.18em] text-white/50">Réseaux</h2>
-            <ul className="mt-4 grid gap-2.5">
-              {site.reseaux.instagram && <li><a href={site.reseaux.instagram} target="_blank" rel="noopener noreferrer" className="font-semibold hover:underline">Instagram</a></li>}
-              {site.reseaux.tiktok && <li><a href={site.reseaux.tiktok} target="_blank" rel="noopener noreferrer" className="font-semibold hover:underline">TikTok</a></li>}
-            </ul>
-          </div>
-        </div>
-        <div className="mt-10 flex flex-col gap-4 border-t border-white/15 pt-6 md:mt-16 text-sm text-white/60 md:flex-row md:items-center md:justify-between">
+    <footer className="border-t border-trait bg-white text-gris">
+      <div className="mx-auto flex max-w-[1240px] flex-col items-center gap-4 px-[max(20px,env(safe-area-inset-left))] pb-28 pt-8 text-center md:flex-row md:justify-between md:pb-8 md:text-left">
+        <div className="flex items-center gap-4">
+          <Logo variante="texte" titre="BOWLY'S" className="w-24 text-rouge" />
           <p>© {new Date().getFullYear()} {site.nom}</p>
-          <ul className="flex flex-wrap gap-x-6 gap-y-2">
-            {legal.map((l) => <li key={l.href}><Link href={l.href} className="hover:text-white hover:underline">{l.label}</Link></li>)}
-          </ul>
         </div>
+        <ul className="flex flex-wrap justify-center gap-x-5 gap-y-1">
+          {legal.map((l) => <li key={l.href}><Link href={l.href} className="hover:text-rouge hover:underline">{l.label}</Link></li>)}
+        </ul>
       </div>
-      {/* Grand logo en filigrane */}
-      <Logo variante="nom" titre="" className="pointer-events-none absolute -bottom-[2%] left-1/2 w-[110%] max-w-none -translate-x-1/2 text-white/[0.05]" />
     </footer>
   );
 }

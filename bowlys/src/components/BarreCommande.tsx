@@ -42,7 +42,7 @@ export function BarreCommande() {
     <nav aria-label="Actions rapides" className="fixed inset-x-0 bottom-0 z-30 px-3 pb-[max(12px,env(safe-area-inset-bottom))] md:hidden">
       <div className="flex gap-2 rounded-full bg-encre/90 p-1.5 shadow-[0_18px_40px_-16px_rgba(11,15,26,.6)] backdrop-blur-md">
         {actions.map(({ href, label, Icone, principal, externe }) => {
-          const cls = `flex h-12 flex-1 items-center justify-center gap-2 rounded-full font-display text-[0.92rem] font-extrabold ${principal ? "bg-rouge text-white" : "text-white"}`;
+          const cls = `flex h-12 flex-1 items-center justify-center gap-2 rounded-full font-display text-[0.92rem] font-extrabold ${principal ? "bg-jaune text-encre" : "text-white"}`;
           const contenu = <><Icone className="size-[18px]" strokeWidth={2.4} />{label}</>;
           return externe || href.startsWith("tel:") ? (
             <a key={label} href={href} {...(externe ? { target: "_blank", rel: "noopener noreferrer" } : {})} className={cls}>{contenu}</a>
