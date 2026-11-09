@@ -1,0 +1,21 @@
+DGN Cars — lancer le site sur votre ordinateur
+==============================================
+
+1. Installez Node.js (version LTS) : https://nodejs.org  (une seule fois)
+
+2. Double-cliquez sur :
+   - Windows : LANCER-LE-SITE-Windows.bat
+   - Mac     : LANCER-LE-SITE-Mac.command
+     (si le Mac bloque le fichier : clic droit > Ouvrir > Ouvrir)
+
+3. La première fois, l'installation prend quelques minutes (connexion internet nécessaire).
+   Le site s'ouvre ensuite tout seul dans votre navigateur : http://localhost:3000
+
+   Espace gestion : http://localhost:3000/admin
+   E-mail : admin@dgncars.be   Mot de passe : Admin123!
+
+4. Laissez la fenêtre noire ouverte tant que vous utilisez le site.
+   Pour arrêter : fermez la fenêtre (ou Ctrl+C).
+
+Le site n'est visible que sur cet ordinateur. Les données (stock, demandes)
+sont enregistrées dans le dossier .local-db.
