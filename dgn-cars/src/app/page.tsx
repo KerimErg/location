@@ -42,8 +42,8 @@ export default async function Home() {
     <>
       {/* HERO — bannière pleine largeur */}
       <section className="relative isolate overflow-hidden bg-ink text-[#eceae5]">
-        <Image src={PHOTOS.hero} alt="Voiture roulant de nuit dans les lumières de la ville" fill priority sizes="100vw" className="-z-20 object-cover object-[60%_50%]" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-ink/95 via-ink/60 to-transparent" />
+        <Image src={PHOTOS.hero} alt="Rangée de voitures exposées sur un parc de vente" fill priority sizes="100vw" className="-z-20 object-cover object-[70%_60%]" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-ink via-ink/75 to-ink/5" />
         <div className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-ink to-transparent" />
         <div className="container-page flex min-h-[78svh] flex-col justify-center py-20 lg:min-h-[720px] lg:pb-32">
           <p className="eyebrow text-[#c4c8cc]">Achat · Vente · Reprise — Rocourt, Liège</p>
@@ -62,7 +62,7 @@ export default async function Home() {
             <Button asChild size="lg" variant="outline" className="border-white/40 bg-black/20 text-white backdrop-blur-sm hover:bg-white/10"><Link href="/reprise">Faire estimer ma voiture</Link></Button>
           </div>
         </div>
-        <p className="absolute right-4 bottom-3 font-mono text-[0.6rem] tracking-wider text-white/45 uppercase lg:bottom-14">Photo : Mathias Reding / Pexels</p>
+        <p className="absolute right-4 bottom-3 font-mono text-[0.6rem] tracking-wider text-white/45 uppercase lg:bottom-14">Photo : Pexels</p>
       </section>
 
       <div className="container-page relative z-10 -mt-px lg:-mt-10">
