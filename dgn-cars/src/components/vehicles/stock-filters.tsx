@@ -116,7 +116,8 @@ export function StockFilters({ makes, count }: { makes: string[]; count: number 
 export function SortSelect() {
   const { params, set, pending } = useParamsState();
   return (
-    <select aria-label="Trier" className={cn(sel, "w-full sm:w-60", pending && "opacity-60")} value={params.get("tri") ?? "recent"} onChange={(e) => set("tri", e.target.value === "recent" ? null : e.target.value)}>
+    <select aria-label="Trier" className={cn(sel, "w-full sm:w-60", pending && "opacity-60")} value={params.get("tri") ?? "selection"} onChange={(e) => set("tri", e.target.value === "selection" ? null : e.target.value)}>
+      <option value="selection">Notre sélection</option>
       <option value="recent">Arrivages récents</option>
       <option value="prix-asc">Prix croissant</option>
       <option value="prix-desc">Prix décroissant</option>

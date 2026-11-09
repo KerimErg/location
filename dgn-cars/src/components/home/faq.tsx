@@ -16,9 +16,9 @@ export function Faq() {
       {FAQ.map((f, i) => (
         <AccordionItem key={i} value={`q${i}`}>
           <AccordionTrigger className="py-6 font-display text-xl font-semibold uppercase hover:text-foreground hover:underline md:text-2xl">
-            <span className="flex gap-6"><span className="pt-1.5 font-mono text-xs font-normal text-muted-foreground">{String(i + 1).padStart(2, "0")}</span>{f.q}</span>
+            {f.q}
           </AccordionTrigger>
-          <AccordionContent className="pl-12 text-base">{f.a}</AccordionContent>
+          <AccordionContent className="text-base">{f.a}</AccordionContent>
         </AccordionItem>
       ))}
     </Accordion>

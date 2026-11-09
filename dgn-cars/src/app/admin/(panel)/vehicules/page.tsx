@@ -10,7 +10,7 @@ import { DeleteVehicleButton, VehicleStatusSelect } from "@/components/admin/inl
 export const metadata = { title: "Véhicules" };
 
 export default async function AdminVehicles() {
-  const vehicles = await prisma.vehicle.findMany({ orderBy: [{ status: "asc" }, { createdAt: "desc" }], include: { _count: { select: { leads: true } } } });
+  const vehicles = await prisma.vehicle.findMany({ orderBy: [{ status: "asc" }, { position: "asc" }], include: { _count: { select: { leads: true } } } });
   return (
     <>
       <AdminTitle title="Véhicules" sub={`${vehicles.length} véhicules au total`} action={<Button asChild className="bg-signal text-signal-foreground"><Link href="/admin/vehicules/nouveau"><Plus /> Ajouter</Link></Button>} />

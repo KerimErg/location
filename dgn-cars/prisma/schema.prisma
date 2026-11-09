@@ -95,11 +95,13 @@ model Vehicle {
   images            String[]
   status            VehicleStatus @default(DISPONIBLE)
   featured          Boolean       @default(false)
+  position          Int           @default(1000) // ordre d'affichage (1 = en premier)
   createdAt         DateTime      @default(now())
   updatedAt         DateTime      @updatedAt
   leads             Lead[]
 
   @@index([status, make])
+  @@index([position])
 }
 
 model Lead {

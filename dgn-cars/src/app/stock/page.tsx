@@ -28,7 +28,7 @@ export default async function StockPage({ searchParams }: { searchParams: Promis
   const kmMax = Number(one(p, "kmMax")) || undefined;
   const anneeMin = Number(one(p, "anneeMin")) || undefined;
   const page = Math.max(1, Number(one(p, "page")) || 1);
-  const tri = one(p, "tri") ?? "recent";
+  const tri = one(p, "tri") ?? "selection";
 
   const where: Prisma.VehicleWhereInput = {
     ...(one(p, "vendus") === "1" ? {} : { status: { not: "VENDU" } }),
@@ -41,7 +41,7 @@ export default async function StockPage({ searchParams }: { searchParams: Promis
     ...(anneeMin && { firstRegistration: { gte: new Date(Date.UTC(anneeMin, 0, 1)) } }),
   };
   const orderBy: Prisma.VehicleOrderByWithRelationInput[] =
-    tri === "prix-asc" ? [{ price: "asc" }] : tri === "prix-desc" ? [{ price: "desc" }] : tri === "km-asc" ? [{ mileage: "asc" }] : tri === "annee-desc" ? [{ firstRegistration: "desc" }] : [{ createdAt: "desc" }];
+    tri === "prix-asc" ? [{ price: "asc" }] : tri === "prix-desc" ? [{ price: "desc" }] : tri === "km-asc" ? [{ mileage: "asc" }] : tri === "annee-desc" ? [{ firstRegistration: "desc" }] : tri === "recent" ? [{ createdAt: "desc" }] : [{ position: "asc" }, { price: "desc" }];
 
   const [vehicles, total, allMakes] = await Promise.all([
     prisma.vehicle.findMany({ where, orderBy: [{ status: "asc" }, ...orderBy], skip: (page - 1) * PER_PAGE, take: PER_PAGE }),

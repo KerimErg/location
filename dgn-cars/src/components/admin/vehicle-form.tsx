@@ -61,6 +61,7 @@ export function VehicleForm({ vehicle: v }: { vehicle?: Vehicle }) {
         <h2 className="text-2xl md:col-span-3">Prix & annonce</h2>
         {input("price", "Prix TVAC (€)", v?.price, { type: "number", min: 1 })}
         {input("previousPrice", "Ancien prix barré (€)", v?.previousPrice, { type: "number", min: 0 })}
+        {input("position", "Ordre d'affichage (1 = en premier)", v?.position ?? 1000, { type: "number", min: 1 })}
         <div className="flex flex-col justify-end gap-2 pb-2">
           {box("vatDeductible", "TVA déductible", v?.vatDeductible ?? false)}
           {box("carPass", "Car-Pass fourni", v?.carPass ?? true)}

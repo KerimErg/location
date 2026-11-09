@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Check } from "lucide-react";
 import { PHOTOS } from "@/config/photos";
 import { PageHeader } from "@/components/page-header";
 import { TradeInForm } from "@/components/forms/trade-in-form";
@@ -22,14 +23,14 @@ export default function TradeInPage() {
         <TradeInForm />
         <aside>
           <p className="eyebrow">Comment ça marche</p>
-          <ol className="mt-4 border-t">
-            {STEPS.map(([t, d], i) => (
-              <li key={t} className="grid grid-cols-[40px_1fr] gap-3 border-b py-5">
-                <span className="font-display text-3xl font-bold text-steel">{i + 1}</span>
+          <ul className="mt-4 border-t">
+            {STEPS.map(([t, d]) => (
+              <li key={t} className="flex gap-3 border-b py-5">
+                <Check className="mt-1 size-5 shrink-0 text-signal" strokeWidth={2.5} />
                 <div><p className="font-display text-xl font-bold uppercase">{t}</p><p className="text-sm text-muted-foreground">{d}</p></div>
               </li>
             ))}
-          </ol>
+          </ul>
           <p className="mt-6 text-sm text-muted-foreground">Prévoyez lors de l&apos;inspection : certificat d&apos;immatriculation, certificat de conformité, Car-Pass, carnet d&apos;entretien et toutes les clés.</p>
         </aside>
       </div>

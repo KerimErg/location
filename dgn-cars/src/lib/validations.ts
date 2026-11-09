@@ -71,6 +71,7 @@ export const vehicleSchema = z.object({
   images: z.string(),
   status: z.enum(["DISPONIBLE", "RESERVE", "VENDU"]),
   featured: z.boolean(),
+  position: z.coerce.number().int().min(1).max(100000),
 });
 
 export type TestDriveInput = z.input<typeof testDriveSchema>;
