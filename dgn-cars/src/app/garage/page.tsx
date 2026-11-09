@@ -21,7 +21,7 @@ const CHECKS = [
 export default function GaragePage() {
   return (
     <>
-      <PageHeader eyebrow="DGN Cars · Rocourt" title={<>Moins de voitures,<br />mieux choisies</>} image={PHOTOS.workshop} imageAlt="Mécanicien effectuant une vidange">
+      <PageHeader eyebrow="DGN Cars · Rocourt" title={<>Moins de voitures,<br />mieux choisies</>} image={PHOTOS.workshop} imageAlt="Appoint d'huile moteur à l'atelier">
         Nous préférons un stock resserré de véhicules que nous connaissons parfaitement plutôt qu&apos;un parking rempli de voitures que personne n&apos;a regardées.
       </PageHeader>
 
@@ -43,7 +43,7 @@ export default function GaragePage() {
 
       <section id="garanties" className="scroll-mt-32 border-y bg-card py-16 md:py-24">
         <div className="container-page grid gap-10 lg:grid-cols-2">
-          <div className="relative min-h-[320px]"><Image src={PHOTOS.engine} alt="Compartiment moteur" fill unoptimized className="object-cover" sizes="50vw" /></div>
+          <div className="relative min-h-[320px]"><Image src={PHOTOS.engine} alt="Compartiment moteur" fill className="object-cover" sizes="50vw" /></div>
           <div>
             <p className="eyebrow">02 — Garanties</p>
             <h2 className="mt-4 text-4xl md:text-5xl">Car-Pass et garantie, noir sur blanc</h2>

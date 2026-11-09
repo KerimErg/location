@@ -9,7 +9,7 @@ const PAGES: Record<string, { title: string; sections: [string, string][] }> = {
       ["Éditeur", `${SITE.legalName} — ${fullAddress}, ${SITE.address.country}. Numéro d'entreprise / TVA : ${SITE.vat}.`],
       ["Contact", "Via le formulaire de contact du site ou aux coordonnées indiquées en pied de page."],
       ["Hébergement", "À compléter : nom et adresse de l'hébergeur du site."],
-      ["Photos", "Photos d'illustration issues d'Unsplash, utilisées conformément à la licence Unsplash. Fonds de carte © contributeurs OpenStreetMap."],
+      ["Photos", "Photos des véhicules : DGN Cars. Photos d'illustration : Pexels (licence Pexels). Fonds de carte © contributeurs OpenStreetMap."],
     ],
   },
   "conditions-de-vente": {

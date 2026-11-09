@@ -40,32 +40,29 @@ export default async function Home() {
 
   return (
     <>
-      {/* HERO */}
-      <section className="bg-ink text-[#eceae5]">
-        <div className="grid lg:min-h-[640px] lg:grid-cols-[1.05fr_1fr]">
-          <div className="container-page flex flex-col justify-center py-14 lg:mr-0 lg:max-w-none lg:py-20 lg:pr-12 lg:pl-[max(2.5rem,calc((100vw-1320px)/2+2.5rem))]">
-            <p className="eyebrow text-[#a9aeb3]">Achat · Vente · Reprise — Rocourt, Liège</p>
-            <h1 className="mt-5 text-[3.4rem] sm:text-7xl xl:text-[6.4rem]">
-              Des occasions
-              <br />
-              contrôlées.
-              <br />
-              <span className="bg-signal px-2 text-signal-foreground">Sans surprise.</span>
-            </h1>
-            <p className="mt-7 max-w-md text-base text-[#b9bdc1] md:text-lg">
-              {count} véhicules en stock, entretenus, passés au contrôle technique et vendus avec Car-Pass et garantie 12 mois. Noté {RATING.average.toLocaleString("fr-BE")}/5 par {RATING.count} clients.
-            </p>
-            <div className="mt-9 flex flex-wrap gap-3">
-              <Button asChild size="lg" className="bg-signal text-signal-foreground"><Link href="/stock">Voir le stock <ArrowRight /></Link></Button>
-              <Button asChild size="lg" variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10"><Link href="/reprise">Faire estimer ma voiture</Link></Button>
-            </div>
-          </div>
-          <div className="relative min-h-[320px] lg:min-h-0">
-            <Image src="/images/banniere.webp" alt="Ford Fiesta rouge dans le showroom DGN Cars, devant l'enseigne lumineuse" fill priority sizes="(min-width:1024px) 50vw, 100vw" className="object-cover object-[50%_60%]" />
-            <div className="absolute inset-y-0 left-0 hidden w-24 bg-gradient-to-r from-ink to-transparent lg:block" />
-            <div className="absolute top-0 right-0 bg-ink/90 px-5 py-3 font-mono text-[0.68rem] tracking-wider text-[#d9d7d2] uppercase">Le showroom · Rocourt</div>
+      {/* HERO — bannière pleine largeur */}
+      <section className="relative isolate overflow-hidden bg-ink text-[#eceae5]">
+        <Image src={PHOTOS.hero} alt="Voiture roulant de nuit dans les lumières de la ville" fill priority sizes="100vw" className="-z-20 object-cover object-[60%_50%]" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-ink/95 via-ink/60 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-ink to-transparent" />
+        <div className="container-page flex min-h-[78svh] flex-col justify-center py-20 lg:min-h-[720px] lg:pb-32">
+          <p className="eyebrow text-[#c4c8cc]">Achat · Vente · Reprise — Rocourt, Liège</p>
+          <h1 className="mt-5 max-w-3xl text-[3.4rem] sm:text-7xl xl:text-[6.6rem]">
+            Des occasions
+            <br />
+            contrôlées.
+            <br />
+            <span className="bg-signal px-2 text-signal-foreground">Sans surprise.</span>
+          </h1>
+          <p className="mt-7 max-w-md text-base text-[#c4c8cc] md:text-lg">
+            {count} véhicules en stock, entretenus, passés au contrôle technique et vendus avec Car-Pass et garantie 12 mois. Noté {RATING.average.toLocaleString("fr-BE")}/5 par {RATING.count} clients.
+          </p>
+          <div className="mt-9 flex flex-wrap gap-3">
+            <Button asChild size="lg" className="bg-signal text-signal-foreground"><Link href="/stock">Voir le stock <ArrowRight /></Link></Button>
+            <Button asChild size="lg" variant="outline" className="border-white/40 bg-black/20 text-white backdrop-blur-sm hover:bg-white/10"><Link href="/reprise">Faire estimer ma voiture</Link></Button>
           </div>
         </div>
+        <p className="absolute right-4 bottom-3 font-mono text-[0.6rem] tracking-wider text-white/45 uppercase lg:bottom-14">Photo : Mathias Reding / Pexels</p>
       </section>
 
       <div className="container-page relative z-10 -mt-px lg:-mt-10">
@@ -118,7 +115,7 @@ export default async function Home() {
               ))}
             </ol>
             <div className="relative min-h-[360px]">
-              <Image src={PHOTOS.workshop} alt="Mécanicien effectuant une vidange à l'atelier" fill unoptimized className="object-cover" sizes="(min-width:1024px) 50vw, 100vw" />
+              <Image src={PHOTOS.workshop} alt="Appoint d'huile moteur à l'atelier" fill className="object-cover" sizes="(min-width:1024px) 50vw, 100vw" />
               <div className="absolute right-0 bottom-0 max-w-xs bg-signal p-5 text-signal-foreground">
                 <p className="font-display text-2xl font-bold uppercase">Préparation atelier</p>
                 <p className="mt-1 text-sm">Entretien, contrôle des freins, pneus et éclairage avant chaque vente.</p>
@@ -133,7 +130,7 @@ export default async function Home() {
         <SectionTitle index="03" label="Services" title="Reprise et financement, réglés en une visite" />
         <div className="grid gap-5 md:grid-cols-2">
           {[
-            { href: "/reprise", icon: HandCoins, title: "Reprise de votre véhicule", text: "Toutes marques, même avec un peu de kilomètres. Estimation sous 24 h ouvrables, déduite du prix de votre prochaine voiture.", img: PHOTOS.hands, alt: "Mains d'un mécanicien avec une clé sur un moteur" },
+            { href: "/reprise", icon: HandCoins, title: "Reprise de votre véhicule", text: "Toutes marques, même avec un peu de kilomètres. Estimation sous 24 h ouvrables, déduite du prix de votre prochaine voiture.", img: PHOTOS.hands, alt: "Remise des clés d'une voiture entre vendeur et client" },
             { href: "/financement", icon: CalendarClock, title: "Financement", text: "Prêt à tempérament de 24 à 72 mois avec nos partenaires. Simulez votre mensualité en ligne.", img: PHOTOS.engine, alt: "Compartiment moteur, capot ouvert" },
           ].map((s) => (
             <Link key={s.href} href={s.href} className="group grid border bg-card sm:grid-cols-[1fr_200px] lg:grid-cols-[1fr_240px]">
@@ -144,7 +141,7 @@ export default async function Home() {
                 <span className="mt-auto flex items-center gap-2 pt-8 font-display text-lg font-semibold uppercase group-hover:underline">En savoir plus <ArrowUpRight className="size-5" /></span>
               </div>
               <div className="relative hidden sm:block">
-                <Image src={s.img} alt={s.alt} fill unoptimized className="object-cover grayscale transition group-hover:grayscale-0" sizes="240px" />
+                <Image src={s.img} alt={s.alt} fill className="object-cover grayscale transition group-hover:grayscale-0" sizes="240px" />
               </div>
             </Link>
           ))}

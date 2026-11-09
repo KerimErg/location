@@ -43,7 +43,7 @@ export function Footer() {
       <div className="border-t border-white/10">
         <div className="container-page flex flex-col justify-between gap-2 py-5 font-mono text-[0.68rem] tracking-wide text-[#8a9097] uppercase sm:flex-row">
           <p>© {new Date().getFullYear()} {SITE.legalName} · TVA {SITE.vat}</p>
-          <p>Photos : <a className="underline hover:text-signal" href="https://unsplash.com/license" target="_blank" rel="noopener">Unsplash</a> · Prix TVAC</p>
+          <p>Photos d&apos;illustration : <a className="underline hover:text-signal" href="https://www.pexels.com/fr-fr/license/" target="_blank" rel="noopener">Pexels</a> · Prix TVAC</p>
         </div>
       </div>
     </footer>

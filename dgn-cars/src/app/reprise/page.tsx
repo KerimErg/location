@@ -15,7 +15,7 @@ const STEPS = [
 export default function TradeInPage() {
   return (
     <>
-      <PageHeader eyebrow="Services · Reprise" title={<>Reprise de votre<br />véhicule</>} image={PHOTOS.hands} imageAlt="Mains d'un mécanicien avec une clé sur un moteur">
+      <PageHeader eyebrow="Services · Reprise" title={<>Reprise de votre<br />véhicule</>} image={PHOTOS.hands} imageAlt="Remise des clés d'une voiture entre vendeur et client">
         Toutes marques, même kilométrées ou à réparer. Une offre claire, sans engagement.
       </PageHeader>
       <div className="container-page grid gap-12 py-16 lg:grid-cols-[1fr_340px] lg:py-20">

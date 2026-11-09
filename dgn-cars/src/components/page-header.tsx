@@ -11,7 +11,7 @@ export function PageHeader({ eyebrow, title, children, image, imageAlt }: { eyeb
         </div>
         {image && (
           <div className="relative hidden min-h-[280px] md:block">
-            <Image src={image} alt={imageAlt ?? ""} fill unoptimized priority className="object-cover" />
+            <Image src={image} alt={imageAlt ?? ""} fill priority sizes="50vw" className="object-cover" />
           </div>
         )}
       </div>
