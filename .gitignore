@@ -12,3 +12,4 @@ prisma/*.db-journal
 # Aperçus HTML générés localement
 dgn-cars/apercu/
 dgn-cars/.local-db/
+dgn-cars/.vercel/
