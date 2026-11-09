@@ -1,5 +1,6 @@
 // DGN Cars — PostgreSQL (Neon en production).
-// DATABASE_URL : connexion poolée (site) · DIRECT_URL : connexion directe (migrations).
+// DATABASE_URL : connexion poolée (site) · DATABASE_URL_UNPOOLED : connexion directe (migrations).
+// Ce sont les noms créés automatiquement par l'intégration Neon de Vercel (onglet Storage).
 generator client {
   provider = "prisma-client-js"
 }
@@ -7,7 +8,7 @@ generator client {
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
 enum Fuel {

@@ -12,7 +12,7 @@ Le stock initial (`prisma/data/stock-autoscout24.json`) contient **10 véhicules
 ## Démarrage local
 ```bash
 npm install
-cp .env.example .env     # DATABASE_URL, DIRECT_URL, NEXTAUTH_SECRET
+cp .env.example .env     # DATABASE_URL, DATABASE_URL_UNPOOLED, NEXTAUTH_SECRET
 npm run db:deploy        # crée les tables
 npm run db:seed          # stock de démo + compte admin
 npm run dev              # http://localhost:3000
@@ -29,6 +29,6 @@ Admin : `/admin` — `admin@dgncars.be` / `Admin123!` (à changer).
 ## Déploiement Vercel + Neon
 1. Neon : créer un projet, copier l'URL **poolée** (`-pooler`) et l'URL **directe**.
 2. Vercel : importer le dépôt, **Root Directory = `dgn-cars`**.
-3. Variables : `DATABASE_URL` (poolée), `DIRECT_URL` (directe), `NEXTAUTH_SECRET`, `NEXTAUTH_URL` (URL du site, Production).
+3. Variables : `DATABASE_URL` (poolée), `DATABASE_URL_UNPOOLED` (directe), `NEXTAUTH_SECRET`, `NEXTAUTH_URL` (URL du site, Production).
 4. Deploy (le script `vercel-build` applique les migrations).
-5. Une fois : `DATABASE_URL="<directe>" DIRECT_URL="<directe>" npm run db:seed` (⚠️ efface les données existantes).
+5. Une fois : `DATABASE_URL="<directe>" DATABASE_URL_UNPOOLED="<directe>" npm run db:seed` (⚠️ efface les données existantes).

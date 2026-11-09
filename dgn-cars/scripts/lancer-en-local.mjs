@@ -41,7 +41,7 @@ try {
   const secretFile = path.join(dataDir, ".secret");
   if (!fs.existsSync(secretFile)) fs.writeFileSync(secretFile, crypto.randomBytes(32).toString("base64"));
   const url = `postgresql://postgres:dgn-local@localhost:${PORT}/${DB}`;
-  const env = { ...process.env, DATABASE_URL: url, DIRECT_URL: url, NEXTAUTH_SECRET: fs.readFileSync(secretFile, "utf8"), NEXTAUTH_URL: "http://localhost:3000", NEXT_TELEMETRY_DISABLED: "1" };
+  const env = { ...process.env, DATABASE_URL: url, DATABASE_URL_UNPOOLED: url, NEXTAUTH_SECRET: fs.readFileSync(secretFile, "utf8"), NEXTAUTH_URL: "http://localhost:3000", NEXT_TELEMETRY_DISABLED: "1" };
 
   step("Mise à jour des tables…");
   run(npx, ["prisma", "migrate", "deploy"], env);
