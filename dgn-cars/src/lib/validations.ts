@@ -63,6 +63,8 @@ export const vehicleSchema = z.object({
   color: z.string().trim().min(1),
   owners: z.coerce.number().int().min(1).max(9),
   carPass: z.boolean(),
+  carPassUrl: z.string().trim().url("URL invalide").optional().or(z.literal("")),
+  externalUrl: z.string().trim().url("URL invalide").optional().or(z.literal("")),
   warrantyMonths: z.coerce.number().int().min(0).max(36),
   options: z.string(),
   description: z.string().trim().min(10, "10 caractères minimum"),

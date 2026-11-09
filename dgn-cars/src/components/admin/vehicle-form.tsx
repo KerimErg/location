@@ -66,6 +66,9 @@ export function VehicleForm({ vehicle: v }: { vehicle?: Vehicle }) {
           {box("carPass", "Car-Pass fourni", v?.carPass ?? true)}
           {box("featured", "Mettre en avant (accueil)", v?.featured ?? false)}
         </div>
+        {input("carPassUrl", "Lien Car-Pass (optionnel)", v?.carPassUrl, { type: "url" })}
+        {input("externalUrl", "Lien annonce AutoScout24 (optionnel)", v?.externalUrl, { type: "url" })}
+        <div className="hidden md:block" />
         <Field label="Description" htmlFor="description" error={e.description} className="md:col-span-3"><Textarea id="description" name="description" rows={4} defaultValue={v?.description} /></Field>
         <Field label="Équipements (un par ligne)" htmlFor="options" className="md:col-span-3 lg:col-span-1"><Textarea id="options" name="options" rows={8} defaultValue={v?.options.join("\n")} /></Field>
         <Field label="Photos (une URL par ligne, la 1re est la principale)" htmlFor="images" className="md:col-span-3 lg:col-span-2" hint="URL https (Unsplash, hébergement photo…) ou chemin /public.">

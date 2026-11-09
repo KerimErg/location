@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, BadgeCheck, CalendarClock, FileCheck2, HandCoins, KeyRound, Repeat2, ShieldCheck, Wrench } from "lucide-react";
+import { ArrowRight, ArrowUpRight, CalendarClock, FileCheck2, HandCoins, KeyRound, Repeat2, ShieldCheck, Wrench } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { SITE, fullAddress, mapsUrl } from "@/config/site";
+import { RATING } from "@/config/reviews";
 import { PHOTOS } from "@/config/photos";
 import { Button } from "@/components/ui/button";
 import { QuickSearch } from "@/components/vehicles/quick-search";
@@ -10,7 +11,7 @@ import { VehicleCard } from "@/components/vehicles/vehicle-card";
 import { SectionTitle } from "@/components/section-title";
 import { Faq, FAQ } from "@/components/home/faq";
 import { GarageMapLazy } from "@/components/map-lazy";
-import { InstagramIcon } from "@/components/icons";
+import { Reviews } from "@/components/home/reviews";
 
 export const dynamic = "force-dynamic";
 
@@ -52,7 +53,7 @@ export default async function Home() {
               <span className="bg-signal px-2 text-signal-foreground">Sans surprise.</span>
             </h1>
             <p className="mt-7 max-w-md text-base text-[#b9bdc1] md:text-lg">
-              {count} véhicules en stock, préparés à l&apos;atelier et vendus avec Car-Pass et garantie. Visites et essais sur rendez-vous.
+              {count} véhicules en stock, entretenus, passés au contrôle technique et vendus avec Car-Pass et garantie 12 mois. Noté {RATING.average.toLocaleString("fr-BE")}/5 par {RATING.count} clients.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Button asChild size="lg" className="bg-signal text-signal-foreground"><Link href="/stock">Voir le stock <ArrowRight /></Link></Button>
@@ -149,20 +150,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* AVIS */}
-      <section className="bg-ink py-16 text-[#eceae5]">
-        <div className="container-page grid items-center gap-8 md:grid-cols-[1fr_auto]">
-          <div>
-            <p className="eyebrow text-[#a9aeb3]">04 — Avis</p>
-            <p className="mt-3 max-w-2xl font-display text-4xl font-bold uppercase md:text-5xl">Plus de 100 évaluations clients sur AutoScout24.</p>
-            <p className="mt-3 text-[#a9aeb3]">Consultez-les en toute transparence, et suivez nos arrivages au quotidien sur Instagram.</p>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <Button asChild size="lg" className="bg-signal text-signal-foreground"><a href={SITE.autoscout} target="_blank" rel="noopener"><BadgeCheck /> Lire les avis</a></Button>
-            <Button asChild size="lg" variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10"><a href={SITE.instagram} target="_blank" rel="noopener"><InstagramIcon className="size-4" /> @dgn_cars</a></Button>
-          </div>
-        </div>
-      </section>
+      <Reviews />
 
       {/* VISITE */}
       <section className="container-page py-20 md:py-28">

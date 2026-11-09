@@ -8,6 +8,8 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "images.unsplash.com" },
       { protocol: "https", hostname: "plus.unsplash.com" },
       { protocol: "https", hostname: "unsplash.com", pathname: "/photos/**" },
+      // Photos des annonces DGN Cars publiées sur AutoScout24
+      { protocol: "https", hostname: "prod.pictures.autoscout24.net" },
     ],
   },
   experimental: { optimizePackageImports: ["lucide-react", "framer-motion"] },

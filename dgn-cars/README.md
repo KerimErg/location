@@ -3,12 +3,11 @@
 Next.js 15 (App Router) · TypeScript · Tailwind CSS v4 + composants shadcn/ui · Prisma + PostgreSQL (Neon) · NextAuth (admin) · Zod + React Hook Form · Leaflet/OpenStreetMap.
 
 ## À compléter avant la mise en ligne
-Tout est centralisé dans **`src/config/site.ts`** :
-- téléphone (`phone.display` + `phone.href`, ex. `+3243XXXXXX`), WhatsApp, e-mail ;
-- horaires (actuellement « sur rendez-vous ») ;
+Tout est centralisé dans **`src/config/site.ts`** (téléphone, GSM/WhatsApp, horaires repris de la fiche AutoScout24 de DGN Cars — à vérifier) :
+- e-mail (vide pour l'instant) ;
 - coordonnées GPS exactes du garage (actuellement approximatives pour Rocourt).
 
-Le stock fourni est une **démo** (14 véhicules, photos Unsplash libres de droits correspondant aux modèles). Remplacez-le par le vrai stock depuis `/admin/vehicules`, avec les photos réelles.
+Le stock initial (`prisma/data/stock-autoscout24.json`) contient **10 véhicules réels** relevés sur la fiche AutoScout24 de DGN Cars (photos hébergées par AutoScout24, liens Car-Pass). Les avis affichés (`src/config/reviews.ts`) proviennent de la même fiche. Gérez ensuite le stock depuis `/admin/vehicules`.
 
 ## Démarrage local
 ```bash

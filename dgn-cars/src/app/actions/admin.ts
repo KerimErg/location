@@ -36,6 +36,8 @@ export async function saveVehicle(id: string | null, _: FormState, fd: FormData)
     previousPrice: d.previousPrice || null,
     engineCc: d.engineCc || null,
     co2: d.co2 ?? null,
+    carPassUrl: d.carPassUrl || null,
+    externalUrl: d.externalUrl || null,
     firstRegistration: new Date(`${firstRegistration}-01T00:00:00Z`),
     options: lines(options),
     images: lines(images),

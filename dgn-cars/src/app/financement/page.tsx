@@ -15,7 +15,7 @@ export default async function FinancePage({ searchParams }: { searchParams: Prom
         Prêt à tempérament de 24 à 72 mois avec nos partenaires financiers. Estimez votre mensualité, on s&apos;occupe du dossier.
       </PageHeader>
       <div className="container-page py-16 lg:py-20">
-        <FinanceSimulator initialPrice={v?.price ?? 20000} vehicleId={v?.id} vehicleName={v ? `${v.make} ${v.model} ${v.version}` : undefined} />
+        <FinanceSimulator initialPrice={v?.price ?? 7500} vehicleId={v?.id} vehicleName={v ? `${v.make} ${v.model} ${v.version}` : undefined} />
       </div>
     </>
   );

@@ -86,6 +86,8 @@ model Vehicle {
   color             String
   owners            Int           @default(1)
   carPass           Boolean       @default(true)
+  carPassUrl        String? // lien vers le rapport Car-Pass public
+  externalUrl       String? // annonce d'origine (AutoScout24…)
   warrantyMonths    Int           @default(12)
   options           String[]
   description       String

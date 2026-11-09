@@ -38,7 +38,7 @@ export function QuickSearch({ makes, count, className }: { makes: string[]; coun
         <span className="eyebrow">Budget max.</span>
         <select className={sel} value={budget} onChange={(e) => setBudget(e.target.value)}>
           <option value="">Sans limite</option>
-          {[10000, 15000, 20000, 25000, 30000, 40000].map((b) => <option key={b} value={b}>{new Intl.NumberFormat("fr-BE").format(b)} €</option>)}
+          {[5000, 6000, 7500, 10000, 15000, 20000].map((b) => <option key={b} value={b}>{new Intl.NumberFormat("fr-BE").format(b)} €</option>)}
         </select>
       </label>
       <label className="grid gap-1.5">

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Check, FileCheck2, MessageCircle, Phone, ShieldCheck } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Check, FileCheck2, MessageCircle, Phone, ShieldCheck } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { SITE } from "@/config/site";
 import { BODY, FUEL, GEARBOX, kwToHp } from "@/lib/labels";
@@ -79,7 +79,7 @@ export default async function VehiclePage({ params }: Props) {
         <div className="grid gap-10 lg:grid-cols-[1fr_400px]">
           <div className="min-w-0">
             <Gallery images={v.images} alt={`${name} ${v.version}`} sold={sold} />
-            <p className="mt-2 font-mono text-[0.68rem] text-muted-foreground uppercase">Photos d&apos;illustration du stock de démonstration</p>
+            <p className="mt-2 font-mono text-[0.68rem] text-muted-foreground uppercase">{v.images.length} photo{v.images.length > 1 ? "s" : ""} · photos du véhicule</p>
 
             <section className="mt-12">
               <h2 className="text-3xl md:text-4xl">Fiche technique</h2>
@@ -106,11 +106,16 @@ export default async function VehiclePage({ params }: Props) {
 
             <section className="mt-12">
               <h2 className="text-3xl md:text-4xl">Le mot du vendeur</h2>
-              <p className="mt-4 max-w-2xl leading-relaxed">{v.description}</p>
+              <p className="mt-4 max-w-2xl leading-relaxed whitespace-pre-line">{v.description}</p>
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                <p className="flex items-center gap-3 border p-4 text-sm"><FileCheck2 className="size-6 shrink-0" strokeWidth={1.5} /> Car-Pass et contrôle technique « vente » remis à la livraison</p>
+                {v.carPassUrl ? (
+                  <a href={v.carPassUrl} target="_blank" rel="noopener" className="flex items-center gap-3 border p-4 text-sm hover:bg-muted"><FileCheck2 className="size-6 shrink-0" strokeWidth={1.5} /> <span>Consulter le Car-Pass de ce véhicule <ArrowUpRight className="inline size-4" /></span></a>
+                ) : (
+                  <p className="flex items-center gap-3 border p-4 text-sm"><FileCheck2 className="size-6 shrink-0" strokeWidth={1.5} /> Car-Pass et contrôle technique « vente » remis à la livraison</p>
+                )}
                 <p className="flex items-center gap-3 border p-4 text-sm"><ShieldCheck className="size-6 shrink-0" strokeWidth={1.5} /> Préparé à l&apos;atelier : entretien, freins, pneus, éclairage</p>
               </div>
+              {v.externalUrl && <a href={v.externalUrl} target="_blank" rel="noopener" className="mt-4 inline-flex items-center gap-1 text-sm underline">Voir aussi l&apos;annonce sur AutoScout24 <ArrowUpRight className="size-4" /></a>}
             </section>
           </div>
 
@@ -149,6 +154,7 @@ export default async function VehiclePage({ params }: Props) {
                 )}
                 <div className="mt-5 grid gap-2">
                   {SITE.phone.href && <a href={`tel:${SITE.phone.href}`} className="flex h-11 items-center justify-center gap-2 border text-sm font-semibold uppercase hover:bg-muted"><Phone className="size-4" /> {SITE.phone.display}</a>}
+                  {SITE.mobile.href && <a href={`tel:${SITE.mobile.href}`} className="flex h-11 items-center justify-center gap-2 border text-sm font-semibold uppercase hover:bg-muted"><Phone className="size-4" /> {SITE.mobile.display}</a>}
                   {SITE.whatsapp && (
                     <a href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(`Bonjour, je suis intéressé par la ${name} (${v.reference}).`)}`} target="_blank" rel="noopener" className="flex h-11 items-center justify-center gap-2 border text-sm font-semibold uppercase hover:bg-muted"><MessageCircle className="size-4" /> WhatsApp</a>
                   )}

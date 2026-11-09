@@ -34,7 +34,9 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
             <table className="mt-2 w-full text-sm"><tbody>{SITE.hours.map((h) => <tr key={h.days} className="border-b"><td className="py-2.5">{h.days}</td><td className="py-2.5 text-right font-mono text-xs">{h.hours}</td></tr>)}</tbody></table>
           </div>
           <div className="grid gap-2 text-sm">
-            {SITE.phone.href && <a className="underline" href={`tel:${SITE.phone.href}`}>{SITE.phone.display}</a>}
+            {SITE.phone.href && <a className="underline" href={`tel:${SITE.phone.href}`}>Garage : {SITE.phone.display}</a>}
+            {SITE.mobile.href && <a className="underline" href={`tel:${SITE.mobile.href}`}>GSM : {SITE.mobile.display}</a>}
+            {SITE.whatsapp && <a className="underline" href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noopener">WhatsApp</a>}
             {SITE.email && <a className="underline" href={`mailto:${SITE.email}`}>{SITE.email}</a>}
             <a className="inline-flex items-center gap-2 underline" href={SITE.instagram} target="_blank" rel="noopener"><InstagramIcon className="size-4" /> @dgn_cars</a>
           </div>

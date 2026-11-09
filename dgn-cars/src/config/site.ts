@@ -16,18 +16,19 @@ export const SITE = {
     lat: 50.6735,
     lng: 5.5528,
   },
-  // TODO : renseigner le vrai numéro (format affiché + format international pour les liens).
-  phone: { display: "+32 4XX XX XX XX", href: "" },
-  whatsapp: "", // ex. "32470123456" (sans + ni espaces)
+  // Coordonnées publiées sur AutoScout24 (fiche DGN Cars) — à vérifier.
+  contact: "Yalçin Dogan",
+  phone: { display: "+32 4 268 41 33", href: "+3242684133" },
+  mobile: { display: "+32 499 23 67 37", href: "+32499236737" },
+  whatsapp: "32499236737", // sans + ni espaces
   email: "", // ex. "contact@dgncars.be"
   appointmentOnly: true,
   hours: [
-    { days: "Lundi – Vendredi", hours: "Sur rendez-vous" },
-    { days: "Samedi", hours: "Sur rendez-vous" },
-    { days: "Dimanche", hours: "Fermé" },
+    { days: "Lundi – Vendredi", hours: "10:00 – 18:00 · sur RDV" },
+    { days: "Samedi – Dimanche", hours: "10:00 – 18:00 · sur RDV" },
   ],
   instagram: "https://www.instagram.com/dgn_cars/",
-  autoscout: "https://www.autoscout24.be/fr/professional/region/liege/bassenge/",
+  autoscout: "https://www.autoscout24.be/fr/professional/dgn-cars",
   url: process.env.NEXTAUTH_URL ?? "http://localhost:3000",
 };
 

@@ -59,15 +59,15 @@ function Body({ makes }: { makes: string[] }) {
         <div className="grid gap-3">
           <select aria-label="Prix maximum" className={sel} value={params.get("prixMax") ?? ""} onChange={(e) => set("prixMax", e.target.value || null)}>
             <option value="">Prix max. : indifférent</option>
-            {[10000, 15000, 20000, 25000, 30000, 35000].map((p) => <option key={p} value={p}>Jusqu&apos;à {new Intl.NumberFormat("fr-BE").format(p)} €</option>)}
+            {[5000, 6000, 7500, 10000, 15000, 20000].map((p) => <option key={p} value={p}>Jusqu&apos;à {new Intl.NumberFormat("fr-BE").format(p)} €</option>)}
           </select>
           <select aria-label="Kilométrage maximum" className={sel} value={params.get("kmMax") ?? ""} onChange={(e) => set("kmMax", e.target.value || null)}>
             <option value="">Km max. : indifférent</option>
-            {[30000, 50000, 75000, 100000, 150000].map((p) => <option key={p} value={p}>Moins de {new Intl.NumberFormat("fr-BE").format(p)} km</option>)}
+            {[50000, 100000, 125000, 150000, 200000].map((p) => <option key={p} value={p}>Moins de {new Intl.NumberFormat("fr-BE").format(p)} km</option>)}
           </select>
           <select aria-label="Année minimum" className={sel} value={params.get("anneeMin") ?? ""} onChange={(e) => set("anneeMin", e.target.value || null)}>
             <option value="">Année min. : indifférent</option>
-            {[2022, 2021, 2020, 2019, 2018, 2015].map((y) => <option key={y} value={y}>{y} et plus récent</option>)}
+            {[2018, 2016, 2014, 2012, 2010].map((y) => <option key={y} value={y}>{y} et plus récent</option>)}
           </select>
         </div>
       </Group>
