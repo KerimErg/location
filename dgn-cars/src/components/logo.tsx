@@ -1,11 +1,16 @@
+import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-export function Logo({ className, inverted }: { className?: string; inverted?: boolean }) {
+/** Logo officiel DGN Cars (fond transparent, prévu pour un fond sombre). */
+export function Logo({ className, onLight, size = "md" }: { className?: string; onLight?: boolean; size?: "md" | "lg" }) {
   return (
-    <Link href="/" aria-label="DGN Cars — accueil" className={cn("group inline-flex items-stretch font-display text-2xl leading-none font-bold uppercase", className)}>
-      <span className="bg-signal px-2 pt-1.5 pb-1 text-signal-foreground">DGN</span>
-      <span className={cn("border-y-2 border-r-2 px-2 pt-1 pb-0.5 tracking-wider", inverted ? "border-white/80 text-white" : "border-foreground")}>Cars</span>
+    <Link
+      href="/"
+      aria-label="DGN Cars — accueil"
+      className={cn("inline-flex items-center", onLight && "rounded-md bg-ink px-2.5 py-1.5", className)}
+    >
+      <Image src="/logo-dgn.png" alt="DGN Cars — Achat · Vente · Reprise" width={720} height={259} priority className={size === "lg" ? "h-20 w-auto" : "h-11 w-auto md:h-12"} />
     </Link>
   );
 }

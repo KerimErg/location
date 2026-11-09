@@ -20,7 +20,7 @@ export function AdminNav({ newLeads }: { newLeads: number }) {
   return (
     <aside className="border-b bg-card lg:sticky lg:top-0 lg:flex lg:h-dvh lg:w-60 lg:shrink-0 lg:flex-col lg:border-r lg:border-b-0">
       <div className="flex items-center justify-between p-4 lg:block lg:p-5">
-        <Logo />
+        <Logo onLight />
         <p className="eyebrow hidden lg:mt-2 lg:block">Gestion</p>
         <ThemeToggle className="lg:hidden" />
       </div>

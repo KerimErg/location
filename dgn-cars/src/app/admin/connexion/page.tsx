@@ -29,7 +29,7 @@ export default function AdminLogin() {
           router.refresh();
         })}
       >
-        <Logo />
+        <Logo onLight />
         <h1 className="mt-8 text-4xl">Espace gestion</h1>
         <div className="mt-6 grid gap-4">
           <Field label="E-mail" htmlFor="email" error={errors.email?.message}><Input id="email" type="email" autoComplete="email" {...form.register("email")} /></Field>

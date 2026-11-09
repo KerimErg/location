@@ -40,7 +40,7 @@ export function Header() {
           </div>
         </div>
       </div>
-      <div className="border-b bg-background/95 backdrop-blur">
+      <div className="border-b border-white/10 bg-ink text-[#eceae5]">
         <div className="container-page flex h-16 items-center justify-between gap-6 md:h-[72px]">
           <Logo />
           <nav className="hidden items-center lg:flex" aria-label="Navigation principale">
@@ -52,7 +52,7 @@ export function Header() {
                   href={n.href}
                   className={cn(
                     "relative px-4 py-2 font-display text-[1.05rem] font-semibold tracking-wide uppercase transition-colors",
-                    active ? "text-foreground" : "text-muted-foreground hover:text-foreground",
+                    active ? "text-white" : "text-[#a9aeb3] hover:text-white",
                   )}
                 >
                   {n.label}
@@ -62,8 +62,8 @@ export function Header() {
             })}
           </nav>
           <div className="flex items-center gap-1">
-            <ThemeToggle />
-            <Link href="/favoris" className="relative inline-flex size-10 items-center justify-center rounded-md hover:bg-muted" aria-label="Mes favoris">
+            <ThemeToggle className="hover:bg-white/10" />
+            <Link href="/favoris" className="relative inline-flex size-10 items-center justify-center rounded-md hover:bg-white/10" aria-label="Mes favoris">
               <Heart className="size-[18px]" strokeWidth={1.75} />
               {ids.length > 0 && (
                 <span className="absolute top-1 right-1 flex size-4 items-center justify-center rounded-sm bg-signal font-mono text-[0.6rem] font-semibold text-signal-foreground">{ids.length}</span>
@@ -74,17 +74,17 @@ export function Header() {
             </Button>
             <Sheet>
               <SheetTrigger asChild>
-                <button className="inline-flex size-10 items-center justify-center rounded-md hover:bg-muted lg:hidden" aria-label="Ouvrir le menu">
+                <button className="inline-flex size-10 items-center justify-center rounded-md hover:bg-white/10 lg:hidden" aria-label="Ouvrir le menu">
                   <Menu className="size-5" />
                 </button>
               </SheetTrigger>
-              <SheetContent side="right" className="p-6">
+              <SheetContent side="right" className="border-white/10 bg-ink p-6 text-white">
                 <SheetTitle className="sr-only">Menu</SheetTitle>
                 <Logo />
-                <nav className="mt-8 flex flex-col border-t">
+                <nav className="mt-8 flex flex-col border-t border-white/15">
                   {NAV.map((n) => (
                     <SheetClose asChild key={n.href}>
-                      <Link href={n.href} className="border-b py-4 font-display text-3xl font-bold uppercase">{n.label}</Link>
+                      <Link href={n.href} className="border-b border-white/15 py-4 font-display text-3xl font-bold uppercase">{n.label}</Link>
                     </SheetClose>
                   ))}
                 </nav>

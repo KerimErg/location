@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: { default: `${SITE.name} — Voitures d'occasion à Liège (Rocourt)`, template: `%s · ${SITE.name}` },
   description: `Voitures d'occasion contrôlées avec Car-Pass et garantie 12 mois. Reprise, financement, essais sur rendez-vous — ${fullAddress}.`,
-  openGraph: { type: "website", locale: "fr_BE", siteName: SITE.name },
+  openGraph: { type: "website", locale: "fr_BE", siteName: SITE.name, images: ["/images/banniere.webp"] },
   icons: { icon: "/icon.svg" },
 };
 

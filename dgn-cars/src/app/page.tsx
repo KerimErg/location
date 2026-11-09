@@ -44,7 +44,7 @@ export default async function Home() {
       <section className="bg-ink text-[#eceae5]">
         <div className="grid lg:min-h-[640px] lg:grid-cols-[1.05fr_1fr]">
           <div className="container-page flex flex-col justify-center py-14 lg:mr-0 lg:max-w-none lg:py-20 lg:pr-12 lg:pl-[max(2.5rem,calc((100vw-1320px)/2+2.5rem))]">
-            <p className="eyebrow text-[#a9aeb3]">Garage automobile · Rocourt, Liège</p>
+            <p className="eyebrow text-[#a9aeb3]">Achat · Vente · Reprise — Rocourt, Liège</p>
             <h1 className="mt-5 text-[3.4rem] sm:text-7xl xl:text-[6.4rem]">
               Des occasions
               <br />
@@ -61,8 +61,9 @@ export default async function Home() {
             </div>
           </div>
           <div className="relative min-h-[320px] lg:min-h-0">
-            <Image src={PHOTOS.hero} alt="Volkswagen Golf GTI exposée en showroom" fill priority unoptimized className="object-cover" />
-            <div className="absolute bottom-0 left-0 bg-ink/85 px-5 py-3 font-mono text-[0.68rem] tracking-wider text-[#d9d7d2] uppercase">Photo : Unsplash</div>
+            <Image src="/images/banniere.webp" alt="Ford Fiesta rouge dans le showroom DGN Cars, devant l'enseigne lumineuse" fill priority sizes="(min-width:1024px) 50vw, 100vw" className="object-cover object-[50%_60%]" />
+            <div className="absolute inset-y-0 left-0 hidden w-24 bg-gradient-to-r from-ink to-transparent lg:block" />
+            <div className="absolute top-0 right-0 bg-ink/90 px-5 py-3 font-mono text-[0.68rem] tracking-wider text-[#d9d7d2] uppercase">Le showroom · Rocourt</div>
           </div>
         </div>
       </section>

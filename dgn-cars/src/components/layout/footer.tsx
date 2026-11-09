@@ -17,7 +17,7 @@ export function Footer() {
     <footer className="bg-ink text-[#d9d7d2]">
       <div className="container-page grid gap-12 py-16 lg:grid-cols-[1.2fr_2fr]">
         <div>
-          <Logo inverted />
+          <Logo size="lg" />
           <p className="mt-6 max-w-sm text-sm leading-relaxed text-[#a9aeb3]">
             Voitures d&apos;occasion sélectionnées, contrôlées et livrées avec Car-Pass et garantie. Visites et essais sur rendez-vous à Rocourt.
           </p>
