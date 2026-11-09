@@ -63,3 +63,15 @@ Freinage, batteries, entretien, moteur : un seul magasin pour toutes vos pièces
 
 ---
 Photos d'illustration : Pexels (licence libre). À remplacer progressivement par des photos de votre magasin et de vos pièces réelles : elles fonctionnent toujours mieux.
+
+---
+
+## Vidéo d'ouverture (Reel / Story) — `video-ouverture-dgn-parts.mp4`
+Format 1080×1920, 16 secondes, sans son : **ajoutez une musique depuis la bibliothèque Instagram** (droits inclus) au moment de publier. Choisissez un son tendance et énergique ; les coupures de la vidéo tombent à 2,2 s · 4,9 s · 7,4 s · 9,9 s · 12,6 s.
+
+Légende proposée :
+C'est officiel : DGN Parts ouvre ses portes 🔧🔥
+Freinage, batteries, entretien, et toutes les pièces pour votre voiture.
+Envoyez votre plaque en message privé, on trouve votre pièce.
+
+#DGNParts #Ouverture #PiecesAuto #PiecesDetachees #Garage #Entretien #AutoBelgique
