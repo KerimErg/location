@@ -12,7 +12,8 @@
     "typecheck": "tsc --noEmit",
     "db:migrate": "prisma migrate dev",
     "db:deploy": "prisma migrate deploy",
-    "db:seed": "tsx prisma/seed.ts"
+    "db:seed": "tsx prisma/seed.ts",
+    "local": "node scripts/lancer-en-local.mjs"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -57,6 +58,7 @@
     "@types/node": "^26.6.6",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "embedded-postgres": "^17.11.0-beta.19",
     "eslint": "^9.39.5",
     "eslint-config-next": "^15.5.27",
     "prisma": "^6.19.3",
