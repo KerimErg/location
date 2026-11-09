@@ -4,9 +4,11 @@ import { spawn, spawnSync } from "node:child_process";
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import EmbeddedPostgres from "embedded-postgres";
 
-const root = path.resolve(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1")), "..");
+// fileURLToPath gère les espaces, les accents (« Téléchargements ») et les lecteurs Windows.
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dataDir = path.join(root, ".local-db");
 const PORT = 54329;
 const DB = "dgncars";
